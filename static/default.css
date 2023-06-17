@@ -28,6 +28,7 @@ textarea {
   display: inline-block;
   border: none;
   background: #f1f1f1;
+  color: #000;
 }
 
 input[type=text]:focus,
@@ -36,6 +37,12 @@ select:focus,
 textarea:focus {
   background-color: #ddd;
   outline: none;
+}
+
+.input-hint {
+  font-size: 15.5px;
+  text-align: justify;
+  color: #666;
 }
 
 /* Overwrite default styles of hr */
