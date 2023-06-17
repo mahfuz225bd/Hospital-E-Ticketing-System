@@ -5,6 +5,36 @@
     <div class="container">
         <h1>হাসপাতাল ই-টিকেট</h1>
         <p>হাসপাতালের টিকেট অনলাইনে পেতে ফরমটি পূরন করুন</p>
+
+        <hr>
+
+        <h3>রোগীর তথ্য</h3>
+        <input type="text" placeholder="রোগীর নাম *" name="name" id="name" required>
+        <input type="text" placeholder="রোগীর বয়স *" name="age" id="age" required>
+        <input type="text" placeholder="ফোন নম্বর *" name="phone" id="phone" required>
+        <input type="text" placeholder="ইমেইল" name="email" id="email">
+        
+        <hr>
+
+        <h3>রোগীর সমস্যা</h3>
+        <input type="radio" id="problem_known" name="problem_known_unknown" value="known">
+        <label for="problem_known">রোগীর রোগ/সমস্যা নির্বাচন করি</label>
+        <select id="problem" name="problem" disabled>
+            <option>(নির্বাচন করুন)</option>
+            <option value="headache">মাথাব্যথা</option>
+            <option value="fever">জ্বর</option>
+            <option value="cough">কাশি</option>
+            <option value="stomach_pain">পেট ব্যথা</option>
+            <option value="nausea">বমি</option>
+            <option value="fatigue">ক্লান্তি</option>
+            <option value="difficulty_breathing">শ্বাস নিতে অসুবিধা</option>
+            <option value="chest_pain">সিনার ব্যথা</option>
+        </select>
+
+        <input type="radio" id="problem_unknown" name="problem_known_unknown" value="unkonwn">
+        <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই লক্ষণগুলো লিখি</label>
+        <textarea name="symptoms" id="symptoms" cols="30" rows="10" disabled></textarea>
+
         <hr>
 
         <h3>হাসপাতাল নির্বাচন করুন</h3>
@@ -84,33 +114,6 @@
                 প
 
         </select>
-        <hr>
-
-        <h3>রোগীর তথ্য</h3>
-        <input type="text" placeholder="রোগীর নাম *" name="name" id="name" required>
-        <input type="text" placeholder="রোগীর বয়স *" name="age" id="age" required>
-        <input type="text" placeholder="ফোন নম্বর *" name="phone" id="phone" required>
-        <input type="text" placeholder="ইমেইল" name="email" id="email">
-        <hr>
-
-        <h3>রোগীর সমস্যা</h3>
-        <input type="radio" id="problem_known" name="problem_known_unknown" value="known">
-        <label for="problem_known">রোগীর রোগ/সমস্যা নির্বাচন করি</label>
-        <select id="problem" name="problem" disabled>
-            <option>(নির্বাচন করুন)</option>
-            <option value="headache">মাথাব্যথা</option>
-            <option value="fever">জ্বর</option>
-            <option value="cough">কাশি</option>
-            <option value="stomach_pain">পেট ব্যথা</option>
-            <option value="nausea">বমি</option>
-            <option value="fatigue">ক্লান্তি</option>
-            <option value="difficulty_breathing">শ্বাস নিতে অসুবিধা</option>
-            <option value="chest_pain">সিনার ব্যথা</option>
-        </select>
-
-        <input type="radio" id="problem_unknown" name="problem_known_unknown" value="unkonwn">
-        <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই লক্ষণগুলো লিখি</label>
-        <textarea name="symptoms" id="symptoms" cols="30" rows="10" disabled></textarea>
 
         <button type="submit" class="btn">নিশ্চিত করুন</button>
     </div>
