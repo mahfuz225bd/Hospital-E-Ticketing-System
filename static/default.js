@@ -28,13 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(err => console.error(err))
 
-    document.querySelector('#problem_known').addEventListener('click', (e) => {
-        const problemOption = document.querySelector('#problem');
+    const problemOption = document.querySelector('#problem');
+    const symptomOption = document.querySelector('#symptoms');
+    const problemKnown = document.querySelector('#problem_known')
+    const problemUnknown = document.querySelector('#problem_unknown')
+
+    problemKnown.addEventListener('click', () => {
         problemOption.disabled = false
+        symptomOption.disabled = true
     })
 
-    document.querySelector('#problem_unknown').addEventListener('click', (e) => {
-        const symptomOption = document.querySelector('#symptoms');
+    problemUnknown.addEventListener('click', () => {
+        problemOption.disabled = true
         symptomOption.disabled = false;
     })
 })
