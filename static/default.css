@@ -6,26 +6,22 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Add padding to containers */
 .container {
-  padding: 16px;
   width: 45%;
   margin: 0 auto;
 }
 
 label {
   font-weight: bold;
+  font-size: small;
 }
 
-/* Full-width input fields */
 input[type=text],
 input[type=password],
 select,
 textarea {
   width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
+  padding: 10px;
   border: none;
   background: #f1f1f1;
   color: #000;
@@ -39,35 +35,50 @@ textarea:focus {
   outline: none;
 }
 
+.input-row {
+  display: flex;
+}
+
+.input-row .input-col {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.input-row .input-col.left {
+  margin-right: 5px;
+}
+
+.input-row .input-col.right {
+  margin-left: 5px;
+}
+
 .input-hint {
   font-size: 15.5px;
   text-align: justify;
   color: #666;
 }
 
-/* Overwrite default styles of hr */
 hr {
   border: 1px solid #f1f1f1;
   margin-bottom: 25px;
 }
 
-/* Set a style for the submit/register button */
 .btn {
   background-color: #04AA6D;
   color: white;
-  padding: 16px 20px;
+  padding: 10px 20px;
   margin: 8px 0;
   border: none;
   cursor: pointer;
   width: 100%;
   opacity: 0.9;
+  font-size: medium;
 }
 
 .btn:hover {
   opacity: 1;
 }
 
-/* Add a blue text color to links */
 a {
   color: dodgerblue;
 }

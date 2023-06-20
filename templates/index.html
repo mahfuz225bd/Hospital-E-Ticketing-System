@@ -9,113 +9,146 @@
         <hr>
 
         <h3>রোগীর তথ্য</h3>
-        <input type="text" placeholder="রোগীর নাম *" name="name" id="name" required>
-        <input type="text" placeholder="রোগীর বয়স *" name="age" id="age" required>
-        <input type="text" placeholder="ফোন নম্বর *" name="phone" id="phone" required>
-        <input type="text" placeholder="ইমেইল" name="email" id="email">
+        <div class="input-row no-label">
+            <div class="input-col left">
+                <input type="text" placeholder="রোগীর নাম *" name="name" id="name" required>
+            </div>
+            <div class="input-col right">
+                <input type="text" placeholder="রোগীর বয়স *" name="age" id="age" required>
+            </div>
+        </div>
+        <div class="input-row">
+            <div class="input-col left">
+                <input type="text" placeholder="ফোন নম্বর *" name="phone" id="phone" required>
+            </div>
+            <div class="input-col right">
+                <input type="text" placeholder="ইমেইল" name="email" id="email">
+            </div>
+        </div>
 
         <hr>
 
         <h3>রোগীর সমস্যা</h3>
-        <input type="radio" id="problem_known" name="problem_known_unknown" value="known">
-        <label for="problem_known">রোগীর রোগ/সমস্যা নির্বাচন করি</label>
-        <select id="problem" name="problem" disabled>
-            <option>(নির্বাচন করুন)</option>
-            <option value="headache">মাথাব্যথা</option>
-            <option value="fever">জ্বর</option>
-            <option value="cough">কাশি</option>
-            <option value="stomach_pain">পেট ব্যথা</option>
-            <option value="nausea">বমি</option>
-            <option value="fatigue">ক্লান্তি</option>
-            <option value="difficulty_breathing">শ্বাস নিতে অসুবিধা</option>
-            <option value="chest_pain">সিনার ব্যথা</option>
-        </select>
-
-        <input type="radio" id="problem_unknown" name="problem_known_unknown" value="unkonwn">
-        <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই লক্ষণগুলো লিখি</label>
-        <textarea name="symptoms" id="symptoms" cols="30" rows="10" disabled></textarea>
+        <div class="input-row">
+            <div class="input-col left">
+                <input type="radio" id="problem_known" name="problem_known_unknown" value="known">
+                <label for="problem_known">রোগীর রোগ/সমস্যা নির্বাচন করি</label>
+                <select id="problem" name="problem" disabled>
+                    <option>(নির্বাচন করুন)</option>
+                    <option value="headache">মাথাব্যথা</option>
+                    <option value="fever">জ্বর</option>
+                    <option value="cough">কাশি</option>
+                    <option value="stomach_pain">পেট ব্যথা</option>
+                    <option value="nausea">বমি</option>
+                    <option value="fatigue">ক্লান্তি</option>
+                    <option value="difficulty_breathing">শ্বাস নিতে অসুবিধা</option>
+                    <option value="chest_pain">সিনার ব্যথা</option>
+                </select>
+            </div>
+            <div class="input-col right">
+                <input type="radio" id="problem_unknown" name="problem_known_unknown" value="unkonwn">
+                <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই লক্ষণগুলো লিখি</label>
+                <textarea name="symptoms" id="symptoms" cols="30" rows="10" disabled></textarea>
+            </div>
+        </div>
 
         <hr>
 
         <h3>হাসপাতাল নির্বাচন করুন</h3>
-        <p class="input-hint">উক্ত রোগ/সমস্যার জন্য যে সকল হাসপাতালে চিকিৎসার সু-ব্যবস্থা রয়েছে, সে হাসপাতালগুলোর নাম পেতে  বিভাগ, জেলা,
+        <p class="input-hint">উক্ত রোগ/সমস্যার জন্য যে সকল হাসপাতালে চিকিৎসার সু-ব্যবস্থা রয়েছে, সে হাসপাতালগুলোর নাম
+            পেতে প্রথমে বিভাগ, জেলা,
             উপজেলা ও থানা নির্বাচন করুন।</p>
-        <label>বিভাগঃ</label>
-        <select id="division" name="division">
-            <option>(নির্বাচন করুন)</option>
-            <option value="ঢাকা">ঢাকা</option>
-            <option value="বরিশাল">বরিশাল</option>
-            <option value="চট্টগ্রাম">চট্টগ্রাম</option>
-            <option value="খুলনা">খুলনা</option>
-            <option value="ময়মনসিংহ">ময়মনসিংহ</option>
-            <option value="রাজশাহী">রাজশাহী</option>
-            <option value="রংপুর">রংপুর</option>
-            <option value="সিলেট">সিলেট</option>
-        </select>
-        <br>
-        <label>জেলাঃ</label>
-        <select id="district" name="district">
-            <option>(নির্বাচন করুন)</option>
-            <option value="ঢাকা">ঢাকা</option>
-            <option value="গাজীপুর">গাজীপুর</option>
-            <option value="শেরপুর">শেরপুর</option>
-            <option value="নরসিংদী">নরসিংদী</option>
-            <option value="মুন্সিগঞ্জ">মুন্সিগঞ্জ</option>
-            <option value="নারায়ণগঞ্জ">নারায়ণগঞ্জ</option>
-            <option value="কিশোরগঞ্জ">কিশোরগঞ্জ</option>
-            <option value="মানিকগঞ্জ">মানিকগঞ্জ</option>
-            <option value="রাজবাড়ি">রাজবাড়ি</option>
-            <option value="ফরিদপুর">ফরিদপুর</option>
-            <option value="টাঙ্গাইল">টাঙ্গাইল</option>
-            <option value="জামালপুর">জামালপুর</option>
-            <option value="মাদারীপুর">মাদারীপুর</option>
-            <option value="গোপালগঞ্জ">গোপালগঞ্জ</option>
-            <option value="রাজবাড়ি">রাজবাড়ি</option>
-        </select>
-        <br>
-        <label>উপজেলাঃ</label>
-        <select id="subdistrict" name="subdistrict">
-            <option>(নির্বাচন করুন)</option>
-            <option value="শাহবাগ">শাহবাগ</option>
-            <option value="কালীগঞ্জ">কালীগঞ্জ</option>
-            <option value="কান্দি">কান্দি</option>
-            <option value="শেরপুর সদর">শেরপুর সদর</option>
-            <option value="মিরপুর">মিরপুর</option>
-            <option value="কালাভবন">কালাভবন</option>
-            <option value="জামালপুর সদর">জামালপুর সদর</option>
-        </select>
-        <br>
-        <label>থানাঃ</label>
-        <select id="thana" name="thana">
-            <option>(নির্বাচন করুন)</option>
-            <option value="শাহবাগ">শাহবাগ</option>
-            <option value="পটিয়া">পটিয়া</option>
-            <option value="বিনোদপুর">বিনোদপুর</option>
-            <option value="কোটওয়ালি">কোটওয়ালি</option>
-            <option value="কমলগঞ্জ">কমলগঞ্জ</option>
-            <option value="কালীগঞ্জ">কালীগঞ্জ</option>
-            <option value="কান্দি">কান্দি</option>
-            <option value="শেরপুর সদর">শেরপুর সদর</option>
-            <option value="শাহবাগ">শাহবাগ</option>
-            <option value="মিরপুর">মিরপুর</option>
-            <option value="কালাভবন">কালাভবন</option>
-            <option value="শাহবাগ">শাহবাগ</option>
-        </select>
-        <label>হাসপাতালের নামঃ <span style="color: red;">*</span></label>
-        <select id="hospitalName" name="hospitalName">
-            <option>(নির্বাচন করুন)</option>
-            <option value="ঢাকা_মেডিকেল_কলেজ_হাসপাতাল">ঢাকা মেডিকেল কলেজ হাসপাতাল</option>
-            <option value="চট্টগ্রাম_মেডিকেল_কলেজ_হাসপাতাল">চট্টগ্রাম মেডিকেল কলেজ হাসপাতাল</option>
-            <option value="রাজশাহী_মেডিকেল_কলেজ_হাসপাতাল">রাজশাহী মেডিকেল কলেজ হাসপাতাল</option>
-            <option value="খুলনা_মেডিকেল_কলেজ_হাসপাতাল">খুলনা মেডিকেল কলেজ হাসপাতাল</option>
-            <option value="সিলেট_মেডিকেল_কলেজ_হাসপাতাল">সিলেট মেডিকেল কলেজ হাসপাতাল</option>
-            <option value="বাংলাবন্ধু_শেখ_মুজিব_মেডিকেল_বিশ্ববিদ্যালয়_হাসপাতাল">বাংলাবন্ধু শেখ মুজিব মেডিকেল
-                বিশ্ববিদ্যালয় হাসপাতাল</option>
-            <option value="বাংলাদেশ_সেনাবাহিনী_হাসপাতাল">বাংলাদেশ সেনাবাহিনী হাসপাতাল</option>
-            <option value="বঙ্গবন্ধু_শেখ_মুজিব_শিল্প_কর্ম_প্রশিক্ষণ_ইনস্টিটিউট_হাসপাতাল">বঙ্গবন্ধু শেখ মুজিব শিল্প কর্ম
-                প্রশিক্ষণ ইনস্টিটিউট হাসপাতাল</option>
-        </select>
 
+        <div class="input-row">
+            <div class="input-col left">
+                <label>বিভাগঃ</label>
+                <select id="division" name="division">
+                    <option>(নির্বাচন করুন)</option>
+                    <option value="ঢাকা">ঢাকা</option>
+                    <option value="বরিশাল">বরিশাল</option>
+                    <option value="চট্টগ্রাম">চট্টগ্রাম</option>
+                    <option value="খুলনা">খুলনা</option>
+                    <option value="ময়মনসিংহ">ময়মনসিংহ</option>
+                    <option value="রাজশাহী">রাজশাহী</option>
+                    <option value="রংপুর">রংপুর</option>
+                    <option value="সিলেট">সিলেট</option>
+                </select>
+            </div>
+            <div class="input-col right">
+                <label>জেলাঃ</label>
+                <select id="district" name="district">
+                    <option>(নির্বাচন করুন)</option>
+                    <option value="ঢাকা">ঢাকা</option>
+                    <option value="গাজীপুর">গাজীপুর</option>
+                    <option value="শেরপুর">শেরপুর</option>
+                    <option value="নরসিংদী">নরসিংদী</option>
+                    <option value="মুন্সিগঞ্জ">মুন্সিগঞ্জ</option>
+                    <option value="নারায়ণগঞ্জ">নারায়ণগঞ্জ</option>
+                    <option value="কিশোরগঞ্জ">কিশোরগঞ্জ</option>
+                    <option value="মানিকগঞ্জ">মানিকগঞ্জ</option>
+                    <option value="রাজবাড়ি">রাজবাড়ি</option>
+                    <option value="ফরিদপুর">ফরিদপুর</option>
+                    <option value="টাঙ্গাইল">টাঙ্গাইল</option>
+                    <option value="জামালপুর">জামালপুর</option>
+                    <option value="মাদারীপুর">মাদারীপুর</option>
+                    <option value="গোপালগঞ্জ">গোপালগঞ্জ</option>
+                    <option value="রাজবাড়ি">রাজবাড়ি</option>
+                </select>
+            </div>
+        </div>
+        <div class="input-row">
+            <div class="input-col left">
+                <label>উপজেলাঃ</label>
+                <select id="subdistrict" name="subdistrict">
+                    <option>(নির্বাচন করুন)</option>
+                    <option value="শাহবাগ">শাহবাগ</option>
+                    <option value="কালীগঞ্জ">কালীগঞ্জ</option>
+                    <option value="কান্দি">কান্দি</option>
+                    <option value="শেরপুর সদর">শেরপুর সদর</option>
+                    <option value="মিরপুর">মিরপুর</option>
+                    <option value="কালাভবন">কালাভবন</option>
+                    <option value="জামালপুর সদর">জামালপুর সদর</option>
+                </select>
+            </div>
+            <div class="input-col right">
+                <label>থানাঃ</label>
+                <select id="thana" name="thana">
+                    <option>(নির্বাচন করুন)</option>
+                    <option value="শাহবাগ">শাহবাগ</option>
+                    <option value="পটিয়া">পটিয়া</option>
+                    <option value="বিনোদপুর">বিনোদপুর</option>
+                    <option value="কোটওয়ালি">কোটওয়ালি</option>
+                    <option value="কমলগঞ্জ">কমলগঞ্জ</option>
+                    <option value="কালীগঞ্জ">কালীগঞ্জ</option>
+                    <option value="কান্দি">কান্দি</option>
+                    <option value="শেরপুর সদর">শেরপুর সদর</option>
+                    <option value="শাহবাগ">শাহবাগ</option>
+                    <option value="মিরপুর">মিরপুর</option>
+                    <option value="কালাভবন">কালাভবন</option>
+                    <option value="শাহবাগ">শাহবাগ</option>
+                </select>
+            </div>
+        </div>
+        <div class="input-row">
+            <div class="input-col">
+                <label>হাসপাতালের নামঃ <span style="color: red;">*</span></label>
+                <select id="hospitalName" name="hospitalName">
+                    <option>(নির্বাচন করুন)</option>
+                    <option value="ঢাকা_মেডিকেল_কলেজ_হাসপাতাল">ঢাকা মেডিকেল কলেজ হাসপাতাল</option>
+                    <option value="চট্টগ্রাম_মেডিকেল_কলেজ_হাসপাতাল">চট্টগ্রাম মেডিকেল কলেজ হাসপাতাল</option>
+                    <option value="রাজশাহী_মেডিকেল_কলেজ_হাসপাতাল">রাজশাহী মেডিকেল কলেজ হাসপাতাল</option>
+                    <option value="খুলনা_মেডিকেল_কলেজ_হাসপাতাল">খুলনা মেডিকেল কলেজ হাসপাতাল</option>
+                    <option value="সিলেট_মেডিকেল_কলেজ_হাসপাতাল">সিলেট মেডিকেল কলেজ হাসপাতাল</option>
+                    <option value="বাংলাবন্ধু_শেখ_মুজিব_মেডিকেল_বিশ্ববিদ্যালয়_হাসপাতাল">বাংলাবন্ধু শেখ মুজিব মেডিকেল
+                        বিশ্ববিদ্যালয় হাসপাতাল</option>
+                    <option value="বাংলাদেশ_সেনাবাহিনী_হাসপাতাল">বাংলাদেশ সেনাবাহিনী হাসপাতাল</option>
+                    <option value="বঙ্গবন্ধু_শেখ_মুজিব_শিল্প_কর্ম_প্রশিক্ষণ_ইনস্টিটিউট_হাসপাতাল">বঙ্গবন্ধু শেখ মুজিব
+                        শিল্প
+                        কর্ম
+                        প্রশিক্ষণ ইনস্টিটিউট হাসপাতাল</option>
+                </select>
+            </div>
+        </div>
         <button type="submit" class="btn">নিশ্চিত করুন</button>
     </div>
 </form>
