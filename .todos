@@ -1,0 +1,3 @@
+- hide/show input on radio selection of [name=problem_known_unknown]
+- convert this form into multi-step form
+- multilevel select for hospital by selecting division, district, subdistrict, thana
