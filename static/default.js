@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // set focus while loaded the page
+    const nameField = document.getElementById("name")
+    nameField.focus()
+
     let hospitals = []
 
     fetch('/static/data/hospitals.json')
