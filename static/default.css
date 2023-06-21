@@ -83,6 +83,24 @@ a {
   color: dodgerblue;
 }
 
+/* Utilities */
+
 .hide {
   display: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .container {
+    width: initial;
+  }
+  
+  .input-row {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .input-row .input-col.right {
+    margin-left: initial;
+  }
 }
