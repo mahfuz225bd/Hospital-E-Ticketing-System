@@ -1,5 +1,5 @@
 * {
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
 body {
@@ -81,4 +81,8 @@ hr {
 
 a {
   color: dodgerblue;
+}
+
+.hide {
+  display: none;
 }

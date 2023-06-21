@@ -33,7 +33,15 @@
             <div class="input-col left">
                 <input type="radio" id="problem_known" name="problem_known_unknown" value="known">
                 <label for="problem_known">রোগীর রোগ/সমস্যা নির্বাচন করি</label>
-                <select id="problem" name="problem" disabled>
+            </div>
+            <div class="input-col right">
+                <input type="radio" id="problem_unknown" name="problem_known_unknown" value="unkonwn">
+                <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই লক্ষণগুলো লিখি</label>
+            </div>
+        </div>
+        <div class="input-row" style="margin-top: -10px;">
+            <div class="input-col left">
+                <select class="hide" id="problem" name="problem">
                     <option>(নির্বাচন করুন)</option>
                     <option value="headache">মাথাব্যথা</option>
                     <option value="fever">জ্বর</option>
@@ -44,11 +52,7 @@
                     <option value="difficulty_breathing">শ্বাস নিতে অসুবিধা</option>
                     <option value="chest_pain">সিনার ব্যথা</option>
                 </select>
-            </div>
-            <div class="input-col right">
-                <input type="radio" id="problem_unknown" name="problem_known_unknown" value="unkonwn">
-                <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই লক্ষণগুলো লিখি</label>
-                <textarea name="symptoms" id="symptoms" cols="30" rows="10" disabled></textarea>
+                <textarea class="hide" name="symptoms" id="symptoms" cols="30" rows="10"></textarea>
             </div>
         </div>
 

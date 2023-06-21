@@ -38,12 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const problemUnknown = document.querySelector('#problem_unknown')
 
     problemKnown.addEventListener('click', () => {
-        problemOption.disabled = false
-        symptomOption.disabled = true
+        problemOption.style.display = 'block'
+        symptomOption.style.display = 'none'
     })
 
     problemUnknown.addEventListener('click', () => {
-        problemOption.disabled = true
-        symptomOption.disabled = false;
+        problemOption.style.display = 'none'
+        symptomOption.style.display = 'block'
     })
 })
