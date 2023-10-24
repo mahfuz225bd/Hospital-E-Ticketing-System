@@ -25,25 +25,35 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 })
 
-                setTimeout(() => {
-                    console.log(newData);
-                });
+                // setTimeout(() => {
+                //     console.log(newData);
+                // });
             }
         })
         .catch(err => console.error(err))
 
-    const problemOption = document.querySelector('#problem');
-    const symptomOption = document.querySelector('#symptoms');
-    const problemKnown = document.querySelector('#problem_known')
-    const problemUnknown = document.querySelector('#problem_unknown')
+    const selectProblem = document.querySelector('#problem');
+    const symptoms = document.querySelector('#symptoms');
+    const problemKnownOption = document.querySelector('#problem_known')
+    const problemUnknownOption = document.querySelector('#problem_unknown')
+    const otherProblemInput = document.querySelector('#otherProblemInput')
 
-    problemKnown.addEventListener('click', () => {
-        problemOption.style.display = 'block'
-        symptomOption.style.display = 'none'
+    problemKnownOption.addEventListener('click', () => {
+        selectProblem.style.display = 'block'
+        symptoms.style.display = 'none'
     })
 
-    problemUnknown.addEventListener('click', () => {
-        problemOption.style.display = 'none'
-        symptomOption.style.display = 'block'
+    problemUnknownOption.addEventListener('click', () => {
+        selectProblem.style.display = 'none'
+        symptoms.style.display = 'block'
+    })
+
+    // For other option input
+    selectProblem.addEventListener('input', (e) => {
+        if (e.target.value === '_other') {
+            otherProblemInput.style.display = 'block'
+        } else {
+            otherProblemInput.style.display = 'none'
+        }
     })
 })

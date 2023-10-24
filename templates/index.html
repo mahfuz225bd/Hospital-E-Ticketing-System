@@ -41,7 +41,7 @@
         </div>
         <div class="input-row" style="margin-top: -10px;">
             <div class="input-col left">
-                <select class="hide" id="problem" name="problem">
+                <select class="hide" id="problem" name="problem" title="রোগীর রোগ/সমস্যা নির্বাচন করি">
                     <option>(নির্বাচন করুন)</option>
                     <option value="headache">মাথাব্যথা</option>
                     <option value="fever">জ্বর</option>
@@ -51,8 +51,12 @@
                     <option value="fatigue">ক্লান্তি</option>
                     <option value="difficulty_breathing">শ্বাস নিতে অসুবিধা</option>
                     <option value="chest_pain">সিনার ব্যথা</option>
+                    <option value="_other">অন্য রোগ/সমস্যা</option>
                 </select>
-                <textarea class="hide" name="symptoms" id="symptoms" cols="30" rows="10"></textarea>
+                <input class="hide" type="text" id="otherProblemInput" name="problem"
+                    placeholder="রোগীর রোগ/সমস্যার নাম লিখুন" style="margin-top: 10px;">
+                <textarea class="hide" name="symptoms" id="symptoms" cols="30" rows="10"
+                    title="রোগের লক্ষণগুলো বর্ননা করি"></textarea>
             </div>
         </div>
 
