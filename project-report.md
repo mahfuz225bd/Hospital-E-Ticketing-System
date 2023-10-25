@@ -169,7 +169,7 @@ The system allows patients to:
 4. E-ticket generation and confirmation.
 5. Access to the hospital based on the allocated time.
 
-### Images of the Proeject
+### Images of the Project
 
 ![Project Code](demo_registration.png)
 
