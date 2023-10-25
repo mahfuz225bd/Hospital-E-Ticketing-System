@@ -1,7 +1,7 @@
 - convert this form into multi-step form
 - multilevel select for hospital by selecting division, district, subdistrict, thana
 
-Others todo:
+Optional todo:
 - Using html hidden attribute instead of css display: none|block
 
 
