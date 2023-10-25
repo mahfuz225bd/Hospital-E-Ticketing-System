@@ -1,6 +1,9 @@
-- hide/show input on radio selection of [name=problem_known_unknown]
 - convert this form into multi-step form
 - multilevel select for hospital by selecting division, district, subdistrict, thana
+
+Others todo:
+- Using html hidden attribute instead of css display: none|block
+
 
 Database Diagram:
 - complete the Appointments table

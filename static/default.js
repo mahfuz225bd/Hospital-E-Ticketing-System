@@ -56,4 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
             otherProblemInput.style.display = 'none'
         }
     })
+
+    // Changing value of `problem` while #otherProblemInput is not hidden
+    if (condition) {
+        
+    }
 })
