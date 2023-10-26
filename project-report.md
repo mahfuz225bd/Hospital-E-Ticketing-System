@@ -61,13 +61,11 @@
 
 9. **Project Timeline**
 
-   - Gantt Chart
    - Milestones
 
 10. **Project Budget**
 
     - Resource Allocation
-    - Cost Estimations
 
 11. **Risk Management**
 
@@ -163,17 +161,20 @@ The system allows patients to:
 
 ### Workflow
 
-1. User registration and login.
-2. Submission of personal and disease information.
-3. Selection of the hospital for ticket collection.
-4. E-ticket generation and confirmation.
-5. Access to the hospital based on the allocated time.
+1. Submission of personal and disease information.
+2. Selection of the hospital for ticket collection.
+3. E-ticket generation and confirmation.
+4. Access to the hospital based on the allocated time.
 
 ### Images of the Project
 
-![Project Code](demo_registration.png)
+- Homepage
 
-![Homepage](demo_homepage.png)
+![Homepage](<resources/images/website screenshot.png>)
+
+- Code
+
+![Frontend HTML](<resources/images/index html.png>)
 
 ---
 
@@ -223,9 +224,7 @@ The system will follow a client-server architecture, with a secure connection fo
 
 ### Data Flow Diagram
 
-[Include Data Flow Diagram illustrating how the system works]
-
----
+![Hospital e-Ticketing System Data Flow Diagram](<resources/images/Hospital e-Ticketing System Database Relational Diagram.jpg>)
 
 ## 6. User Requirements
 
@@ -251,6 +250,7 @@ Users can choose a hospital based on:
 
 - Division
 - District
+- Sub-District
 - Zone
 
 ### Ticket Collection Process
@@ -308,10 +308,6 @@ The core technology used for this project is Python Flask, a web framework known
 
 ## 9. Project Timeline
 
-### Gantt Chart
-
-[Include Gantt chart showing project timeline]
-
 ### Milestones
 
 - Project Initiation
@@ -332,12 +328,6 @@ The core technology used for this project is Python Flask, a web framework known
 - Software
 - Hosting and Infrastructure
 - Quality Assurance
-
-### Cost Estimations
-
-[Provide cost estimates for each resource]
-
----
 
 ## 11. Risk Management
 
