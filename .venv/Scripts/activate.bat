@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=f:\My Apps\Hospital E-Ticketing System\.venv
+set VIRTUAL_ENV=C:\Users\ubcre\Desktop\forked hospital e-ticketing system\Hospital-E-Ticketing-System\.venv
 
 if not defined PROMPT set PROMPT=$P$G
 

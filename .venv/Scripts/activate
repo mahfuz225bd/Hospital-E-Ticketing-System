@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="f:\My Apps\Hospital E-Ticketing System\.venv"
+VIRTUAL_ENV="C:\Users\ubcre\Desktop\forked hospital e-ticketing system\Hospital-E-Ticketing-System\.venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
