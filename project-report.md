@@ -77,8 +77,6 @@
     - Project Achievements
     - Future Enhancements
 
-13. **References**
-
 ---
 
 ## 1. Executive Summary
@@ -377,12 +375,6 @@ The Hospital eTicketing web app is poised to revolutionize the healthcare system
 ### Future Enhancements
 
 Future enhancements may include expanding the platform to cover more hospitals, integrating with electronic health records, and adding real-time doctor availability information.
-
----
-
-## 13. References
-
-[Include a list of references, sources, and citations used in the report.]
 
 ---
 
