@@ -35,6 +35,10 @@ textarea:focus {
   outline: none;
 }
 
+select.loading {
+  cursor: wait;
+}
+
 .input-row {
   display: flex;
 }
@@ -94,7 +98,7 @@ a {
   .container {
     width: initial;
   }
-  
+
   .input-row {
     -webkit-flex-direction: column;
     flex-direction: column;
