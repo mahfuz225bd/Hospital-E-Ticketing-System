@@ -1,42 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // set focus while loaded the page
-    const nameField = document.getElementById("name")
-    nameField.focus()
-
-    let hospitals = []
-
-    fetch('/static/data/hospitals.json')
-        .then(res => res.text())
-        .then(data => {
-            const json = JSON.parse(data)
-            json.forEach(each => {
-                hospitals.push(each)
-            });
-        }).then(() => {
-            // select #division
-            const divisionSelect = document.getElementById("division");
-            if (divisionSelect) {
-                // select #district
-                const districtSelect = document.getElementById("district")
-                const newData = []
-                hospitals.forEach(each => {
-                    if (each.division === divisionSelect.value) {
-                        console.log(each);
-                    }
-                })
-
-                // setTimeout(() => {
-                //     console.log(newData);
-                // });
-            }
-        })
-        .catch(err => console.error(err))
-
     const selectProblem = document.querySelector('#problem');
     const symptoms = document.querySelector('#symptoms');
     const problemKnownOption = document.querySelector('#problem_known')
     const problemUnknownOption = document.querySelector('#problem_unknown')
     const otherProblemInput = document.querySelector('#otherProblemInput')
+    const selectDivision = document.querySelector('#division')
+    const selectDistrict = document.querySelector('#district')
+
+    // set focus while loaded the page
+    const nameField = document.getElementById("name")
+    nameField.focus()
+
+    // Loading divisions to #division
+    fetch('/api/divisions')
+        .then(res => res.json())
+        .then(data => {
+            data.forEach(each => selectDivision.innerHTML += `<option value=${each.index}>${each.value} ({Count})</option>`);
+        })
+        .catch(err => console.error(err))
 
     problemKnownOption.addEventListener('click', () => {
         selectProblem.style.display = 'block'
@@ -58,7 +39,22 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     // Changing value of `problem` while #otherProblemInput is not hidden
-    if (condition) {
-        
-    }
+    // if (condition) {
+
+    // }
+
+    // Loading districts on input #division
+    selectDivision.addEventListener('input', event => {
+        let divisionIndex = event.target.selectedOptions[0].getAttribute('value')
+        fetch(`/api/districts?divisionIndex=${divisionIndex}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    selectDistrict.disabled = false
+                    selectDistrict.innerHTML = '<option>-- সকল --</option>'
+                    data.forEach(each => selectDistrict.innerHTML += `<option value=${each.index}>${each.value} ({Count})</option>`);
+                }
+            })
+    })
+
 })

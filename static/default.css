@@ -35,6 +35,10 @@ textarea:focus {
   outline: none;
 }
 
+select:disabled {
+  cursor: not-allowed;
+}
+
 select.loading {
   cursor: wait;
 }
