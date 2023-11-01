@@ -16,6 +16,10 @@ label {
   font-size: small;
 }
 
+label.fw-normal {
+  font-weight: normal;
+}
+
 input[type=text],
 input[type=password],
 select,
@@ -95,6 +99,10 @@ a {
 
 .hide {
   display: none;
+}
+
+.fw-bold {
+  font-weight: bold !important;
 }
 
 /* Responsive */

@@ -17,10 +17,10 @@
     </div>
     <div class="input-row">
       <div class="input-col left">
-        <input type="text" placeholder="ফোন নম্বর *" name="phone" id="phone" required value="1714123381" />
+        <input type="text" placeholder="ফোন নম্বর *" name="phone" id="phone" required value="+880-1714-123381" />
       </div>
       <div class="input-col right">
-        <input type="text" placeholder="ইমেইল" name="email" id="email" />
+        <input type="text" placeholder="ইমেইল" name="email" id="email" value="mahfuz225bd@gmail.com" />
       </div>
     </div>
 
@@ -40,6 +40,7 @@
     <div class="input-row" style="margin-top: -10px">
       <div class="input-col left">
         <select class="hide" id="problem" name="problem" title="রোগীর রোগ/সমস্যা নির্বাচন করি">
+          <option value="headache">মাথাব্যথা</option>
           <option>(নির্বাচন করুন)</option>
           <option value="headache">মাথাব্যথা</option>
           <option value="fever">জ্বর</option>
@@ -70,18 +71,21 @@
       <div class="input-col left">
         <label>বিভাগঃ</label>
         <select id="division" name="division">
+          <option value="1">ঢাকা</option>
           <option>(নির্বাচন করুন)</option>
         </select>
       </div>
       <div class="input-col">
         <label>জেলাঃ</label>
         <select id="district" name="district" disabled>
+          <option value="1">ঢাকা</option>
           <option>-- সকল --</option>
         </select>
       </div>
       <div class="input-col right">
         <label>উপজেলা/থানাঃ</label>
         <select id="subdistrictThana" name="subdistrictThana" disabled>
+          <option value="1">শেরেবাংলা নগর থানা</option>
           <option>-- সকল --</option>
         </select>
       </div>
@@ -89,7 +93,15 @@
     <div class="input-row">
       <div class="input-col">
         <label>হাসপাতালের নামঃ <span style="color: red">*</span></label>
+        <br>
+        <span class="fw-bold">ফিল্টার করুনঃ</span>
+        <input type="radio" id="filter_hospital_for_you" name="filter_hospital" value="for_you">
+        <label class="fw-normal" for="filter_hospital_for_you">"মাথাব্যথা" রোগের চিকিৎসা রয়েছে এমন হাসপাতালসমূহ</label>
+        <input type="radio" id="filter_hospital_all" name="filter_hospital" value="all">
+        <label class="fw-normal" for="filter_hospital_all">সকল হাসপাতাল</label>
+        <br>
         <select id="hospitalName" name="hospitalName" disabled>
+          <option value="134">ন্যাশনাল ইন্সিটিউট অব নিউরোসায়েন্স ও হাসপাতাল</option>
           <option>(নির্বাচন করুন)</option>
         </select>
       </div>
