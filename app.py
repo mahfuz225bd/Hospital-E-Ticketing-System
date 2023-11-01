@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from twilio.rest import Client
 from db_config import db_cursor, mydb, Error
 
 import json
@@ -49,6 +50,21 @@ def subdistricts():
 @app.route('/test_route')
 def test_route():
     return render_template('successful.html')
+
+@app.route('/send_sms', methods=['GET'])
+def send_sms():
+    account_sid = 'AC0c3b046145c1886babbeb1e8d59f8dc8'
+    auth_token = '499fec0970a9ef14662792d1d59b647f'
+    client = Client(account_sid, auth_token)
+
+    if request.method == 'GET':
+        message = client.messages.create(
+            from_='+12052363581',
+            body=request.args['message'],
+            to=request.args['to']
+        )
+
+    return message.sid
 
 if __name__ == '__main__':
     app.run(debug=True)
