@@ -1,4 +1,0 @@
-Dear Sir, your appointment with {doctor_name} is confirmed. Your serial no: {serial no}, Time: {time}, Date: {date} at {hospital_name}.
-
-Example:
-Dear Sir, your appointment with PROF. DR. SK NURUL FATTAH RUMI is confirmed. Your serial no: 59, Time: 8:54:00PM, Date: 25 April, 2023 at Labaid.

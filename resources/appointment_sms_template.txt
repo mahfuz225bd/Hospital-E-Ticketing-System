@@ -1,0 +1,1 @@
+আপনার {hospital_name}, {thana}, {district} হাসপাতালে {doctor_name}-এর অ্যাপয়েন্টমেন্ট নিশ্চিত হয়েছে। আপনার সিরিয়াল নং: {serial_no} এবং {date} তারিখে {time} এর মধ্যে এই হাসপাতালের {doctor_location_at_hospital} এ উপস্থিত থাকার জন্য অনুরোধ করা হলো।
