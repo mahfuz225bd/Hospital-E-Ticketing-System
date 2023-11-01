@@ -101,8 +101,9 @@ a {
   display: none;
 }
 
-.fw-bold {
-  font-weight: bold !important;
+.filter-label {
+  font-weight: bold;
+  font-size: small;
 }
 
 /* Responsive */
@@ -119,4 +120,8 @@ a {
   .input-row .input-col.right {
     margin-left: initial;
   }
+}
+
+.text-sm {
+  font-size: small;
 }

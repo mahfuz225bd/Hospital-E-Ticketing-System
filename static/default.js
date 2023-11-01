@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const nameField = document.querySelector("#name")
     const selectProblem = document.querySelector('#problem');
     const symptoms = document.querySelector('#symptoms');
     const problemKnownOption = document.querySelector('#problem_known')
@@ -8,7 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectDistrict = document.querySelector('#district')
 
     // set focus while loaded the page
-    const nameField = document.getElementById("name")
+    setTimeout(() => {
+        problemKnownOption.click()
+    });
     nameField.focus()
 
     // Loading divisions to #division
@@ -56,6 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
     })
-    
+
 
 })
