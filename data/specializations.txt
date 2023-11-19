@@ -1,0 +1,111 @@
+1. Anesthesia & Pain:
+   - Anesthesiology (Pain) Specialist
+
+2. Breast Health:
+   - Breast Specialist
+
+3. Cancer Care:
+   - Cancer Specialist
+   - Cancer Surgery Specialist
+
+4. Cardiac Health:
+   - Cardiac Surgery Specialist
+   - Cardiology Specialist
+   - Cardiovascular & Thoracic Surgery Specialist
+
+5. Respiratory Health:
+   - Chest & Asthma Specialist
+
+6. Pediatric Health:
+   - Child Cardiology Specialist
+   - Child Neurology Specialist
+   - Child Specialist
+   - Pediatric Hematologist
+   - Pediatric Nephrologist
+   - Pediatric Orthopedic Surgeon
+   - Pediatric Surgery Specialist
+
+7. Colorectal Health:
+   - Colorectal Surgery (Female) Specialist
+   - Colorectal Surgery Specialist
+
+8. Dental Health:
+   - Dental Specialist
+
+9. Diabetes & Hormone:
+   - Diabetes & Hormone Specialist
+   - Endocrinology (Diabetes & Hormone) Specialist
+   - Endocrinology Specialist
+
+10. Eye Care:
+    - Eye Specialist
+
+11. Gastrointestinal Health:
+    - Gastroenterology Specialist
+
+12. General & Laparoscopic Surgery:
+    - General & Laparoscopic Surgery Specialist
+
+13. Gynecological Health:
+    - Gynecological Oncologist
+    - Gynecology & Obstetrics Specialist
+
+14. Hematology:
+    - Hematology (Blood) Specialist
+
+15. Hepatobiliary Surgery:
+    - Hepatobiliary Surgery Specialist
+
+16. Homeopathy:
+    - Homeopathic Doctor
+    - Homeopathy Doctor
+
+17. Reproductive Health:
+    - Infertility Specialist
+
+18. Kidney & Liver Health:
+    - Kidney Specialist
+    - Liver Specialist
+
+19. Internal Medicine:
+    - Medicine Specialist
+
+20. Neurology:
+    - Neurology/Neuromedicine Specialist
+    - Neuro-ophthalmologist
+    - Neurosurgery Specialist
+
+21. Obstetrics (Normal Delivery):
+    - Normal Delivery Specialist
+
+22. Nutrition and Diet:
+    - Dietitian/Nutritionist
+    - Nutritionist
+
+23. Orthopedics:
+    - Orthopedic Specialist
+
+24. Physical Medicine:
+    - Physical Medicine Specialist
+
+25. Physiotherapy:
+    - Physiotherapy Specialist
+
+26. Plastic Surgery:
+    - Plastic Surgery Specialist
+
+27. Psychiatry & Mental Health:
+    - Psychiatry (Mental) Specialist
+
+28. Rheumatology:
+    - Rheumatology Specialist
+
+29. Dermatology:
+    - Skin Specialist
+
+30. Urology:
+    - Urology Specialist
+
+31. Vascular Surgery:
+    - Vascular Surgery Specialist
+

@@ -17,6 +17,15 @@ Optional todo:
 
 - Using html hidden attribute instead of css display: none|block
 
-Database Diagram:
 
-- complete the Appointments table
+
+-> Todo for Uzzal
+
+# Todo 1
+
+1. Create a database to mysql named `hospital-e-ticketing`
+2. import hospital-e-ticketing.sql
+3. Execute Code:
+   SELECT `hospital_name_en`, SUBSTRING(`hospital_name_en`, POSITION(',' in `hospital_name_en`) + 1) AS splitted_address, `subdistrict_thana_id` FROM `hospitals` WHERE `hospital_name_en` LIKE '%,%';
+4. Hover on subdistrict_thana_id, it will show a string value of sub-district/thana of the hospital
+5. If it mismatched to splitted_address, change subdistrict_thana_id of the appropriate sub-district/thana
