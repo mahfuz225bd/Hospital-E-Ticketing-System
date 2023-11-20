@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrap Data</title>
+</head>
+
+<body>
+
+    <script>
+        // Functions
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function generateRandomPhoneNumber() {
+            const prefixes = ['017', '019', '015', '014', '013', '018'];
+            const selectedPrefix = prefixes[getRandomInt(0, prefixes.length - 1)];
+
+            // Generate the remaining 8 digits
+            const remainingDigits = getRandomInt(1e8, 9e8 - 1);
+
+            // Concatenate the prefix and remaining digits
+            const phoneNumber = selectedPrefix + remainingDigits;
+
+            return phoneNumber;
+        }
+
+        function generateRandomDOB(minAge, maxAge) {
+            const currentYear = new Date().getFullYear();
+
+            const randomAge = getRandomInt(minAge, maxAge);
+            const birthYear = currentYear - randomAge;
+
+            // Random month and day
+            const birthMonth = getRandomInt(1, 12);
+            const daysInMonth = new Date(birthYear, birthMonth, 0).getDate();
+            const birthDay = getRandomInt(1, daysInMonth);
+
+            // Format the date of birth
+            const formattedDOB = `${birthYear}-${(birthMonth < 10 ? '0' : '') + birthMonth}-${(birthDay < 10 ? '0' : '') + birthDay}`;
+
+            return formattedDOB;
+        }
+
+        const apiKey = 'AIzaSyBvkQ59mpUYxL_FGtfc0wxoursDuv_SndA';
+        function translateToBengali(text) {
+            const apiUrl = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
+
+            const data = {
+                q: text,
+                target: 'bn',
+            };
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(result => {
+                    const translatedText = result.data.translations[0].translatedText;
+                    console.log(`Original: ${text}`);
+                    console.log(`Translated to Bengali: ${translatedText}`);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+    </script>
+</body>
+
+</html>
