@@ -4,15 +4,6 @@
 - #symptoms must be within 225 characters
 - view count of available hospital for treatment that disease
 
-trying this sql code
-
-```
-SELECT *, COUNT() AS count
-FROM hospitals
-RIGHT JOIN districts
-ON hospital.district = district.id;
-```
-
 Optional todo:
 
 - Using html hidden attribute instead of css display: none|block
@@ -27,3 +18,8 @@ Optional todo:
    SELECT `hospital_name_en`, SUBSTRING(`hospital_name_en`, POSITION(',' in `hospital_name_en`) + 1) AS splitted_address, `subdistrict_thana_id` FROM `hospitals` WHERE `hospital_name_en` LIKE '%,%';
 4. Hover on subdistrict_thana_id, it will show a string value of sub-district/thana of the hospital
 5. If it mismatched to splitted_address, change subdistrict_thana_id of the appropriate sub-district/thana
+
+Database:
+
+- Inserting more hospitals of other districts
+- Inserting all doctors by hospitals

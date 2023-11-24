@@ -1,0 +1,9 @@
+-- Getting ranges of id of subdistrict_and_thans by each district
+SELECT district_id, min(id) as start, max(id) as end FROM `subdistrict_and_thanas` GROUP BY district_id;
+
+
+-- Total hospitals by districts
+SELECT *, COUNT() AS count
+FROM hospitals
+RIGHT JOIN districts
+ON hospital.district = district.id;
