@@ -25,10 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
     problemKnownOption.addEventListener('click', () => {
         selectProblem.style.display = 'block'
         symptoms.style.display = 'none'
+
+        if (selectProblem.value === '_other') {
+            otherProblemInput.style.display = 'block'
+        }
     })
 
     problemUnknownOption.addEventListener('click', () => {
         selectProblem.style.display = 'none'
+        otherProblemInput.style.display = 'none'
         symptoms.style.display = 'block'
     })
 
@@ -40,11 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
             otherProblemInput.style.display = 'none'
         }
     })
-
-    // Changing value of `problem` while #otherProblemInput is not hidden
-    // if (condition) {
-
-    // }
 
     // Loading districts on input #division
     selectDivision.addEventListener('input', event => {
@@ -59,6 +59,4 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
     })
-
-
 })
