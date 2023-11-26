@@ -7,20 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const otherProblemInput = document.querySelector('#otherProblemInput')
     const selectDivision = document.querySelector('#division')
     const selectDistrict = document.querySelector('#district')
+    const selectSubdistrictAndThanas = document.querySelector('#subdistrictThana')
 
     // set focus while loaded the page
     setTimeout(() => {
         problemKnownOption.click()
     });
     nameField.focus()
-
-    // Loading divisions to #division
-    fetch('/api/divisions')
-        .then(res => res.json())
-        .then(data => {
-            data.forEach(each => selectDivision.innerHTML += `<option value=${each.index}>${each.value} ({Count})</option>`);
-        })
-        .catch(err => console.error(err))
 
     problemKnownOption.addEventListener('click', () => {
         selectProblem.style.display = 'block'
@@ -46,6 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
+    // Loading divisions to #division
+    fetch('/api/divisions')
+        .then(res => res.json())
+        .then(data => {
+            data.forEach(each => selectDivision.innerHTML += `<option value=${each.index}>${each.value}</option>`);
+        })
+        .catch(err => console.error(err))
+
     // Loading districts on input #division
     selectDivision.addEventListener('input', event => {
         let divisionIndex = event.target.selectedOptions[0].getAttribute('value')
@@ -55,7 +56,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.length > 0) {
                     selectDistrict.disabled = false
                     selectDistrict.innerHTML = '<option>-- সকল --</option>'
-                    data.forEach(each => selectDistrict.innerHTML += `<option value=${each.index}>${each.value} ({Count})</option>`);
+                    data.forEach(each => selectDistrict.innerHTML += `<option value=${each.index}>${each.value}</option>`);
+                }
+            })
+    })
+
+    // Loading sub-district and thanas on input #district
+    selectDistrict.addEventListener('input', event => {
+        let districtIndex = event.target.selectedOptions[0].getAttribute('value')
+        fetch(`/api/subdistrictAndThanas?districtIndex=${districtIndex}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    selectSubdistrictAndThanas.disabled = false
+                    selectSubdistrictAndThanas.innerHTML = '<option>-- সকল --</option>'
+                    data.forEach(each => selectSubdistrictAndThanas.innerHTML += `<option value=${each.index}>${each.value}</option>`);
                 }
             })
     })
