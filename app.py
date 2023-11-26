@@ -11,39 +11,39 @@ def index():
     return render_template('index.html')
 
 @app.route('/api/divisions')
-def divisions():
+def get_divisions():
     divisions = []
     db_cursor.execute("SELECT id, value_bn FROM `divisions`")
     result = db_cursor.fetchall()
 
     for each in result:
-        divisions.append({'index': each[0], 'value': each[1]})
+        divisions.append({'id': each[0], 'value': each[1]})
 
     return json.dumps(divisions)
 
 @app.route('/api/districts', methods=['GET'])
-def districts():
+def get_districts():
     districts = []
     if request.method == 'GET':
-        db_cursor.execute("SELECT id, value_bn FROM `districts` WHERE division_id=%s", (request.args['divisionIndex'],))
+        db_cursor.execute("SELECT id, value_bn FROM `districts` WHERE division_id=%s", (request.args['divisionId'],))
 
         result = db_cursor.fetchall()
 
         for each in result:
-            districts.append({'index': each[0], 'value': each[1]})
+            districts.append({'id': each[0], 'value': each[1]})
 
         return json.dumps(districts)
     
 @app.route('/api/subdistrictAndThanas', methods=['GET'])
-def subdistricts():
+def get_subdistrict_and_thanas():
     subdistrictAndThana = []
     if request.method == 'GET':
-        db_cursor.execute("SELECT id, value_bn FROM `subdistrict_and_thanas` WHERE district_id=%s", (request.args['districtIndex'],))
+        db_cursor.execute("SELECT id, value_bn FROM `subdistrict_and_thanas` WHERE district_id=%s", (request.args['districtId'],))
 
         result = db_cursor.fetchall()
 
         for each in result:
-            subdistrictAndThana.append({'index': each[0], 'value': each[1]})
+            subdistrictAndThana.append({'id': each[0], 'value': each[1]})
 
         return json.dumps(subdistrictAndThana)
 
