@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const otherProblemInput = document.querySelector('#otherProblemInput')
     const selectDivision = document.querySelector('#division')
     const selectDistrict = document.querySelector('#district')
-    const selectSubdistrictAndThanas = document.querySelector('#subdistrictThana')
+    const selectSubdistrictOrThana = document.querySelector('#subdistrictOrThana')
+    const selectHospital = document.querySelector('#hospital')
 
     // /* For TODO: changing text for output.hospitalNameValue + output.problemValue
     //    Remarks: Not Working */
@@ -87,9 +88,23 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.length > 0) {
-                    selectSubdistrictAndThanas.disabled = false
-                    selectSubdistrictAndThanas.innerHTML = '<option>-- সকল --</option>'
-                    data.forEach(each => selectSubdistrictAndThanas.innerHTML += `<option value=${each.id}>${each.value}</option>`);
+                    selectSubdistrictOrThana.disabled = false
+                    selectSubdistrictOrThana.innerHTML = '<option>-- সকল --</option>'
+                    data.forEach(each => selectSubdistrictOrThana.innerHTML += `<option value=${each.id}>${each.value}</option>`);
+                }
+            })
+    })
+
+    // Loading hospitals on input #selectSubdistrictOrThana
+    selectSubdistrictOrThana.addEventListener('input', event => {
+        const subdistrictOrThanaId = event.target.selectedOptions[0].getAttribute('value')
+        fetch(`/api/hospitals?subdistrictOrThanaId=${subdistrictOrThanaId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    selectHospital.disabled = false
+                    selectHospital.innerHTML = '<option value="">-- নির্বাচন করুন --</option>'
+                    data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`);
                 }
             })
     })

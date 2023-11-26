@@ -46,6 +46,20 @@ def get_subdistrict_and_thanas():
             subdistrictAndThana.append({'id': each[0], 'value': each[1]})
 
         return json.dumps(subdistrictAndThana)
+    
+@app.route('/api/hospitals', methods=['GET'])
+def get_hospitals():
+    hospitals = []
+    if request.method == 'GET':
+        db_cursor.execute("SELECT id, hospital_name_en FROM `hospitals` WHERE subdistrict_thana_id=%s", (request.args['subdistrictOrThanaId'],))
+
+        result = db_cursor.fetchall()
+
+        for each in result:
+            hospitals.append({'id': each[0], 'value': each[1]})
+
+        return json.dumps(hospitals)
+    
 
 @app.route('/test_route')
 def test_route():
