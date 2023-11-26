@@ -59,7 +59,19 @@ def get_hospitals():
             hospitals.append({'id': each[0], 'value': each[1]})
 
         return json.dumps(hospitals)
-    
+
+@app.route('/api/doctors', methods=['GET'])
+def get_doctors():
+    hospitals = []
+    if request.method == 'GET':
+        db_cursor.execute("SELECT `id`, `name_en`, `name_bn`, `degree`, `speciality`, `designation`, `dob`, `phone_no_1`, `phone_no_2`, `outdoor_doctor`, `per_visit_time`, `room_location`, `doctor_available_now`, `note` FROM `doctors_by_hospital` WHERE hospital_id=%s", (request.args['hospitalId'],))
+
+        result = db_cursor.fetchall()
+
+        for each in result:
+            hospitals.append({'id': each[0], 'name': each[2], 'speciality': each[4]})
+
+        return json.dumps(hospitals) 
 
 @app.route('/test_route')
 def test_route():
