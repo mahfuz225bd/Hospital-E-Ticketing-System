@@ -1,8 +1,8 @@
+import json
+
 from flask import Flask, render_template, request
 from twilio.rest import Client
 from db_config import db_cursor, mydb, Error
-
-import json
 
 app = Flask(__name__)
 
