@@ -134,4 +134,20 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error(err))
     })
 
+    // Change values of all output.problemValue
+    selectProblem.addEventListener('input', event => {
+        const selectedProblemValue = event.target.selectedOptions[0].innerText
+        document.querySelectorAll('output.problemValue').forEach(each => {
+            each.innerText = selectedProblemValue
+        })
+    })
+
+    // Change values of all output.problemValue
+    selectHospital.addEventListener('input', event => {
+        const selectedHospitalValue = event.target.selectedOptions[0].innerText
+        document.querySelectorAll('output.hospitalNameValue').forEach(each => {
+            each.innerText = selectedHospitalValue
+        })
+    })
+
 })

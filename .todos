@@ -1,7 +1,6 @@
 - convert this form into multi-step form
 - make subdistrictOrThana optional
 - multilevel select for hospital by selecting division, district, subdistrict/thana
-- changing text for output.hospitalNameValue + output.problemValue
 - #symptoms must be within 225 characters
 - view count of available hospital for treatment that disease
 
