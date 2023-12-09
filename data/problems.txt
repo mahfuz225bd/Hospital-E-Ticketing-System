@@ -1,0 +1,110 @@
+1.	Anesthesia & Pain:
+    -	Chronic Pain Issues
+    
+2.	Breast Health:
+    -	Breast Health Problems
+
+3.	Cancer Care:
+    -	Oncological Disorders
+    -	Cancer Surgery Issues
+
+4.	Cardiac Health:
+    -	Cardiovascular Surgery Problems
+    -	Cardiac Disorders
+    -	Thoracic Vascular Issues
+
+5.	Respiratory Health:
+    -	Respiratory Disorders
+
+6.	Pediatric Health:
+    -	Pediatric Cardiac Conditions
+    -	Pediatric Neurological Disorders
+    -	Childhood Health Issues
+    -	Pediatric Hematological Problems
+    -	Pediatric Nephrological Disorders
+    -	Pediatric Orthopedic Conditions
+    -	Pediatric Surgical Challenges
+
+7.	Colorectal Health:
+    -	Colorectal Disorders (Female)
+    -	Colorectal Issues
+
+8.	Dental Health:
+    -	Dental Problems
+
+9.	Diabetes & Hormone:
+    -	Diabetes & Hormone-Related Disorders
+    -	Endocrinological Issues
+    -	Endocrine Disorders
+
+10.	Eye Care:
+    -	Ophthalmic Conditions
+
+11.	Gastrointestinal Health:
+    -	Gastrointestinal Disorders
+
+12.	General & Laparoscopic Surgery:
+    -	General & Laparoscopic Surgical Problems
+
+13.	Gynecological Health:
+    -	Gynecological Oncology Challenges
+    -	Gynecological & Obstetric Issues
+
+14.	Hematology:
+    -	Hematological Disorders
+
+15.	Hepatobiliary Surgery:
+    -	Hepatobiliary Surgical Problems
+
+16.	Homeopathy:
+    -	Homeopathic Health Issues
+
+17.	Reproductive Health:
+    -	Reproductive Health Challenges
+
+18.	Kidney & Liver Health:
+    -	Renal Disorders
+    -	Hepatic Issues
+
+19.	Internal Medicine:
+    -	Internal Medical Problems
+
+20.	Neurology:
+    -	Neurological Disorders
+    -	Neuro-ophthalmological Challenges
+    -	Neurosurgical Issues
+
+21.	Obstetrics (Normal Delivery):
+    -	Normal Delivery Challenges
+
+22.	Nutrition and Diet:
+    -	Nutritional and Diet-Related Disorders
+    -	Nutritional Deficiencies
+
+23.	Orthopedics:
+    -	Orthopedic Issues
+
+24.	Physical Medicine:
+    -	Physical Medicine Problems
+
+25.	Physiotherapy:
+    -	Physiotherapeutic Challenges
+
+26.	Plastic Surgery:
+    -	Plastic Surgical Issues
+
+27.	Psychiatry & Mental Health:
+    -	Psychiatric and Mental Health Problems
+
+28.	Rheumatology:
+    -	Rheumatological Disorders
+
+29.	Dermatology:
+    -	Dermatological Issues
+
+30.	Urology:
+    -	Urological Disorders
+
+31. Vascular Surgery:
+    - Vascular Surgical Complications
+
