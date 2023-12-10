@@ -29,26 +29,26 @@ document.addEventListener('DOMContentLoaded', () => {
     //     });
     // }
 
-    // set focus while loaded the page
-    setTimeout(() => {
-        problemKnownOption.click()
-    });
+    // // set focus while loaded the page
+    // setTimeout(() => {
+    //     problemKnownOption.click()
+    // });
     nameField.focus()
 
-    problemKnownOption.addEventListener('click', () => {
-        selectProblem.style.display = 'block'
-        symptoms.style.display = 'none'
+    // problemKnownOption.addEventListener('click', () => {
+    //     selectProblem.style.display = 'block'
+    //     symptoms.style.display = 'none'
 
-        if (selectProblem.value === '_other') {
-            otherProblemInput.style.display = 'block'
-        }
-    })
+    //     if (selectProblem.value === '_other') {
+    //         otherProblemInput.style.display = 'block'
+    //     }
+    // })
 
-    problemUnknownOption.addEventListener('click', () => {
-        selectProblem.style.display = 'none'
-        otherProblemInput.style.display = 'none'
-        symptoms.style.display = 'block'
-    })
+    // problemUnknownOption.addEventListener('click', () => {
+    //     selectProblem.style.display = 'none'
+    //     otherProblemInput.style.display = 'none'
+    //     symptoms.style.display = 'block'
+    // })
 
     // For other option input
     selectProblem.addEventListener('input', (e) => {
