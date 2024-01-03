@@ -16,10 +16,6 @@ label {
   font-size: small;
 }
 
-label.fw-normal {
-  font-weight: normal;
-}
-
 input[type=text],
 input[type=password],
 input[type=date],
@@ -120,14 +116,22 @@ ul.step-indicator li+li:before {
   content: "\00BB\00a0";
 }
 
+.filter-label {
+  font-weight: bold;
+  font-size: small;
+}
+
 /* Utilities */
 
 .hide {
   display: none;
 }
 
-.filter-label {
-  font-weight: bold;
+.fw-normal {
+  font-weight: normal;
+}
+
+.text-sm {
   font-size: small;
 }
 
@@ -145,8 +149,4 @@ ul.step-indicator li+li:before {
   .input-row .input-col.right {
     margin-left: initial;
   }
-}
-
-.text-sm {
-  font-size: small;
 }
