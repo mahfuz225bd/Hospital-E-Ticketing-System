@@ -107,11 +107,11 @@ ul.step-indicator {
 ul.step-indicator li {
   display: inline;
   font-size: 14px;
-  color: #04AA6D;
+  color: black;
 }
 
 ul.step-indicator li.active {
-  color: black;
+  color: #04AA6D;
 }
 
 ul.step-indicator li+li:before {
