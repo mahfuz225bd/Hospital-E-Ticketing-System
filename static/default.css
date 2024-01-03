@@ -96,6 +96,30 @@ a {
   color: dodgerblue;
 }
 
+/* Step Indicator Breadcrumb */
+
+ul.step-indicator-breadcrumb {
+  padding: 10px 16px;
+  list-style: none;
+  background-color: #eee;
+}
+
+ul.step-indicator-breadcrumb li {
+  display: inline;
+  font-size: 14px;
+  color: #04AA6D;
+}
+
+ul.step-indicator-breadcrumb li.active {
+  color: black;
+}
+
+ul.step-indicator-breadcrumb li+li:before {
+  padding: 8px;
+  color: black;
+  content: "\00BB\00a0";
+}
+
 /* Utilities */
 
 .hide {
