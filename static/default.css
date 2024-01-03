@@ -16,22 +16,6 @@ hr {
   /* margin-bottom: 25px; */
 }
 
-.btn {
-  background-color: #04AA6D;
-  color: white;
-  padding: 10px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-  font-size: medium;
-}
-
-.btn:hover {
-  opacity: 1;
-}
-
 a {
   color: dodgerblue;
 }
@@ -69,6 +53,27 @@ select:disabled {
 
 select.loading {
   cursor: wait;
+}
+
+.btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 10px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  font-size: medium;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 /* Input rows and cols */
@@ -120,11 +125,6 @@ ul.step-indicator li+li:before {
   content: "\00BB\00a0";
 }
 
-.filter-label {
-  font-weight: bold;
-  font-size: small;
-}
-
 /* Utilities */
 
 .hide {
@@ -137,6 +137,25 @@ ul.step-indicator li+li:before {
 
 .text-sm {
   font-size: small;
+}
+
+/* Others */
+
+.filter-label {
+  font-weight: bold;
+  font-size: small;
+}
+
+.btn-show-subdistrictOrThana-input {
+  padding: 8px;
+  margin: auto;
+  width: auto;
+  font-size: medium;
+}
+
+.btn-show-subdistrictOrThana-input::before {
+  content: "\2b";
+  font-weight: bold;
 }
 
 /* Responsive */

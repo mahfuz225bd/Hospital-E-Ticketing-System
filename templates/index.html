@@ -91,16 +91,17 @@
       <select id="district" name="district" disabled>
         <option>-- সকল --</option>
       </select>
-      <button id="btnShowSubdistrictOrThanaInput" class="btn">উপজেলা/থানা (ঐচ্ছিক) &raquo;</button>
     </div>
     <div class="input-col right">
       <label>উপজেলা/থানাঃ</label>
-      <select id="subdistrictOrThana" name="subdistrictOrThana" disabled>
+      <button id="btnShowSubdistrictOrThanaInput" class="btn btn-show-subdistrictOrThana-input" disabled>
+        ইনপুট দিতে ক্লিক করুন (ঐচ্ছিক)</button>
+      <select id="subdistrictOrThana" name="subdistrictOrThana" disabled hidden>
         <option>-- সকল --</option>
       </select>
     </div>
   </div>
-  <div class="input-row">
+  <div class="input-row" hidden>
     <div class="input-col">
       <label>হাসপাতালের নামঃ <span style="color: red">*</span></label>
       <br>

@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.length > 0) {
+                    btnShowSubdistrictOrThanaInput.disabled = false
                     selectSubdistrictOrThana.disabled = false
                     selectSubdistrictOrThana.innerHTML = '<option>-- সকল --</option>'
                     data.forEach(each => selectSubdistrictOrThana.innerHTML += `<option value=${each.id}>${each.value}</option>`);
@@ -149,6 +150,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('output.hospitalNameValue').forEach(each => {
             each.innerText = selectedHospitalValue
         })
+    })
+
+    // Show select input and hide button itself
+    btnShowSubdistrictOrThanaInput.addEventListener('click', event => {
+        event.target.hidden = true;
+        selectSubdistrictOrThana.hidden = false;
     })
 
 })
