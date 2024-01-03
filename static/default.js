@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const otherProblemInput = document.querySelector('#otherProblemInput')
     const selectDivision = document.querySelector('#division')
     const selectDistrict = document.querySelector('#district')
+    const btnShowSubdistrictOrThanaInput = document.querySelector('#btnShowSubdistrictOrThanaInput')
     const selectSubdistrictOrThana = document.querySelector('#subdistrictOrThana')
     const selectHospital = document.querySelector('#hospital')
     const selectDoctor = document.querySelector('#doctor')

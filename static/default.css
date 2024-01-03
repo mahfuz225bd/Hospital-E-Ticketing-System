@@ -11,6 +11,33 @@ body {
   margin: 0 auto;
 }
 
+hr {
+  border: 1px solid #f1f1f1;
+  /* margin-bottom: 25px; */
+}
+
+.btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 10px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  font-size: medium;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+
+a {
+  color: dodgerblue;
+}
+
+/* Form elements */
+
 label {
   font-weight: bold;
   font-size: small;
@@ -44,6 +71,8 @@ select.loading {
   cursor: wait;
 }
 
+/* Input rows and cols */
+
 .input-row {
   display: flex;
 }
@@ -65,31 +94,6 @@ select.loading {
   font-size: 15.5px;
   text-align: justify;
   color: #666;
-}
-
-hr {
-  border: 1px solid #f1f1f1;
-  /* margin-bottom: 25px; */
-}
-
-.btn {
-  background-color: #04AA6D;
-  color: white;
-  padding: 10px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-  font-size: medium;
-}
-
-.btn:hover {
-  opacity: 1;
-}
-
-a {
-  color: dodgerblue;
 }
 
 /* Step Indicator Breadcrumb */
@@ -136,6 +140,7 @@ ul.step-indicator li+li:before {
 }
 
 /* Responsive */
+
 @media (max-width: 600px) {
   .container {
     width: initial;
