@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (countWord <= 255) {
             symtomsWordCount.innerText = countWord
         } else {
-            alert("রোগের লক্ষণসমূহ ২৫৫ অক্ষরের মধ্যে লিখা যাবে না।")
+            alert("রোগের লক্ষণসমূহ ২৫৫ অক্ষরের বেশি লিখা যাবে না।")
             symtomsWordCount.innerText = "255"
             event.target.value = event.target.value.slice(0, 255)
         }
