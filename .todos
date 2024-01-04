@@ -1,6 +1,4 @@
 - convert this form into multi-step form
-- make subdistrictOrThana optional
-- multilevel selection with districts and subdistrict/thana for hospitals and mark subdistrict/thana as optional filter option
 - #symptoms must be within 225 characters
 - view count of available hospital for treatment that disease
 
