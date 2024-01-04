@@ -147,13 +147,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     selectDoctor.disabled = false
                     selectDoctor.innerHTML = '<option>-- নির্বাচন করুন --</option>'
                     data.forEach(each => selectDoctor.innerHTML += `<option value=${each.id}>${each.name}, ${each.speciality}</option>`)
-
-                    // Change values of all output.hospitalValues
-                    const selectedHospitalValue = event.target.selectedOptions[0].innerText
-                    allHospitalValues.forEach(each => {
-                        each.innerText = selectedHospitalValue
-                    })
                 }
+            }).then(() => {
+                // Change values of all output.hospitalValues
+                const selectedHospitalValue = event.target.selectedOptions[0].innerText
+                allHospitalValues.forEach(each => {
+                    each.innerText = selectedHospitalValue
+                })
             })
             .catch(err => console.error(err))
     })
