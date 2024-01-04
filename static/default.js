@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nameField = document.querySelector("#name")
     const selectProblem = document.querySelector('#problem');
     const symptoms = document.querySelector('#symptoms');
+    const symtomsWordCount = document.querySelector('#symtomsWordCount')
     const problemKnownOption = document.querySelector('#problem_known')
     const problemUnknownOption = document.querySelector('#problem_unknown')
     const otherProblemInput = document.querySelector('#otherProblemInput')
@@ -34,6 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // setTimeout(() => {
     //     problemKnownOption.click()
     // });
+
+    // Automatically focus on first field while homepage is being loaded
     nameField.focus()
 
     problemKnownOption.addEventListener('click', () => {
@@ -46,12 +49,22 @@ document.addEventListener('DOMContentLoaded', () => {
         otherProblemInput.disabled = true
     })
 
-    // For other option input
-    selectProblem.addEventListener('input', (e) => {
-        if (e.target.value === '_other') {
+    selectProblem.addEventListener('input', event => {
+        // For other option input
+        if (event.target.value === '_other') {
             otherProblemInput.style.display = 'block'
         } else {
             otherProblemInput.style.display = 'none'
+        }
+    })
+
+    // Showing word count and limit for preventing input more than 255 characters
+    symptoms.addEventListener('input', event => {
+        const countWord = event.target.value.trim().length
+        if (countWord <= 255) {
+            symtomsWordCount.innerText = countWord
+        } else {
+            alert("Symptoms should less than 255 words.")
         }
     })
 

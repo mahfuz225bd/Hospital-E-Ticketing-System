@@ -141,6 +141,10 @@ ul.step-indicator li+li:before {
   font-size: small;
 }
 
+.text-right {
+  text-align: right;
+}
+
 /* Others */
 
 .filter-label {

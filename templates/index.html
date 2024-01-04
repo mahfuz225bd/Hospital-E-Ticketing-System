@@ -36,13 +36,13 @@
 
   <div class="input-row">
     <div class="input-col left">
-        <input type="radio" id="problem_known" name="problem_known_unknown" value="known" />
-        <label for="problem_known">রোগীর রোগ/সমস্যা নির্বাচন করি</label>
-      </div>
-      <div class="input-col right">
-        <input type="radio" id="problem_unknown" name="problem_known_unknown" value="unkonwn" />
-        <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই রোগের লক্ষণগুলো লিখি</label>
-      </div>
+      <input type="radio" id="problem_known" name="problem_known_unknown" value="known" />
+      <label for="problem_known">রোগীর রোগ/সমস্যা নির্বাচন করি</label>
+    </div>
+    <div class="input-col right">
+      <input type="radio" id="problem_unknown" name="problem_known_unknown" value="unkonwn" />
+      <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই রোগের লক্ষণগুলো লিখি</label>
+    </div>
   </div>
   <div class="input-row" style="margin-top: -10px">
     <div class="input-col">
@@ -68,6 +68,9 @@
     <div class="input-col">
       <label>রোগের লক্ষণসমূহঃ</label>
       <textarea name="symptoms" id="symptoms" cols="30" rows="10" title="রোগের লক্ষণগুলো বর্ননা করি"></textarea>
+      <div class="text-right">
+        Word Count: <output id="symtomsWordCount">0</output>/255
+      </div>
     </div>
   </div>
 
