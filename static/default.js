@@ -36,20 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // });
     nameField.focus()
 
-    // problemKnownOption.addEventListener('click', () => {
-    //     selectProblem.style.display = 'block'
-    //     symptoms.style.display = 'none'
+    problemKnownOption.addEventListener('click', () => {
+        selectProblem.disabled = false
+        otherProblemInput.disabled = false
+    })
 
-    //     if (selectProblem.value === '_other') {
-    //         otherProblemInput.style.display = 'block'
-    //     }
-    // })
-
-    // problemUnknownOption.addEventListener('click', () => {
-    //     selectProblem.style.display = 'none'
-    //     otherProblemInput.style.display = 'none'
-    //     symptoms.style.display = 'block'
-    // })
+    problemUnknownOption.addEventListener('click', () => {
+        selectProblem.disabled = true
+        otherProblemInput.disabled = true
+    })
 
     // For other option input
     selectProblem.addEventListener('input', (e) => {

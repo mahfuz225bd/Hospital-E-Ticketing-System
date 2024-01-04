@@ -47,7 +47,9 @@ textarea:focus {
   outline: none;
 }
 
-select:disabled {
+input:disabled,
+select:disabled,
+textarea:disabled {
   cursor: not-allowed;
 }
 
