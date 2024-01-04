@@ -51,7 +51,10 @@ def get_subdistrict_and_thanas():
 def get_hospitals():
     hospitals = []
     if request.method == 'GET':
-        db_cursor.execute("SELECT id, hospital_name_en FROM `hospitals` WHERE subdistrict_thana_id=%s", (request.args['subdistrictOrThanaId'],))
+        district_id = request.args['districtId'] if 'districtId' in request.args else ''
+        subdistrict_or_thana_id = request.args['subdistrictOrThanaId'] if 'subdistrictOrThanaId' in request.args else ''
+
+        db_cursor.execute("SELECT hospitals.id AS id, hospitals.hospital_name_en AS hospital_name_en, subdistrict_and_thanas.district_id AS district_id, hospitals.subdistrict_thana_id AS subdistrict_thana_id FROM hospitals JOIN subdistrict_and_thanas ON subdistrict_and_thanas.id = hospitals.subdistrict_thana_id WHERE district_id = %s OR subdistrict_thana_id = %s", (district_id, subdistrict_or_thana_id,))
 
         result = db_cursor.fetchall()
 

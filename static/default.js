@@ -73,19 +73,33 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error(err))
     })
 
-    // Loading sub-district and thanas on input #district
+    // Loading hospitals + subdistrict/thanas on input #district
     selectDistrict.addEventListener('input', event => {
         const districtId = event.target.selectedOptions[0].getAttribute('value')
 
-        fetch(`/api/subdistrictAndThanas?districtId=${districtId}`)
+        // Loading hospitals with enabling select input
+        fetch(`/api/hospitals?districtId=${districtId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.length > 0) {
-                    btnShowSubdistrictOrThanaInput.disabled = false
-                    selectSubdistrictOrThana.disabled = false
-                    selectSubdistrictOrThana.innerHTML = '<option>-- সকল --</option>'
-                    data.forEach(each => selectSubdistrictOrThana.innerHTML += `<option value=${each.id}>${each.value}</option>`);
+                    selectHospital.disabled = false
+                    selectHospital.innerHTML = '<option>-- সকল --</option>'
+                    data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`)
                 }
+            }).then(() => {
+                // Loading subdistrict/thanas with enabling select input
+                fetch(`/api/subdistrictAndThanas?districtId=${districtId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            btnShowSubdistrictOrThanaInput.disabled = false
+                            selectSubdistrictOrThana.disabled = false
+                            selectSubdistrictOrThana.innerHTML = '<option>-- সকল --</option>'
+                            data.forEach(each => selectSubdistrictOrThana.innerHTML += `<option value=${each.id}>${each.value}</option>`);
+
+                        }
+                    })
+                    .catch(err => console.error(err))
             })
             .catch(err => console.error(err))
     })
