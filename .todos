@@ -1,5 +1,7 @@
 - convert this form into multi-step form
 - view count of available hospital for treatment that disease
+- performing filter for hospitals
+- performing filter for doctors
 
 Optional todo:
 
@@ -9,4 +11,3 @@ Database:
 
 - Inserting more hospitals of other districts
 - Inserting all doctors by hospitals
-

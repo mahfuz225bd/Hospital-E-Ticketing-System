@@ -1,35 +1,45 @@
 document.addEventListener('DOMContentLoaded', () => {
     const nameField = document.querySelector("#name")
+    const problemKnownOption = document.querySelector('#problem_known')
+    const problemUnknownOption = document.querySelector('#problem_unknown')
     const selectProblem = document.querySelector('#problem');
+    const otherProblemInput = document.querySelector('#otherProblemInput')
     const allProblemValues = document.querySelectorAll('output.problemValue');
     const symptoms = document.querySelector('#symptoms');
     const symtomsWordCount = document.querySelector('#symtomsWordCount')
-    const problemKnownOption = document.querySelector('#problem_known')
-    const problemUnknownOption = document.querySelector('#problem_unknown')
-    const otherProblemInput = document.querySelector('#otherProblemInput')
     const selectDivision = document.querySelector('#division')
     const selectDistrict = document.querySelector('#district')
     const btnShowSubdistrictOrThanaInput = document.querySelector('#btnShowSubdistrictOrThanaInput')
     const selectSubdistrictOrThana = document.querySelector('#subdistrictOrThana')
     const selectHospital = document.querySelector('#hospital')
+    const hospitalSelectionRow = document.querySelector('#hospitalSelectionRow')
     const allHospitalValues = document.querySelectorAll('output.hospitalNameValue')
     const selectDoctor = document.querySelector('#doctor')
 
     // Automatically focus on first field while homepage is being loaded
     nameField.focus()
 
+    // Enable selectProblem and otherProblemInput
     problemKnownOption.addEventListener('click', () => {
         selectProblem.disabled = false
         otherProblemInput.disabled = false
     })
 
+    // Disable selectProblem and otherProblemInput
     problemUnknownOption.addEventListener('click', () => {
         selectProblem.disabled = true
         otherProblemInput.disabled = true
     })
 
+    // Change values of all problemValue + Show/hide otherProblemInput
     selectProblem.addEventListener('input', event => {
-        // For other option input
+        // Change values of all problemValue
+        const selectedProblemValue = event.target.selectedOptions[0].innerText
+        allProblemValues.forEach(each => {
+            each.innerText = selectedProblemValue
+        })
+
+        // Show/hide otherProblemInput
         if (event.target.value === '_other') {
             otherProblemInput.style.display = 'block'
         } else {
@@ -82,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.length > 0) {
+                    hospitalSelectionRow.classList.remove('hide')
                     selectHospital.disabled = false
                     selectHospital.innerHTML = '<option>-- সকল --</option>'
                     data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`)
@@ -113,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.length > 0) {
+                    hospitalSelectionRow.classList.remove('hide')
                     selectHospital.disabled = false
                     selectHospital.innerHTML = '<option>-- নির্বাচন করুন --</option>'
                     data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`);
@@ -134,25 +146,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     selectDoctor.disabled = false
                     selectDoctor.innerHTML = '<option>-- নির্বাচন করুন --</option>'
                     data.forEach(each => selectDoctor.innerHTML += `<option value=${each.id}>${each.name}, ${each.speciality}</option>`)
+
+                    // Change values of all output.problemValue
+                    const selectedHospitalValue = event.target.selectedOptions[0].innerText
+                    allHospitalValues.forEach(each => {
+                        each.innerText = selectedHospitalValue
+                    })
                 }
             })
             .catch(err => console.error(err))
-    })
-
-    // Change values of all problemValue
-    selectProblem.addEventListener('input', event => {
-        const selectedProblemValue = event.target.selectedOptions[0].innerText
-        allProblemValues.forEach(each => {
-            each.innerText = selectedProblemValue
-        })
-    })
-
-    // Change values of all output.problemValue
-    selectHospital.addEventListener('input', event => {
-        const selectedHospitalValue = event.target.selectedOptions[0].innerText
-        allHospitalValues.forEach(each => {
-            each.innerText = selectedHospitalValue
-        })
     })
 
     // Show select input and hide button itself
