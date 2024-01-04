@@ -15,25 +15,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const hospitalSelectionRow = document.querySelector('#hospitalSelectionRow')
     const allHospitalValues = document.querySelectorAll('output.hospitalNameValue')
     const selectDoctor = document.querySelector('#doctor')
+    const allDoctorNameValues = document.querySelectorAll('output.doctorNameValue')
+    const appointmentDateRow = document.querySelector('#appointmentDateRow')
 
-    // Automatically focus on first field while homepage is being loaded
+    // Automatically focused on first field while homepage is being loaded
     nameField.focus()
 
-    // Enable selectProblem and otherProblemInput
+    // Enabling selectProblem and otherProblemInput
     problemKnownOption.addEventListener('click', () => {
         selectProblem.disabled = false
         otherProblemInput.disabled = false
     })
 
-    // Disable selectProblem and otherProblemInput
+    // Disabling selectProblem and otherProblemInput
     problemUnknownOption.addEventListener('click', () => {
         selectProblem.disabled = true
         otherProblemInput.disabled = true
     })
 
-    // Change values of all problemValue + Show/hide otherProblemInput
+    // Changing values of all output.problemValue + show/hide otherProblemInput
     selectProblem.addEventListener('input', event => {
-        // Change values of all problemValue
+        // Change values of all output.problemValue
         const selectedProblemValue = event.target.selectedOptions[0].innerText
         allProblemValues.forEach(each => {
             each.innerText = selectedProblemValue
@@ -83,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error(err))
     })
 
-    // Loading hospitals + subdistrict/thanas on input #district
+    // Loading hospitals \w showing hidden #hospitalSelectionRow + subdistrict/thanas on input #district
     selectDistrict.addEventListener('input', event => {
         const districtId = event.target.selectedOptions[0].getAttribute('value')
 
@@ -124,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.length > 0) {
-                    hospitalSelectionRow.classList.remove('hide')
                     selectHospital.disabled = false
                     selectHospital.innerHTML = '<option>-- নির্বাচন করুন --</option>'
                     data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`);
@@ -135,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error(err))
     })
 
-    // Loading doctors on input #hospital
+    // Loading doctors on input #hospital + changing values of all output.hospitalValues
     selectHospital.addEventListener('input', event => {
         const hospitalId = event.target.selectedOptions[0].getAttribute('value')
 
@@ -147,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     selectDoctor.innerHTML = '<option>-- নির্বাচন করুন --</option>'
                     data.forEach(each => selectDoctor.innerHTML += `<option value=${each.id}>${each.name}, ${each.speciality}</option>`)
 
-                    // Change values of all output.problemValue
+                    // Change values of all output.hospitalValues
                     const selectedHospitalValue = event.target.selectedOptions[0].innerText
                     allHospitalValues.forEach(each => {
                         each.innerText = selectedHospitalValue
@@ -157,10 +158,20 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error(err))
     })
 
-    // Show select input and hide button itself
+    // Showing #selectSubdistrictOrThana and hide button itself
     btnShowSubdistrictOrThanaInput.addEventListener('click', event => {
         event.target.hidden = true;
         selectSubdistrictOrThana.hidden = false;
+    })
+
+    // Showing #appointmentDateRow + changing all output.allDoctorNameValues
+    selectDoctor.addEventListener('input', event => {
+        if (appointmentDateRow.classList.contains('hide')) {
+            appointmentDateRow.classList.remove('hide')
+        }
+
+        const doctorName = event.target.selectedOptions[0].innerText.split(",")[0].trim(0)
+        allDoctorNameValues.forEach(each => each.innerText = doctorName)
     })
 
 })
