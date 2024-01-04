@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const nameField = document.querySelector("#name")
     const selectProblem = document.querySelector('#problem');
+    const allProblemValues = document.querySelectorAll('output.problemValue');
     const symptoms = document.querySelector('#symptoms');
     const symtomsWordCount = document.querySelector('#symtomsWordCount')
     const problemKnownOption = document.querySelector('#problem_known')
@@ -11,30 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnShowSubdistrictOrThanaInput = document.querySelector('#btnShowSubdistrictOrThanaInput')
     const selectSubdistrictOrThana = document.querySelector('#subdistrictOrThana')
     const selectHospital = document.querySelector('#hospital')
+    const allHospitalValues = document.querySelectorAll('output.hospitalNameValue')
     const selectDoctor = document.querySelector('#doctor')
-
-    // /* For TODO: changing text for output.hospitalNameValue + output.problemValue
-    //    Remarks: Not Working */
-
-    // const setAllHospitalNameValues = (value) => {
-    //     const hospitalNameValueAll = document.querySelectorAll('output.hospitalNameValue')
-    //     for (let i = 0; i < hospitalNameValueAll.length; i++) {
-    //         hospitalNameValue[i] = value
-    //     }
-    // }
-    // const setAllProblemValues = (value) => {
-    //     const problemValueAll = document.querySelectorAll('output.problemValue')
-    //     setTimeout(() => {
-    //         for (let i = 0; i < problemValueAll.length; i++) {
-    //             problemValueAll[i] = value
-    //         }
-    //     });
-    // }
-
-    // // set focus while loaded the page
-    // setTimeout(() => {
-    //     problemKnownOption.click()
-    // });
 
     // Automatically focus on first field while homepage is being loaded
     nameField.focus()
@@ -65,6 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
             symtomsWordCount.innerText = countWord
         } else {
             alert("Symptoms should less than 255 words.")
+            symtomsWordCount.innerText = "255"
+            event.target.value = event.target.value.slice(0, 255)
         }
     })
 
@@ -144,10 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error(err))
     })
 
-    // Change values of all output.problemValue
+    // Change values of all problemValue
     selectProblem.addEventListener('input', event => {
         const selectedProblemValue = event.target.selectedOptions[0].innerText
-        document.querySelectorAll('output.problemValue').forEach(each => {
+        allProblemValues.forEach(each => {
             each.innerText = selectedProblemValue
         })
     })
@@ -155,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Change values of all output.problemValue
     selectHospital.addEventListener('input', event => {
         const selectedHospitalValue = event.target.selectedOptions[0].innerText
-        document.querySelectorAll('output.hospitalNameValue').forEach(each => {
+        allHospitalValues.forEach(each => {
             each.innerText = selectedHospitalValue
         })
     })
