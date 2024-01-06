@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const mainForm = document.querySelector('#mainForm')
     const nameField = document.querySelector("#name")
     const problemKnownOption = document.querySelector('#problem_known')
     const problemUnknownOption = document.querySelector('#problem_unknown')
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectDoctor = document.querySelector('#doctor')
     const allDoctorNameValues = document.querySelectorAll('output.doctorNameValue')
     const appointmentDateRow = document.querySelector('#appointmentDateRow')
+    const btnConfirm = document.querySelector('#btnConfirm')
 
     // Automatically focused on first field while homepage is being loaded
     nameField.focus()
@@ -174,4 +176,15 @@ document.addEventListener('DOMContentLoaded', () => {
         allDoctorNameValues.forEach(each => each.innerText = doctorName)
     })
 
+    // If form#mainForm is submitted
+    mainForm.addEventListener('submit', event => {
+        event.preventDefault()
+
+        const formData = new FormData(event.target)
+        const formEntries = Object.fromEntries(formData.entries())
+
+        console.log(formEntries);
+
+        mainForm.reset()
+    })
 })

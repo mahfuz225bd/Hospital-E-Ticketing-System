@@ -1,5 +1,6 @@
 - convert this form into multi-step form
 - view count of available hospital for treatment that disease
+- input mask for mobile number according to bd format
 - performing filter for hospitals
 - performing filter for doctors
 
