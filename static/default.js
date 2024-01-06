@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectDoctor = document.querySelector('#doctor')
     const allDoctorNameValues = document.querySelectorAll('output.doctorNameValue')
     const appointmentDateRow = document.querySelector('#appointmentDateRow')
-    const btnConfirm = document.querySelector('#btnConfirm')
 
     // Automatically focused on first field while homepage is being loaded
     nameField.focus()
