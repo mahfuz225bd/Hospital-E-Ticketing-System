@@ -60,7 +60,8 @@
         <option value="_other">অন্য রোগ/সমস্যা</option>
       </select>
       <br class="hide">
-      <input class="hide" type="text" id="otherProblemInput" name="problem" placeholder="রোগীর রোগ/সমস্যার নাম লিখুন"
+      <!-- name attribute should not be provided. it will be handled by js -->
+      <input class="hide" type="text" id="otherProblemInput" placeholder="রোগীর রোগ/সমস্যার নাম লিখুন"
         style="margin-top: 10px" />
     </div>
   </div>
@@ -92,18 +93,14 @@
     </div>
     <div class="input-col">
       <label for="district">জেলাঃ</label>
-      <select id="district" name="district" disabled>
-        <option>-- সকল --</option>
-      </select>
+      <select id="district" name="district" disabled></select>
     </div>
     <div class="input-col right">
       <label for="subdistrictOrThana">উপজেলা/থানাঃ</label>
       <button type="button" id="btnShowSubdistrictOrThanaInput" class="btn btn-show-subdistrictOrThana-input"
         title="Show input for subdistrict/thana" disabled>
         ইনপুট দিতে ক্লিক করুন (ঐচ্ছিক)</button>
-      <select id="subdistrictOrThana" name="subdistrictOrThana" disabled hidden>
-        <option>-- সকল --</option>
-      </select>
+      <select id="subdistrictOrThana" name="subdistrictOrThana" disabled hidden></select>
     </div>
   </div>
 

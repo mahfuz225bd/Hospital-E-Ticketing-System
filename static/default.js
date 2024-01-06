@@ -50,6 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
+    // Changing _other (other problem) value to selectProblem from otherProblemInput
+    otherProblemInput.addEventListener('input', event => {
+        selectProblem.selectedOptions[0].value = "Other: " + event.target.value
+    })
+
     // Showing word count and limit for preventing input more than 255 characters
     symptoms.addEventListener('input', event => {
         const countWord = event.target.value.trim().length
@@ -79,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.length > 0) {
                     selectDistrict.disabled = false
-                    selectDistrict.innerHTML = '<option>-- সকল --</option>'
                     data.forEach(each => selectDistrict.innerHTML += `<option value=${each.id}>${each.value}</option>`);
                 }
             })
@@ -97,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.length > 0) {
                     hospitalSelectionRow.classList.remove('hide')
                     selectHospital.disabled = false
-                    selectHospital.innerHTML = '<option>-- সকল --</option>'
                     data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`)
                 }
             }).then(() => {
@@ -108,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (data.length > 0) {
                             btnShowSubdistrictOrThanaInput.disabled = false
                             selectSubdistrictOrThana.disabled = false
-                            selectSubdistrictOrThana.innerHTML = '<option>-- সকল --</option>'
+                            selectSubdistrictOrThana.innerHTML = '<option value="all">-- সকল --</option>'
                             data.forEach(each => selectSubdistrictOrThana.innerHTML += `<option value=${each.id}>${each.value}</option>`);
 
                         }
