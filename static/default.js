@@ -1,3 +1,5 @@
+import { Validator } from "./base.js"
+
 document.addEventListener('DOMContentLoaded', () => {
     const mainForm = document.querySelector('#mainForm')
     const nameField = document.querySelector("#name")
