@@ -2,11 +2,11 @@ import { Validator } from "./base.js"
 
 document.addEventListener('DOMContentLoaded', () => {
     const mainForm = document.querySelector('#mainForm')
-    const nameField = document.querySelector("#name")
+    const inputName = document.querySelector("#name")
     const problemKnownOption = document.querySelector('#problem_known')
     const problemUnknownOption = document.querySelector('#problem_unknown')
     const selectProblem = document.querySelector('#problem');
-    const otherProblemInput = document.querySelector('#otherProblemInput')
+    const inputCustomProblem = document.querySelector('#inputCustomProblem')
     const allProblemValues = document.querySelectorAll('output.problemValue');
     const symptoms = document.querySelector('#symptoms');
     const symtomsWordCount = document.querySelector('#symtomsWordCount')
@@ -22,21 +22,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const appointmentDateRow = document.querySelector('#appointmentDateRow')
 
     // Automatically focused on first field while homepage is being loaded
-    nameField.focus()
+    inputName.focus()
 
-    // Enabling selectProblem and otherProblemInput
+    // Enabling selectProblem and inputCustomProblem
     problemKnownOption.addEventListener('click', () => {
         selectProblem.disabled = false
-        otherProblemInput.disabled = false
+        inputCustomProblem.disabled = false
     })
 
-    // Disabling selectProblem and otherProblemInput
+    // Disabling selectProblem and inputCustomProblem
     problemUnknownOption.addEventListener('click', () => {
         selectProblem.disabled = true
-        otherProblemInput.disabled = true
+        inputCustomProblem.disabled = true
     })
 
-    // Changing values of all output.problemValue + show/hide otherProblemInput
+    // Changing values of all output.problemValue + show/hide inputCustomProblem
     selectProblem.addEventListener('input', event => {
         // Change values of all output.problemValue
         const selectedProblemValue = event.target.selectedOptions[0].innerText
@@ -44,16 +44,18 @@ document.addEventListener('DOMContentLoaded', () => {
             each.innerText = selectedProblemValue
         })
 
-        // Show/hide otherProblemInput
+        // Show/hide inputCustomProblem
         if (event.target.value === '_other') {
-            otherProblemInput.style.display = 'block'
+            inputCustomProblem.style.display = 'block'
+            inputCustomProblem.value = ''
         } else {
-            otherProblemInput.style.display = 'none'
+            inputCustomProblem.style.display = 'none'
+            inputCustomProblem.value = ''
         }
     })
 
-    // Changing _other (other problem) value to selectProblem from otherProblemInput
-    otherProblemInput.addEventListener('input', event => {
+    // Changing _other (other problem) value to selectProblem from inputCustomProblem
+    inputCustomProblem.addEventListener('input', event => {
         selectProblem.selectedOptions[0].value = "Other: " + event.target.value
     })
 
@@ -187,8 +189,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(event.target)
         const formEntries = Object.fromEntries(formData.entries())
 
-        console.log(formEntries);
+        const customProblem = inputCustomProblem.value
 
-        mainForm.reset()
+        if (inputCustomProblem.value) {
+            // Make a POST request using fetch
+            fetch('/api/add_problem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'customProblem': inputCustomProblem.value,
+                }).toString(),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        console.log(data);
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        event.target.reset()
     })
+
 })

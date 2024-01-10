@@ -14,16 +14,16 @@
 <form action="/post" id="mainForm">
   <div class="input-row no-label">
     <div class="input-col left">
-      <input type="text" placeholder="রোগীর নাম *" name="name" id="name" required />
+      <input type="text" placeholder="রোগীর নাম *" name="name" id="name" />
     </div>
     <div class="input-col right">
-      <input type="text" placeholder="রোগীর বয়স *" name="age" id="age" required />
+      <input type="text" placeholder="রোগীর বয়স *" name="age" id="age" />
     </div>
   </div>
 
   <div class="input-row">
     <div class="input-col left">
-      <input type="text" placeholder="ফোন নম্বর *" name="phone" id="phone" required />
+      <input type="text" placeholder="ফোন নম্বর *" name="phone" id="phone" />
     </div>
     <div class="input-col right">
       <input type="text" placeholder="ইমেইল" name="email" id="email" />
@@ -40,7 +40,7 @@
     </div>
     <div class="input-col right">
       <input type="radio" id="problem_unknown" name="problem_known_unknown" value="unkonwn" />
-      <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই রোগের লক্ষণগুলো লিখি</label>
+      <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই (শুধু) রোগের লক্ষণগুলো লিখি</label>
     </div>
   </div>
 
@@ -61,8 +61,8 @@
       </select>
       <br class="hide">
       <!-- name attribute should not be provided. it will be handled by js -->
-      <input class="hide" type="text" id="otherProblemInput" placeholder="রোগীর রোগ/সমস্যার নাম লিখুন"
-        style="margin-top: 10px" />
+      <input class="hide" type="text" id="inputCustomProblem" name="customProblem"
+        placeholder="রোগীর রোগ/সমস্যার নাম লিখুন" style="margin-top: 10px" />
     </div>
   </div>
 
@@ -147,7 +147,7 @@
     <div class="input-col" style="display: flex; justify-content: end; flex-direction: column;">
       <label for="appoinmentDate">"<output class="doctorNameValue"></output>" এর অ্যাপয়েন্টমেন্ট তারিখ নির্বাচন করুনঃ
         <span style="color: red">*</span></label>
-      <input type="date" name="appoinmentDate" id="appoinmentDate" required />
+      <input type="date" name="appoinmentDate" id="appoinmentDate" />
     </div>
   </div>
 

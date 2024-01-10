@@ -1,8 +1,8 @@
-import json
-
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from twilio.rest import Client
-from db_config import db_cursor, mydb, Error
+from controllers.db_config import db_cursor, mydb, Error
+from controllers import check_language
+from controllers import translate
 
 app = Flask(__name__)
 
@@ -19,7 +19,7 @@ def get_divisions():
     for each in result:
         divisions.append({'id': each[0], 'value': each[1]})
 
-    return json.dumps(divisions)
+    return jsonify(divisions)
 
 @app.route('/api/districts', methods=['GET'])
 def get_districts():
@@ -32,7 +32,7 @@ def get_districts():
         for each in result:
             districts.append({'id': each[0], 'value': each[1]})
 
-        return json.dumps(districts)
+        return jsonify(districts)
     
 @app.route('/api/subdistrictAndThanas', methods=['GET'])
 def get_subdistrict_and_thanas():
@@ -45,7 +45,7 @@ def get_subdistrict_and_thanas():
         for each in result:
             subdistrictAndThana.append({'id': each[0], 'value': each[1]})
 
-        return json.dumps(subdistrictAndThana)
+        return jsonify(subdistrictAndThana)
     
 @app.route('/api/hospitals', methods=['GET'])
 def get_hospitals():
@@ -61,7 +61,7 @@ def get_hospitals():
         for each in result:
             hospitals.append({'id': each[0], 'value': each[1]})
 
-        return json.dumps(hospitals)
+        return jsonify(hospitals)
 
 @app.route('/api/doctors', methods=['GET'])
 def get_doctors():
@@ -74,7 +74,29 @@ def get_doctors():
         for each in result:
             hospitals.append({'id': each[0], 'name': each[2], 'speciality': each[4]})
 
-        return json.dumps(hospitals) 
+        return jsonify(hospitals)
+    
+@app.route('/api/add_problem', methods=['POST'])
+def add_problem():
+    """API route for adding a problem (disease) as draft to `problems_draft`"""
+    if request.method == 'POST':
+        # Get data from POST request
+        
+        customProblem = request.form['customProblem']
+
+        value_en = customProblem if check_language.is_en(customProblem) else translate.bn_to_en(customProblem)
+        value_bn = customProblem if check_language.is_bn(customProblem) else translate.en_to_bn(customProblem)
+
+        # Insert into problems_draft table
+        query = "INSERT INTO problems_draft(value_en, value_bn) VALUES (%s, %s)"
+        try:
+            db_cursor.execute(query, (value_en, value_bn))
+            mydb.commit()
+            response = {'status':'success'}
+        except Exception as e:
+            print('Error: ',e)
+            response = {'status': 'failure', 'message': str(e)}
+        return jsonify(**response)
 
 @app.route('/test_route')
 def test_route():
