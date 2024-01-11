@@ -44,32 +44,6 @@
 
             return formattedDOB;
         }
-
-        const apiKey = 'AIzaSyBvkQ59mpUYxL_FGtfc0wxoursDuv_SndA';
-        function translateToBengali(text) {
-            const apiUrl = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
-
-            const data = {
-                q: text,
-                target: 'bn',
-            };
-
-            fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
-                .then(response => response.json())
-                .then(result => {
-                    const translatedText = result.data.translations[0].translatedText;
-                    console.log(`Original: ${text}`);
-                    console.log(`Translated to Bengali: ${translatedText}`);
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
     </script>
 </body>
 
