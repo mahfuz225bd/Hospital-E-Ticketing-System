@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputCustomProblem = document.querySelector('#inputCustomProblem')
     const allProblemValues = document.querySelectorAll('output.problemValue');
     const symptoms = document.querySelector('#symptoms');
-    const symtomsWordCount = document.querySelector('#symtomsWordCount')
+    const symptomsWordCount = document.querySelector('#symptomsWordCount')
     const selectDivision = document.querySelector('#division')
     const selectDistrict = document.querySelector('#district')
     const btnShowSubdistrictOrThanaInput = document.querySelector('#btnShowSubdistrictOrThanaInput')
@@ -63,10 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
     symptoms.addEventListener('input', event => {
         const countWord = event.target.value.trim().length
         if (countWord <= 255) {
-            symtomsWordCount.innerText = countWord
+            symptomsWordCount.innerText = countWord
         } else {
             alert("রোগের লক্ষণসমূহ ২৫৫ অক্ষরের বেশি লিখা যাবে না।")
-            symtomsWordCount.innerText = "255"
+            symptomsWordCount.innerText = "255"
             event.target.value = event.target.value.slice(0, 255)
         }
     })
