@@ -22,10 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const appointmentDateRow = document.querySelector('#appointmentDateRow')
     const inputAppointmentDate = document.querySelector('#appointmentDate')
 
-
-    // Automatically focused on first field while homepage is being loaded
-    inputName.focus()
-
     // Setting attributes value, min, max properties of #appointmentDate
     const todayForHTML = DateForHTML.getToday()
     inputAppointmentDate.setAttribute('value', todayForHTML)

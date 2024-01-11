@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from twilio.rest import Client
 from controllers.db_config import db_cursor, mydb, Error
-from controllers import check_language
-from controllers import translate
+from controllers.translator import EnBnTranslator
 
 app = Flask(__name__)
 
@@ -84,8 +83,8 @@ def add_problem():
         
         customProblem = request.form['customProblem']
 
-        value_en = customProblem if check_language.is_en(customProblem) else translate.bn_to_en(customProblem)
-        value_bn = customProblem if check_language.is_bn(customProblem) else translate.en_to_bn(customProblem)
+        value_en = customProblem if EnBnTranslator.is_en(customProblem) else EnBnTranslator.bn_to_en(customProblem)
+        value_bn = customProblem if EnBnTranslator.is_bn(customProblem) else EnBnTranslator.en_to_bn(customProblem)
 
         # Insert into problems_draft table
         query = "INSERT INTO problems_draft(value_en, value_bn) VALUES (%s, %s)"
