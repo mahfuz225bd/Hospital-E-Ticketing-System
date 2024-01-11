@@ -9,6 +9,21 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route('/api/problems')
+def get_problems_category_wise():
+    problems = {}
+    db_cursor.execute("SELECT id, value_bn, (SELECT value_bn FROM problem_categories WHERE problem_categories.id = problem_category_id) AS category FROM problems;")
+    result = db_cursor.fetchall()
+
+    for each in result:
+        category = each[2]
+        if category in problems:
+            problems[category].append({'id': each[0], 'value': each[1], 'category': each[2]})
+        else:
+            problems[category] = [{'id': each[0], 'value': each[1], 'category': each[2]}]
+
+    return jsonify(problems)
+
 @app.route('/api/divisions')
 def get_divisions():
     divisions = []

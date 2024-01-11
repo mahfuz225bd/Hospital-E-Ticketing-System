@@ -2,7 +2,6 @@ import { Validator, DateValueForHTML, preventDatesToInput } from "./base.js"
 
 document.addEventListener('DOMContentLoaded', () => {
     const mainForm = document.querySelector('#mainForm')
-    const inputName = document.querySelector("#name")
     const problemKnownOption = document.querySelector('#problem_known')
     const problemUnknownOption = document.querySelector('#problem_unknown')
     const selectProblem = document.querySelector('#problem');
@@ -40,6 +39,31 @@ document.addEventListener('DOMContentLoaded', () => {
         inputCustomProblem.disabled = true
     })
 
+    // Loading problems to #selectProblems, then loading divisions to #division
+    fetch('/api/problems')
+        .then(response => response.json())
+        .then(problems => {
+            const categories = Object.keys(problems)
+            categories.forEach(category => {
+                let optionElements = ''
+                problems[category].forEach(problem => {
+                    optionElements += `<option value="${problem.id}">${problem.value}</option>`
+                })
+
+                selectProblem.innerHTML += `<optgroup label="${category}">${optionElements}</optgroup>`
+            })
+            selectProblem.innerHTML += '<option value="_other">অন্য রোগ/সমস্যা</option>';
+        }).then(() => {
+            // Loading divisions to #division
+            fetch('/api/divisions')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(each => selectDivision.innerHTML += `<option value=${each.id}>${each.value}</option>`);
+                })
+                .catch(err => console.error(err))
+        })
+        .catch(err => console.error(err))
+
     // To change values of all output.problemValue + show/hide #inputCustomProblem
     selectProblem.addEventListener('input', event => {
         // Changing values of all output.problemValue
@@ -74,14 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
             event.target.value = event.target.value.slice(0, 255)
         }
     })
-
-    // To load divisions to #division
-    fetch('/api/divisions')
-        .then(res => res.json())
-        .then(data => {
-            data.forEach(each => selectDivision.innerHTML += `<option value=${each.id}>${each.value}</option>`);
-        })
-        .catch(err => console.error(err))
 
     // To load districts on input #division
     selectDivision.addEventListener('input', event => {

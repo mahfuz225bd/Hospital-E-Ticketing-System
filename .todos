@@ -3,7 +3,6 @@
 - input mask for mobile number according to bd format
 - performing filter for hospitals
 - performing filter for doctors
-- loading problems with category wise from database
 
 Optional todo:
 
@@ -14,4 +13,5 @@ Database:
 
 - Inserting more hospitals of other districts
 - Inserting all doctors by hospitals
+- revising bengali translated data of problems, problem_categories
 - Updating database graphical schema
