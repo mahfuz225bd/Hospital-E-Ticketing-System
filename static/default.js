@@ -1,4 +1,4 @@
-import { Validator, DateForHTML } from "./base.js"
+import { Validator, DateValueForHTML, preventDatesToInput } from "./base.js"
 
 document.addEventListener('DOMContentLoaded', () => {
     const mainForm = document.querySelector('#mainForm')
@@ -23,32 +23,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputAppointmentDate = document.querySelector('#appointmentDate')
 
     // Setting attributes value, min, max properties of #appointmentDate
-    const todayForHTML = DateForHTML.getToday()
+    const todayForHTML = DateValueForHTML.getToday()
     inputAppointmentDate.setAttribute('value', todayForHTML)
     inputAppointmentDate.setAttribute('min', todayForHTML)
-    inputAppointmentDate.setAttribute('max', DateForHTML.getDateAfterThirtyDays())
+    inputAppointmentDate.setAttribute('max', DateValueForHTML.getDateAfterThirtyDays())
 
-    // Enabling selectProblem and inputCustomProblem
+    // To enable selectProblem and inputCustomProblem
     problemKnownOption.addEventListener('click', () => {
         selectProblem.disabled = false
         inputCustomProblem.disabled = false
     })
 
-    // Disabling selectProblem and inputCustomProblem
+    // To disable selectProblem and inputCustomProblem
     problemUnknownOption.addEventListener('click', () => {
         selectProblem.disabled = true
         inputCustomProblem.disabled = true
     })
 
-    // Changing values of all output.problemValue + show/hide inputCustomProblem
+    // To change values of all output.problemValue + show/hide #inputCustomProblem
     selectProblem.addEventListener('input', event => {
-        // Change values of all output.problemValue
+        // Changing values of all output.problemValue
         const selectedProblemValue = event.target.selectedOptions[0].innerText
         allProblemValues.forEach(each => {
             each.innerText = selectedProblemValue
         })
 
-        // Show/hide inputCustomProblem
+        // Showing or hiding #inputCustomProblem
         if (event.target.value === '_other') {
             inputCustomProblem.style.display = 'block'
             inputCustomProblem.value = ''
@@ -58,12 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
-    // Changing _other (other problem) value to selectProblem from inputCustomProblem
+    // To change value to selectProblem from #inputCustomProblem (with replacing _other)
     inputCustomProblem.addEventListener('input', event => {
         selectProblem.selectedOptions[0].value = "Other: " + event.target.value
     })
 
-    // Showing word count and limit for preventing input more than 255 characters
+    // To show word count and limit for preventing input for more characters
     symptoms.addEventListener('input', event => {
         const countWord = event.target.value.trim().length
         if (countWord <= 255) {
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
-    // Loading divisions to #division
+    // To load divisions to #division
     fetch('/api/divisions')
         .then(res => res.json())
         .then(data => {
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(err => console.error(err))
 
-    // Loading districts on input #division
+    // To load districts on input #division
     selectDivision.addEventListener('input', event => {
         const divisionId = event.target.selectedOptions[0].getAttribute('value')
 
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error(err))
     })
 
-    // Loading hospitals \w showing hidden #hospitalSelectionRow + subdistrict/thanas on input #district
+    // To load hospitals \w showing hidden #hospitalSelectionRow + subdistrict/thanas on input #district
     selectDistrict.addEventListener('input', event => {
         const districtId = event.target.selectedOptions[0].getAttribute('value')
 
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error(err))
     })
 
-    // Loading hospitals on input #subdistrictOrThana
+    // To load hospitals on input #subdistrictOrThana
     selectSubdistrictOrThana.addEventListener('input', event => {
         const subdistrictOrThanaId = event.target.selectedOptions[0].getAttribute('value')
         const subdistrictOrThanaName = event.target.selectedOptions[0].innerText
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error(err))
     })
 
-    // Loading doctors on input #hospital + changing values of all output.hospitalValues
+    // To load doctors on input #hospital + change values of all output.hospitalValues
     selectHospital.addEventListener('input', event => {
         const hospitalId = event.target.selectedOptions[0].getAttribute('value')
 
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     data.forEach(each => selectDoctor.innerHTML += `<option value=${each.id}>${each.name}, ${each.speciality}</option>`)
                 }
             }).then(() => {
-                // Change values of all output.hospitalValues
+                // Changing values of all output.hospitalValues
                 const selectedHospitalValue = event.target.selectedOptions[0].innerText
                 allHospitalValues.forEach(each => {
                     each.innerText = selectedHospitalValue
@@ -171,22 +171,31 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error(err))
     })
 
-    // Showing #selectSubdistrictOrThana and hide button itself
+    // To show #selectSubdistrictOrThana and hide button itself
     btnShowSubdistrictOrThanaInput.addEventListener('click', event => {
         event.target.hidden = true;
         selectSubdistrictOrThana.hidden = false;
     })
 
-    // Showing #appointmentDateRow + changing all output.allDoctorNameValues
+    // To show #appointmentDateRow + change all output.allDoctorNameValues
     selectDoctor.addEventListener('input', event => {
         // Hide #appointmentDateRow
         if (appointmentDateRow.classList.contains('hide')) {
             appointmentDateRow.classList.remove('hide')
         }
 
-        // Setting to all element to doctor name as value
         const doctorName = event.target.selectedOptions[0].innerText.split(",")[0].trim(0)
+
+        // Changing values to all output.doctorNameValue
         allDoctorNameValues.forEach(each => each.innerText = doctorName)
+    })
+
+    // To configure to show alert if doctor is not available according to specific weeks (iso weeks)
+    inputAppointmentDate.addEventListener('input', event => {
+        const availableISOWeeks = event.target.dataset.availableIsoWeeks.split(',').map(item => Number(item.trim()));
+        const unavailableISOWeeks = Array.from({ length: 7 }, (_, index) => index + 1).filter(num => !availableISOWeeks.includes(num));
+
+        preventDatesToInput(event.target, unavailableISOWeeks)
     })
 
     // If form#mainForm is submitted
@@ -225,4 +234,9 @@ document.addEventListener('DOMContentLoaded', () => {
         event.target.reset()
     })
 
+    // // Temporary
+    // document.querySelectorAll("*").forEach(el => {
+    //     el.classList.remove('hide')
+    //     el.disabled = false
+    // })
 })
