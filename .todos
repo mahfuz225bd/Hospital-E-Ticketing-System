@@ -1,7 +1,6 @@
 - convert this form into multi-step form
 - view count of available hospital for treatment that disease
 - input mask for mobile number according to bd format
-- appointment date disable selection to old dates
 - performing filter for hospitals
 - performing filter for doctors
 - loading problems with category wise from database

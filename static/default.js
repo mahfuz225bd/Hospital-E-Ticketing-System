@@ -1,4 +1,4 @@
-import { Validator } from "./base.js"
+import { Validator, DateForHTML } from "./base.js"
 
 document.addEventListener('DOMContentLoaded', () => {
     const mainForm = document.querySelector('#mainForm')
@@ -20,9 +20,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectDoctor = document.querySelector('#doctor')
     const allDoctorNameValues = document.querySelectorAll('output.doctorNameValue')
     const appointmentDateRow = document.querySelector('#appointmentDateRow')
+    const inputAppointmentDate = document.querySelector('#appointmentDate')
+
 
     // Automatically focused on first field while homepage is being loaded
     inputName.focus()
+
+    // Setting attributes value, min, max properties of #appointmentDate
+    const todayForHTML = DateForHTML.getToday()
+    inputAppointmentDate.setAttribute('value', todayForHTML)
+    inputAppointmentDate.setAttribute('min', todayForHTML)
+    inputAppointmentDate.setAttribute('max', DateForHTML.getDateAfterThirtyDays())
 
     // Enabling selectProblem and inputCustomProblem
     problemKnownOption.addEventListener('click', () => {
@@ -88,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.length > 0) {
                     selectDistrict.disabled = false
+                    selectDistrict.innerHTML = '<option>(নির্বাচন করুন)</option>'
                     data.forEach(each => selectDistrict.innerHTML += `<option value=${each.id}>${each.value}</option>`);
                 }
             })
@@ -98,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     selectDistrict.addEventListener('input', event => {
         const districtId = event.target.selectedOptions[0].getAttribute('value')
 
-        // Loading hospitals with enabling select input
+        // Loading hospitals + subdistrict/thanas with enabling select input
         fetch(`/api/hospitals?districtId=${districtId}`)
             .then(response => response.json())
             .then(data => {
@@ -135,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.length > 0) {
                     selectHospital.disabled = false
-                    selectHospital.innerHTML = '<option>-- নির্বাচন করুন --</option>'
+                    selectHospital.innerHTML = '<option>(নির্বাচন করুন)</option>'
                     data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`);
                 } else {
                     alert(`${subdistrictOrThanaName}-তে কোন হাসপাতাল পাওয়া যায় নি`)
@@ -153,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.length > 0) {
                     selectDoctor.disabled = false
-                    selectDoctor.innerHTML = '<option>-- নির্বাচন করুন --</option>'
+                    selectDoctor.innerHTML = '<option>(নির্বাচন করুন)</option>'
                     data.forEach(each => selectDoctor.innerHTML += `<option value=${each.id}>${each.name}, ${each.speciality}</option>`)
                 }
             }).then(() => {
@@ -174,10 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Showing #appointmentDateRow + changing all output.allDoctorNameValues
     selectDoctor.addEventListener('input', event => {
+        // Hide #appointmentDateRow
         if (appointmentDateRow.classList.contains('hide')) {
             appointmentDateRow.classList.remove('hide')
         }
 
+        // Setting to all element to doctor name as value
         const doctorName = event.target.selectedOptions[0].innerText.split(",")[0].trim(0)
         allDoctorNameValues.forEach(each => each.innerText = doctorName)
     })
