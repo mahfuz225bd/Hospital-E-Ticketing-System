@@ -48,16 +48,29 @@ def get_districts():
 
         return jsonify(districts)
     
+# @app.route('/api/subdistrictAndThanas', methods=['GET'])
+# def get_subdistrict_and_thanas():
+#     subdistrictAndThana = []
+#     if request.method == 'GET':
+#         db_cursor.execute("SELECT id, value_bn FROM `subdistrict_and_thanas` WHERE district_id=%s", (request.args['districtId'],))
+
+#         result = db_cursor.fetchall()
+
+#         for each in result:
+#             subdistrictAndThana.append({'id': each[0], 'value': each[1]})
+
+#         return jsonify(subdistrictAndThana)
+    
 @app.route('/api/subdistrictAndThanas', methods=['GET'])
 def get_subdistrict_and_thanas():
     subdistrictAndThana = []
     if request.method == 'GET':
-        db_cursor.execute("SELECT id, value_bn FROM `subdistrict_and_thanas` WHERE district_id=%s", (request.args['districtId'],))
+        db_cursor.execute("SELECT subdistrict_and_thanas.id, subdistrict_and_thanas.value_bn, COUNT(hospitals.hospital_name_en) AS count FROM subdistrict_and_thanas LEFT JOIN hospitals ON subdistrict_and_thanas.id = hospitals.subdistrict_thana_id WHERE subdistrict_and_thanas.district_id = %s GROUP BY subdistrict_and_thanas.id", (request.args['districtId'],))
 
         result = db_cursor.fetchall()
 
         for each in result:
-            subdistrictAndThana.append({'id': each[0], 'value': each[1]})
+            subdistrictAndThana.append({'id': each[0], 'value': each[1], 'count': each[2]})
 
         return jsonify(subdistrictAndThana)
     

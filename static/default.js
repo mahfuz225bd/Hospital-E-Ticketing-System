@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.length > 0) {
                     hospitalSelectionRow.classList.remove('hide')
                     selectHospital.disabled = false
-                    data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`)
+                    data.forEach(each => selectHospital.innerHTML += `<option value="${each.id}">${each.value}</option>`)
                 }
             }).then(() => {
                 // Loading subdistrict/thanas with enabling select input
@@ -137,8 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             btnShowSubdistrictOrThanaInput.disabled = false
                             selectSubdistrictOrThana.disabled = false
                             selectSubdistrictOrThana.innerHTML = '<option value="all">-- সকল --</option>'
-                            data.forEach(each => selectSubdistrictOrThana.innerHTML += `<option value=${each.id}>${each.value}</option>`);
-
+                            data.forEach(each => selectSubdistrictOrThana.innerHTML += `<option value="${each.id}">${each.value} (${each.count})</option>`);
                         }
                     })
                     .catch(err => console.error(err))
@@ -159,7 +158,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     selectHospital.innerHTML = '<option>(নির্বাচন করুন)</option>'
                     data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`);
                 } else {
-                    alert(`${subdistrictOrThanaName}-তে কোন হাসপাতাল পাওয়া যায় নি`)
+                    const _subdistrictOrThanaName = subdistrictOrThanaName.split(" ")
+                    // To remove count
+                    _subdistrictOrThanaName.pop()
+
+                    alert(`${_subdistrictOrThanaName.join(" ")}-তে কোন হাসপাতাল পাওয়া যায় নি`)
                 }
             })
             .catch(err => console.error(err))
