@@ -48,19 +48,6 @@ def get_districts():
 
         return jsonify(districts)
     
-# @app.route('/api/subdistrictAndThanas', methods=['GET'])
-# def get_subdistrict_and_thanas():
-#     subdistrictAndThana = []
-#     if request.method == 'GET':
-#         db_cursor.execute("SELECT id, value_bn FROM `subdistrict_and_thanas` WHERE district_id=%s", (request.args['districtId'],))
-
-#         result = db_cursor.fetchall()
-
-#         for each in result:
-#             subdistrictAndThana.append({'id': each[0], 'value': each[1]})
-
-#         return jsonify(subdistrictAndThana)
-    
 @app.route('/api/subdistrictAndThanas', methods=['GET'])
 def get_subdistrict_and_thanas():
     subdistrictAndThana = []
