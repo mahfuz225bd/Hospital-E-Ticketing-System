@@ -224,8 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(event.target)
         const formEntries = Object.fromEntries(formData.entries())
 
-        console.log(formEntries);
-        
+        console.log(formEntries);        
 
         const customProblem = selectProblem.value.startsWith("Other: ")
 
