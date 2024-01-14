@@ -72,19 +72,30 @@ document.addEventListener('DOMContentLoaded', () => {
             each.innerText = selectedProblemValue
         })
 
-        // Showing or hiding #inputCustomProblem
+        // Showing or hiding #inputCustomProblem + changing filter values for hospitals and doctors
         if (event.target.value === '_other') {
             inputCustomProblem.style.display = 'block'
             inputCustomProblem.value = ''
+            inputCustomProblem.setAttribute('required', true)
+            inputCustomProblem.setAttribute('placeholder', "রোগীর রোগ/সমস্যার নাম লিখুন *")
+
+            document.getElementById('filter_hospital').value = 'filter_outdoor'
+            document.getElementById('filter_doctor').value = 'filter_outdoor'
         } else {
             inputCustomProblem.style.display = 'none'
             inputCustomProblem.value = ''
+            inputCustomProblem.removeAttribute('required', false)
+            inputCustomProblem.setAttribute('placeholder', "রোগীর রোগ/সমস্যার নাম লিখুন")
         }
     })
 
     // To change value to selectProblem from #inputCustomProblem (with replacing _other)
     inputCustomProblem.addEventListener('input', event => {
         selectProblem.selectedOptions[0].value = "Other: " + event.target.value
+
+        // Changing text of filter labels
+        document.querySelector('label[for="filter_hospital"]').innerHTML = `${inputCustomProblem.value} এর জন্য বহির্বিভাগ রয়েছে এমন হাসপাতালসমূহ`
+        document.querySelector('label[for="filter_doctor"]').innerHTML = `${inputCustomProblem.value} এর জন্য বহির্বিভাগের ডাক্তারগণ`
     })
 
     // To show word count and limit for preventing input for more characters
@@ -224,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(event.target)
         const formEntries = Object.fromEntries(formData.entries())
 
-        console.log(formEntries);        
+        console.log(formEntries);
 
         const isCustomProblem = selectProblem.value.startsWith("Other: ")
 

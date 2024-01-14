@@ -4,10 +4,14 @@
 - performing filter for hospitals
 - performing filter for doctors
 
-Optional todo:
+Optional todos:
 
 - Using html hidden attribute instead of css display: none|block
 - website en/bn translator with toggle
+
+Most possible todos:
+
+- Allow user to select more than one problem
 
 Database:
 
