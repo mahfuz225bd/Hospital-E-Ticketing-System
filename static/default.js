@@ -226,9 +226,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         console.log(formEntries);        
 
-        const customProblem = selectProblem.value.startsWith("Other: ")
+        const isCustomProblem = selectProblem.value.startsWith("Other: ")
 
-        if (customProblem) {
+        if (isCustomProblem) {
             // Make a POST request using fetch
             fetch('/api/add_problem', {
                 method: 'POST',
