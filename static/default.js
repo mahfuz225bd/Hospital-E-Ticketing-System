@@ -224,9 +224,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(event.target)
         const formEntries = Object.fromEntries(formData.entries())
 
-        const customProblem = inputCustomProblem.value
+        console.log(formEntries);
+        
 
-        if (inputCustomProblem.value) {
+        const customProblem = selectProblem.value.startsWith("Other: ")
+
+        if (customProblem) {
             // Make a POST request using fetch
             fetch('/api/add_problem', {
                 method: 'POST',
