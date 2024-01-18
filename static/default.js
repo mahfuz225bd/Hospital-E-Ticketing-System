@@ -225,7 +225,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const availableISOWeeks = event.target.dataset.availableIsoWeeks.split(',').map(item => Number(item.trim()));
         const unavailableISOWeeks = Array.from({ length: 7 }, (_, index) => index + 1).filter(num => !availableISOWeeks.includes(num));
 
-        preventDatesToInput(event.target, unavailableISOWeeks)
+        const targetElement = event.target
+        preventDatesToInput(targetElement, unavailableISOWeeks)
     })
 
     // If form#mainForm is submitted
@@ -235,12 +236,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(event.target)
         const formEntries = Object.fromEntries(formData.entries())
 
-        console.log(formEntries);
+        const makeAnAppoinment = () => {
+            let patient_id;
+
+            fetch('/add_patient/', {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: formData['name'],
+                    age: formData['age'],
+                    gender: formData['gender'],
+                    phone: formData['phone'],
+                    email: formData['email'],
+                    problem_id: formData['email'],
+                    symptoms: formData['symtoms']
+                })
+            }).then((response) => response.json()).then((data) => {
+                console.log("Success:", data);
+                patient_id = data['patient_id']
+            }).then(() => {
+                // fetch to insert appointment with patient_id
+            })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
 
         const isCustomProblem = selectProblem.value.startsWith("Other: ")
-
         if (isCustomProblem) {
-            // Make a POST request using fetch
+            // add problem as draft to database
             fetch('/api/add_problem', {
                 method: 'POST',
                 headers: {
@@ -266,9 +289,9 @@ document.addEventListener('DOMContentLoaded', () => {
         event.target.reset()
     })
 
-    // // Temporary
-    // document.querySelectorAll("*").forEach(el => {
-    //     el.classList.remove('hide')
-    //     el.disabled = false
-    // })
+    // Temporary
+    document.querySelectorAll("*").forEach(el => {
+        el.classList.remove('hide')
+        el.disabled = false
+    })
 })

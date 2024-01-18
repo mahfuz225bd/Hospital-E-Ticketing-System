@@ -52,7 +52,7 @@ def get_districts():
 def get_subdistrict_and_thanas():
     subdistrictAndThana = []
     if request.method == 'GET':
-        db_cursor.execute("SELECT subdistrict_and_thanas.id, subdistrict_and_thanas.value_bn, COUNT(hospitals.hospital_name_en) AS count FROM subdistrict_and_thanas LEFT JOIN hospitals ON subdistrict_and_thanas.id = hospitals.subdistrict_thana_id WHERE subdistrict_and_thanas.district_id = %s GROUP BY subdistrict_and_thanas.id", (request.args['districtId'],))
+        db_cursor.execute("SELECT subdistrict_and_thanas.id, subdistrict_and_thanas.value_bn, COUNT(hospitals.hospital_name_en) AS count FROM subdistrict_and_thanas LEFT JOIN hospitals ON subdistrict_and_thanas.id = hospitals.subdistrict_thana_id WHERE subdistrict_and_thanas.district_id = %s GROUP BY subdistrict_and_thanas.id ORDER BY count DESC ", (request.args['districtId'],))
 
         result = db_cursor.fetchall()
 
@@ -101,10 +101,33 @@ def add_problem():
         value_en = customProblem if EnBnTranslator.is_en(customProblem) else EnBnTranslator.bn_to_en(customProblem)
         value_bn = customProblem if EnBnTranslator.is_bn(customProblem) else EnBnTranslator.en_to_bn(customProblem)
 
-        # Insert into problems_draft table
+        # Make query string to insert into problems_draft table
         query = "INSERT INTO problems_draft(value_en, value_bn) VALUES (%s, %s)"
         try:
             db_cursor.execute(query, (value_en, value_bn))
+            mydb.commit()
+            response = {'status':'success'}
+        except Exception as e:
+            print('Error: ',e)
+            response = {'status': 'failure', 'message': str(e)}
+        return jsonify(**response)
+    
+@app.route('/api/add_patient', methods=['POST'])
+def add_patient():
+    """API route for adding a patient with return the id"""
+    if request.method == 'POST':
+        # Getting form data
+        name = request.form['name']
+        age = int(request.form['age'])
+        gender = request.form['gender']
+        phone = request.form['phone']
+        email = request.form['email']
+        problem_id = request.form['problem_id']
+        symtoms = request.form['symtoms']
+        
+        query = "INSERT INTO `patients`(`name`, `age`, `gender`, `phone_no`, `email`, `problem_id`, `symptoms`) VALUES (%s,%s,UPPER(%s),%s,%s,%s,%s)"
+        try:
+            db_cursor.execute(query, (name, age, gender, phone, email, problem_id, symtoms))
             mydb.commit()
             response = {'status':'success'}
         except Exception as e:

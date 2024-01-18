@@ -3,6 +3,7 @@
 - input mask for mobile number according to bd format (with country code)
 - performing filter for hospitals
 - performing filter for doctors
+- show hospitals + doctors for specific problem
 
 Optional todos:
 
