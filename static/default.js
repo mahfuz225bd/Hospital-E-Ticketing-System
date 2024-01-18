@@ -1,4 +1,4 @@
-import { Validator, DateValueForHTML, preventDatesToInput } from "./base.js"
+import { Validator, DateValueForHTML, preventDatesToInput, isNumeric } from "./base.js"
 
 document.addEventListener('DOMContentLoaded', () => {
     const mainForm = document.querySelector('#mainForm')
@@ -169,8 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     selectHospital.innerHTML = '<option>(নির্বাচন করুন)</option>'
                     data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`);
                 } else {
+                    // Get subdistrictOrThanaName with removing count
                     const _subdistrictOrThanaName = subdistrictOrThanaName.split(" ")
-                    // To remove count
                     _subdistrictOrThanaName.pop()
 
                     alert(`${_subdistrictOrThanaName.join(" ")}-তে কোন হাসপাতাল পাওয়া যায় নি`)
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.length > 0) {
                     selectDoctor.disabled = false
                     selectDoctor.innerHTML = '<option>(নির্বাচন করুন)</option>'
-                    data.forEach(each => selectDoctor.innerHTML += `<option value=${each.id}>${each.name}, ${each.speciality}</option>`)
+                    data.forEach(each => selectDoctor.innerHTML += `<option value=${each.id} data-per-visit-time=${each.perVisitTime}>${each.name}, ${each.speciality}</option>`)
                 }
             }).then(() => {
                 // Changing values of all output.hospitalValues
@@ -236,32 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(event.target)
         const formEntries = Object.fromEntries(formData.entries())
 
-        const makeAnAppoinment = () => {
-            let patient_id;
-
-            fetch('/add_patient/', {
-                method: 'POST',
-                body: JSON.stringify({
-                    name: formData['name'],
-                    age: formData['age'],
-                    gender: formData['gender'],
-                    phone: formData['phone'],
-                    email: formData['email'],
-                    problem_id: formData['email'],
-                    symptoms: formData['symtoms']
-                })
-            }).then((response) => response.json()).then((data) => {
-                console.log("Success:", data);
-                patient_id = data['patient_id']
-            }).then(() => {
-                // fetch to insert appointment with patient_id
-            })
-                .catch((error) => {
-                    console.error("Error:", error);
-                });
-        }
-
         const isCustomProblem = selectProblem.value.startsWith("Other: ")
+
         if (isCustomProblem) {
             // add problem as draft to database
             fetch('/api/add_problem', {
@@ -276,15 +252,132 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
-                        console.log(data);
+                        sessionStorage.setItem('customProblemId', data.lastInsertedId)
                     } else {
                         alert('Error: ' + data.message);
                     }
+                }).then(() => {
+                    makeAnAppointment({
+                        name: formEntries['name'],
+                        age: formEntries['age'],
+                        gender: formEntries['gender'],
+                        phone: formEntries['phone'],
+                        email: formEntries['email'],
+                        customProblemId: sessionStorage.getItem('customProblemId'),
+                        symptoms: formEntries['symptoms']
+                    })
+
+                    // remove customProblemId from session storage
+                    if (sessionStorage.getItem('customProblemId')) {
+                        sessionStorage.removeItem('customProblemId')
+                    }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    alert('Error: ', error);
+                });
+        } else {
+            makeAnAppointment({
+                name: formEntries['name'],
+                age: formEntries['age'],
+                gender: formEntries['gender'],
+                phone: formEntries['phone'],
+                email: formEntries['email'],
+                problemId: formEntries['problem'],
+                symptoms: formEntries['symptoms'],
+                doctorByHospitalId: formEntries['doctor'],
+                appointmentDate: formEntries['appointmentDate']
+            })
+        }
+
+        const customProblemId = sessionStorage.getItem('customProblemId')
+
+        const makeAnAppointment = (data) => {
+            fetch('/api/add_patient', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    name: data.name,
+                    age: data.age,
+                    gender: data.gender,
+                    phone: data.phone,
+                    email: data.email,
+                    problemId: isNumeric(data.problemId) ? data.problemId : "",
+                    customProblemId: isNumeric(data.customProblemId) ? data.customProblemId : "",
+                    symptoms: data.symptoms
+                }).toString()
+            }).then(response => response.json())
+                .then(data => {
+                    // remove session
+                    if (customProblemId) {
+                        sessionStorage.removeItem("customProblemId");
+                    }
+
+                    // fetch to insert appointment with patientId
+                    fetch('/api/make_appointment', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams({
+                            patientId: data['lastInsertedId'],
+                            doctorByHospitalId: data.doctorByHospitalId,
+                            appointmentDate: data.appointmentDate
+                        }).toString()
+                    }).then(response => response.json())
+                        .catch(error => {
+                            alert("Error: ", error)
+                        })
+                })
+                .catch(error => {
+                    alert("Error: ", error);
                 });
         }
+
+        // const makeAnAppointment = () => {
+        //     fetch('/api/add_patient', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/x-www-form-urlencoded',
+        //         },
+        //         body: new URLSearchParams({
+        //             name: formEntries['name'],
+        //             age: formEntries['age'],
+        //             gender: formEntries['gender'],
+        //             phone: formEntries['phone'],
+        //             email: formEntries['email'],
+        //             problemId: isNumeric(formEntries['problem']) ? formEntries['problem'] : "",
+        //             customProblemId: isNumeric(customProblemId) ? customProblemId : "",
+        //             symptoms: formEntries['symptoms']
+        //         }).toString()
+        //     }).then(response => response.json())
+        //         .then(data => {
+        //             // remove session
+        //             if (customProblemId) {
+        //                 sessionStorage.removeItem("customProblemId");
+        //             }
+
+        //             // fetch to insert appointment with patientId
+        //             fetch('/api/make_appointment', {
+        //                 method: 'POST',
+        //                 headers: {
+        //                     'Content-Type': 'application/x-www-form-urlencoded',
+        //                 },
+        //                 body: new URLSearchParams({
+        //                     patientId: data['lastInsertedId'],
+        //                     doctorByHospitalId: formEntries['doctor'],
+        //                     date: formEntries['appointmentDate']
+        //                 }).toString()
+        //             }).then(response => response.json())
+        //                 .catch(error => {
+        //                     alert("Error: ", error)
+        //                 })
+        //         })
+        //         .catch(error => {
+        //             alert("Error: ", error);
+        //         });
+        // }
 
         event.target.reset()
     })

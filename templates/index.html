@@ -14,13 +14,13 @@
 <form action="/post" id="mainForm">
   <div class="input-row no-label">
     <div class="input-col left">
-      <input type="text" placeholder="রোগীর নাম *" name="name" id="name" autofocus />
+      <input type="text" placeholder="রোগীর নাম *" name="name" id="name" required autofocus />
     </div>
     <div class="input-col">
-      <input type="text" placeholder="রোগীর বয়স *" name="age" id="age" />
+      <input type="text" placeholder="রোগীর বয়স *" name="age" id="age" required />
     </div>
     <div class="input-col right">
-      <select name="gender" id="gender">
+      <select name="gender" id="gender" required>
         <option value="" selected disabled>লিঙ্গ *</option>
         <option value="M">পুরুষ</option>
         <option value="F">মহিলা</option>
@@ -31,10 +31,11 @@
 
   <div class="input-row">
     <div class="input-col left">
-      <input type="tel" placeholder="ফোন নম্বর *" name="phone" id="phone" data-input-template="+88X XXXX-XXXXXX" />
+      <input type="tel" placeholder="ফোন নম্বর *" name="phone" id="phone" data-input-template="+88X XXXX-XXXXXX"
+        required />
     </div>
     <div class="input-col right">
-      <input type="text" placeholder="ইমেইল" name="email" id="email" />
+      <input type="text" placeholder="ইমেইল" name="email" id="email" required />
     </div>
   </div>
 
@@ -54,8 +55,8 @@
 
   <div class="input-row" style="margin-top: -10px">
     <div class="input-col">
-      <label for="problem">রোগ/সমস্যা নির্বাচনঃ</label>
-      <select id="problem" name="problem" title="রোগীর রোগ/সমস্যা নির্বাচন করি">
+      <label for="problem">রোগ/সমস্যা নির্বাচনঃ <span style="color: red">*</span></label>
+      <select id="problem" name="problem" title="রোগীর রোগ/সমস্যা নির্বাচন করি" required>
         <option>(নির্বাচন করুন)</option>
       </select>
       <br class="hide">
@@ -85,14 +86,14 @@
 
   <div class="input-row">
     <div class="input-col left">
-      <label for="division">বিভাগঃ</label>
-      <select id="division" name="division">
+      <label for="division">বিভাগঃ <span style="color: red">*</span></label>
+      <select id="division" name="division" required>
         <option>(নির্বাচন করুন)</option>
       </select>
     </div>
     <div class="input-col">
-      <label for="district">জেলাঃ</label>
-      <select id="district" name="district" disabled></select>
+      <label for="district">জেলাঃ <span style="color: red">*</span></label>
+      <select id="district" name="district" required disabled></select>
     </div>
     <div class="input-col right">
       <label for="subdistrictOrThana">উপজেলা/থানাঃ</label>
@@ -114,7 +115,7 @@
       <input type="radio" id="clear_filter_hospital" name="filter_hospital" value="all">
       <label class="fw-normal" for="clear_filter_hospital">সকল হাসপাতাল</label>
       <br>
-      <select id="hospital" name="hospital" disabled>
+      <select id="hospital" name="hospital" required disabled>
         <option>(নির্বাচন করুন)</option>
       </select>
     </div>
@@ -136,7 +137,7 @@
       <label class="fw-normal" for="clear_filter_doctor">সকল বিভাগের
         ডাক্তারগণ</label>
       <br>
-      <select id="doctor" name="doctor" disabled>
+      <select id="doctor" name="doctor" required disabled>
         <option>(নির্বাচন করুন)</option>
       </select>
     </div>
@@ -146,7 +147,7 @@
     <div class="input-col" style="display: flex; justify-content: end; flex-direction: column;">
       <label for="appointmentDate">"<output class="doctorNameValue"></output>" এর অ্যাপয়েন্টমেন্ট তারিখ নির্বাচন করুনঃ
         <span style="color: red">*</span></label>
-      <input type="date" name="appointmentDate" id="appointmentDate" data-available-iso-weeks="1,2" />
+      <input type="date" name="appointmentDate" id="appointmentDate" data-available-iso-weeks="1,2" required />
     </div>
   </div>
 

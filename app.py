@@ -79,16 +79,16 @@ def get_hospitals():
 
 @app.route('/api/doctors', methods=['GET'])
 def get_doctors():
-    hospitals = []
+    doctors = []
     if request.method == 'GET':
         db_cursor.execute("SELECT `id`, `name_en`, `name_bn`, `degree`, `speciality`, `designation`, `dob`, `phone_no_1`, `phone_no_2`, `outdoor_doctor`, `per_visit_time`, `room_location`, `doctor_available_now`, `note` FROM `doctors_by_hospital` WHERE hospital_id=%s", (request.args['hospitalId'],))
 
         result = db_cursor.fetchall()
 
         for each in result:
-            hospitals.append({'id': each[0], 'name': each[2], 'speciality': each[4]})
+            doctors.append({'id': each[0], 'name': each[2], 'speciality': each[4], 'perVisitTime': each[10]})
 
-        return jsonify(hospitals)
+        return jsonify(doctors)
     
 @app.route('/api/add_problem', methods=['POST'])
 def add_problem():
@@ -96,20 +96,29 @@ def add_problem():
     if request.method == 'POST':
         # Get data from POST request
         
-        customProblem = request.form['customProblem']
+        custom_problem = request.form['customProblem']
 
-        value_en = customProblem if EnBnTranslator.is_en(customProblem) else EnBnTranslator.bn_to_en(customProblem)
-        value_bn = customProblem if EnBnTranslator.is_bn(customProblem) else EnBnTranslator.en_to_bn(customProblem)
+        value_en = custom_problem if EnBnTranslator.is_en(custom_problem) else EnBnTranslator.bn_to_en(custom_problem)
+        value_bn = custom_problem if EnBnTranslator.is_bn(custom_problem) else EnBnTranslator.en_to_bn(custom_problem)
 
         # Make query string to insert into problems_draft table
         query = "INSERT INTO problems_draft(value_en, value_bn) VALUES (%s, %s)"
+
         try:
             db_cursor.execute(query, (value_en, value_bn))
             mydb.commit()
-            response = {'status':'success'}
+            response = {'status':'success', 'lastInsertedId': db_cursor.lastrowid}
         except Exception as e:
-            print('Error: ',e)
-            response = {'status': 'failure', 'message': str(e)}
+            print('Error: ', e)
+
+            custom_problem_id = 0
+
+            if 'Duplicate entry' in e:
+                db_cursor.execute("SELECT id FROM `problems_draft WHERE value_en=%s OR value_bn=%s`", (custom_problem, custom_problem))
+                result = db_cursor.fetchone()
+                custom_problem_id = result['id']
+
+            response = {'status': 'failure', 'message': str(e), 'customProblemId': custom_problem_id}
         return jsonify(**response)
     
 @app.route('/api/add_patient', methods=['POST'])
@@ -122,16 +131,40 @@ def add_patient():
         gender = request.form['gender']
         phone = request.form['phone']
         email = request.form['email']
-        problem_id = request.form['problem_id']
-        symtoms = request.form['symtoms']
+        symptoms = request.form['symptoms']
+
+        # take value one of `problem_id` or `custom_problem_id` and empty for other one
+        problem_id = int(request.form['problemId']) if request.form['problemId'].isnumeric() else ""
+        custom_problem_id = int(request.form['customProblemId']) if request.form['customProblemId'].isnumeric() else ""
         
-        query = "INSERT INTO `patients`(`name`, `age`, `gender`, `phone_no`, `email`, `problem_id`, `symptoms`) VALUES (%s,%s,UPPER(%s),%s,%s,%s,%s)"
+        query = "INSERT INTO `patients`(`name`, `age`, `gender`, `phone_no`, `email`, `problem_id`, `custom_problem_id`, `symptoms`) VALUES (%s,%s,UPPER(%s),%s,%s,%s,%s,%s)"
+
         try:
-            db_cursor.execute(query, (name, age, gender, phone, email, problem_id, symtoms))
+            db_cursor.execute(query, (name, age, gender, phone, email, problem_id, custom_problem_id, symptoms))
+            mydb.commit()
+            response = {'status':'success', 'lastInsertedId': db_cursor.lastrowid}
+        except Exception as e:
+            print('Error: ', e)
+            response = {'status': 'failure', 'message': str(e)}
+        return jsonify(**response)
+    
+@app.route('/api/make_appointment', methods=['POST'])
+def make_appointment():
+    """API route for inserting an appointment"""
+    if request.method == 'POST':
+        # Getting form data
+        patient_id = int(request.form['patientId'])
+        doctor_by_hospital_id = int(request.form['doctorByHospitalId'])
+        appointment_date = request.form['appointmentDate']
+        
+        query = "INSERT INTO `appointments`(`patient_id`, `doctor_by_hospital_id`, `date`) VALUES (%s,%s,%s)"
+
+        try:
+            db_cursor.execute(query, (patient_id, doctor_by_hospital_id, appointment_date))
             mydb.commit()
             response = {'status':'success'}
         except Exception as e:
-            print('Error: ',e)
+            print('Error: ', e)
             response = {'status': 'failure', 'message': str(e)}
         return jsonify(**response)
 

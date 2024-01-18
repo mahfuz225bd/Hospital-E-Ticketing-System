@@ -97,5 +97,9 @@ const preventDatesToInput = (inputElement, ISODaysNosToPrevent) => {
     })
 }
 
+const isNumeric = (value) => {
+    return !isNaN(value)
+}
 
-export { Validator, DateValueForHTML, preventDatesToInput };
+
+export { Validator, DateValueForHTML, preventDatesToInput, isNumeric };
