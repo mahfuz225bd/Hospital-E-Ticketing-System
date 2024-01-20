@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.status === 'success') {
+                    if (data.status === 'success') {                        
                         sessionStorage.setItem('customProblemId', data.lastInsertedId)
                     } else {
                         alert('Error: ' + data.message);
