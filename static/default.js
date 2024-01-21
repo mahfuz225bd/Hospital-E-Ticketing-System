@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.status === 'success') {                        
+                    if (data.status === 'success') {
                         sessionStorage.setItem('customProblemId', data.lastInsertedId)
                     } else {
                         alert('Error: ' + data.message);
@@ -309,6 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }).toString()
             }).then(response => response.json())
                 .then(data => {
+                    console.log(data);
                     // remove session
                     if (customProblemId) {
                         sessionStorage.removeItem("customProblemId");
@@ -322,8 +323,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         body: new URLSearchParams({
                             patientId: data['lastInsertedId'],
-                            doctorByHospitalId: data.doctorByHospitalId,
-                            appointmentDate: data.appointmentDate
+                            doctorByHospitalId: formEntries['doctor'],
+                            appointmentDate: formEntries['appointmentDate']
                         }).toString()
                     }).then(response => response.json())
                         .catch(error => {
