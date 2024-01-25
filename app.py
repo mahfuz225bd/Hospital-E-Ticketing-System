@@ -12,13 +12,13 @@ def index():
 @app.route('/api/problems')
 def get_problems_category_wise():
     problems = {}
-    db_cursor.execute("SELECT id, value_bn, (SELECT value_bn FROM problem_categories WHERE problem_categories.id = problem_category_id) AS category FROM problems;")
+    db_cursor.execute("SELECT id, value_bn, value_en, (SELECT value_bn FROM problem_categories WHERE problem_categories.id = problem_category_id) AS category FROM problems;")
     result = db_cursor.fetchall()
 
     for each in result:
-        category = each[2]
+        category = each[3]
         if category in problems:
-            problems[category].append({'id': each[0], 'value': each[1], 'category': each[2]})
+            problems[category].append({'id': each[0], 'value': each[1], 'valueAlt': each[2], 'category': each[3]})
         else:
             problems[category] = [{'id': each[0], 'value': each[1], 'category': each[2]}]
 
@@ -81,12 +81,12 @@ def get_hospitals():
 def get_doctors():
     doctors = []
     if request.method == 'GET':
-        db_cursor.execute("SELECT `id`, `name_en`, `name_bn`, `degree`, `speciality`, `designation`, `dob`, `phone_no_1`, `phone_no_2`, `outdoor_doctor`, `per_visit_time`, `room_location`, `doctor_available_now`, `note` FROM `doctors_by_hospital` WHERE hospital_id=%s", (request.args['hospitalId'],))
+        db_cursor.execute("SELECT `id`, `name_en`, `name_bn`, `degree`, `speciality`, `treatment_for`, `designation`,  `dob`, `phone_no_1`, `phone_no_2`, `outdoor_doctor`, `per_visit_time`, `room_location`, `doctor_available_now`, `note` FROM `doctors_by_hospital` WHERE hospital_id=%s", (request.args['hospitalId'],))
 
         result = db_cursor.fetchall()
 
         for each in result:
-            doctors.append({'id': each[0], 'name': each[2], 'speciality': each[4], 'perVisitTime': each[10]})
+            doctors.append({'id': each[0], 'name': each[2], 'nameEn': each[1], 'speciality': each[4], 'treatmentFor': each[5], 'outdoor_doctor': each[10], 'perVisitTime': each[11]})
 
         return jsonify(doctors)
     

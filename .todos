@@ -4,6 +4,9 @@
 - performing filter for hospitals
 - performing filter for doctors
 - show hospitals + doctors for specific problem
+- set data-available-iso-weeks= of selected doctor
+- set dataset `valueAlt` for translation
+- isNumeric function to method of Validator
 
 Optional todos:
 

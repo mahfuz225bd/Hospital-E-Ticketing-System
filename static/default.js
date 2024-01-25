@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             categories.forEach(category => {
                 let optionElements = ''
                 problems[category].forEach(problem => {
-                    optionElements += `<option value="${problem.id}">${problem.value}</option>`
+                    optionElements += `<option value="${problem.id}" data-value-alt=${problem.valueAlt}>${problem.value}</option>`
                 })
 
                 selectProblem.innerHTML += `<optgroup label="${category}">${optionElements}</optgroup>`
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.length > 0) {
                     selectDoctor.disabled = false
                     selectDoctor.innerHTML = '<option>(নির্বাচন করুন)</option>'
-                    data.forEach(each => selectDoctor.innerHTML += `<option value=${each.id} data-per-visit-time=${each.perVisitTime}>${each.name}, ${each.speciality}</option>`)
+                    data.forEach(each => selectDoctor.innerHTML += `<option value=${each.id} data-per-visit-time=${each.perVisitTime} data-treatment-for="${each.treatmentFor}">${each.name}, ${each.speciality}</option>`)
                 }
             }).then(() => {
                 // Changing values of all output.hospitalValues
@@ -335,50 +335,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert("Error: ", error);
                 });
         }
-
-        // const makeAnAppointment = () => {
-        //     fetch('/api/add_patient', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/x-www-form-urlencoded',
-        //         },
-        //         body: new URLSearchParams({
-        //             name: formEntries['name'],
-        //             age: formEntries['age'],
-        //             gender: formEntries['gender'],
-        //             phone: formEntries['phone'],
-        //             email: formEntries['email'],
-        //             problemId: isNumeric(formEntries['problem']) ? formEntries['problem'] : "",
-        //             customProblemId: isNumeric(customProblemId) ? customProblemId : "",
-        //             symptoms: formEntries['symptoms']
-        //         }).toString()
-        //     }).then(response => response.json())
-        //         .then(data => {
-        //             // remove session
-        //             if (customProblemId) {
-        //                 sessionStorage.removeItem("customProblemId");
-        //             }
-
-        //             // fetch to insert appointment with patientId
-        //             fetch('/api/make_appointment', {
-        //                 method: 'POST',
-        //                 headers: {
-        //                     'Content-Type': 'application/x-www-form-urlencoded',
-        //                 },
-        //                 body: new URLSearchParams({
-        //                     patientId: data['lastInsertedId'],
-        //                     doctorByHospitalId: formEntries['doctor'],
-        //                     date: formEntries['appointmentDate']
-        //                 }).toString()
-        //             }).then(response => response.json())
-        //                 .catch(error => {
-        //                     alert("Error: ", error)
-        //                 })
-        //         })
-        //         .catch(error => {
-        //             alert("Error: ", error);
-        //         });
-        // }
 
         event.target.reset()
     })

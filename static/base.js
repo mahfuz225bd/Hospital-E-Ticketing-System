@@ -70,36 +70,75 @@ const DateValueForHTML = {
 }
 
 const preventDatesToInput = (inputElement, ISODaysNosToPrevent) => {
-    inputElement.addEventListener('input', e => {
-        const UTCDay = new Date(e.target.value).getUTCDay()
-        const ISODay = UTCDay || 7
+    const UTCDay = new Date(inputElement.value).getUTCDay();
+    
+    // Convert 0 (Sunday) to 7 for adjustment with ISO days
+    const ISODay = UTCDay === 0 ? 7 : UTCDay;
 
-        if (Array.isArray(ISODaysNosToPrevent) && ISODaysNosToPrevent.every(e => e >= 1 && e <= 7)) {
-            if (ISODaysNosToPrevent.includes(ISODay)) {
-                e.preventDefault();
-                e.target.value = '';
+    const ISOWeekdays = {
+        1: 'Monday',
+        2: 'Tuesday',
+        3: 'Wednesday',
+        4: 'Thursday',
+        5: 'Friday',
+        6: 'Saturday',
+        7: 'Sunday'
+    };
 
-                const ISOWeekdays = {
-                    1: 'Monday',
-                    2: 'Tuesday',
-                    3: 'Wednesday',
-                    4: 'Thursday',
-                    5: 'Friday',
-                    6: 'Saturday',
-                    7: 'Sunday'
-                };
-
-                alert(ISOWeekdays[ISODay] + " is not available.");
-            }
-        } else {
-            console.error("ISODaysNosToPrevent argument should array of numbers between 1 to 7, where 1=Monday, 2=Tuesday,..., 7=Sunday.");
-        }
-    })
-}
+    if (ISODaysNosToPrevent.includes(ISODay)) {
+        alert(ISOWeekdays[ISODay] + ' is not available.');
+        inputElement.value = ''
+    }
+};
 
 const isNumeric = (value) => {
     return !isNaN(value)
 }
 
+class CompareParagraphs {
+    constructor(inputParagraph, targetToCompare) {
+        this.inputParagraph = inputParagraph
+        this.targetToCompare = targetToCompare
+    }
 
-export { Validator, DateValueForHTML, preventDatesToInput, isNumeric };
+    getCountObject() {
+        const removePunctuations = (myStr) => {
+            const punctuations = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+            return myStr
+                .split('')
+                .filter(char => !punctuations.includes(char))
+                .join('');
+        };
+
+        const myInputKeywords = removePunctuations(myInput.toLowerCase()).split(' ');
+        const targetStrKeywords = removePunctuations(targetStr.toLowerCase()).split(' ');
+
+        const matches = {};
+
+        targetStrKeywords.forEach((keyword) => {
+            if (myInputKeywords.includes(keyword)) {
+                matches[keyword] = targetStrKeywords.filter(kw => kw === keyword).length;
+            }
+        });
+
+        return matches;
+    }
+
+    countMatchedWords() {
+        const countObj = this.getCountObject()
+        return countObj.length
+    }
+
+    countTotalWords() {
+        const countObj = this.getCountObject()
+        let total = 0;
+
+        for (let key in countObj) {
+            total += countObj[key];
+        }
+
+        return total
+    }
+}
+
+export { Validator, DateValueForHTML, preventDatesToInput, isNumeric, CompareParagraphs };
