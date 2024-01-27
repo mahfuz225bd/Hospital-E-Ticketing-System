@@ -1,4 +1,4 @@
-import { Validator, DateValueForHTML, preventDatesToInput, isNumeric } from "./base.js"
+import { Validator, DateValueForHTML, preventDatesToInput } from "./base.js"
 
 document.addEventListener('DOMContentLoaded', () => {
     const mainForm = document.querySelector('#mainForm')
@@ -303,8 +303,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     gender: data.gender,
                     phone: data.phone,
                     email: data.email,
-                    problemId: isNumeric(data.problemId) ? data.problemId : "",
-                    customProblemId: isNumeric(data.customProblemId) ? data.customProblemId : "",
+                    problemId: new Validator(data.problemId).isNumeric() ? data.problemId : "",
+                    customProblemId: new Validator(data.customProblemId).isNumeric() ? data.customProblemId : "",
                     symptoms: data.symptoms
                 }).toString()
             }).then(response => response.json())

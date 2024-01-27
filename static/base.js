@@ -7,6 +7,10 @@ class Validator {
         return !(this.value === undefined || this.value === null || this.value.length === 0)
     }
 
+    isNumeric() {
+        return !isNaN(value)
+    }
+
     isAge() {
         const ageRegExp = /^[1-9][0-9]{0,2}$/
         return ageRegExp.test(this.value)
