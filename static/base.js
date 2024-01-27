@@ -8,7 +8,7 @@ class Validator {
     }
 
     isNumeric() {
-        return !isNaN(value)
+        return !isNaN(this.value)
     }
 
     isAge() {

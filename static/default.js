@@ -236,6 +236,53 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(event.target)
         const formEntries = Object.fromEntries(formData.entries())
 
+        const customProblemId = sessionStorage.getItem('customProblemId')
+
+        const makeAnAppointment = (data) => {
+            fetch('/api/add_patient', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    name: data.name,
+                    age: data.age,
+                    gender: data.gender,
+                    phone: data.phone,
+                    email: data.email,
+                    problemId: new Validator(data.problemId).isNumeric() ? data.problemId : "",
+                    customProblemId: new Validator(data.customProblemId).isNumeric() ? data.customProblemId : "",
+                    symptoms: data.symptoms
+                }).toString()
+            }).then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    // remove session
+                    if (customProblemId) {
+                        sessionStorage.removeItem("customProblemId");
+                    }
+
+                    // fetch to insert appointment with patientId
+                    fetch('/api/make_appointment', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams({
+                            patientId: data['lastInsertedId'],
+                            doctorByHospitalId: formEntries['doctor'],
+                            appointmentDate: formEntries['appointmentDate']
+                        }).toString()
+                    }).then(response => response.json())
+                        .catch(error => {
+                            alert("Error: ", error)
+                        })
+                })
+                .catch(error => {
+                    alert("Error: ", error);
+                });
+        }
+
         const isCustomProblem = selectProblem.value.startsWith("Other: ")
 
         if (isCustomProblem) {
@@ -287,53 +334,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 doctorByHospitalId: formEntries['doctor'],
                 appointmentDate: formEntries['appointmentDate']
             })
-        }
-
-        const customProblemId = sessionStorage.getItem('customProblemId')
-
-        const makeAnAppointment = (data) => {
-            fetch('/api/add_patient', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: new URLSearchParams({
-                    name: data.name,
-                    age: data.age,
-                    gender: data.gender,
-                    phone: data.phone,
-                    email: data.email,
-                    problemId: new Validator(data.problemId).isNumeric() ? data.problemId : "",
-                    customProblemId: new Validator(data.customProblemId).isNumeric() ? data.customProblemId : "",
-                    symptoms: data.symptoms
-                }).toString()
-            }).then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    // remove session
-                    if (customProblemId) {
-                        sessionStorage.removeItem("customProblemId");
-                    }
-
-                    // fetch to insert appointment with patientId
-                    fetch('/api/make_appointment', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            patientId: data['lastInsertedId'],
-                            doctorByHospitalId: formEntries['doctor'],
-                            appointmentDate: formEntries['appointmentDate']
-                        }).toString()
-                    }).then(response => response.json())
-                        .catch(error => {
-                            alert("Error: ", error)
-                        })
-                })
-                .catch(error => {
-                    alert("Error: ", error);
-                });
         }
 
         event.target.reset()
