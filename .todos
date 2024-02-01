@@ -1,4 +1,4 @@
-- convert this form into multi-step form
+- validate filled up data then next action of form slider
 - view count of available hospital for treatment that disease
 - input mask for mobile number according to bd format (with country code)
 - performing filter for hospitals
@@ -6,7 +6,6 @@
 - show hospitals + doctors for specific problem
 - set data-available-iso-weeks= of selected doctor
 - set dataset `valueAlt` for translation
-- isNumeric function to method of Validator
 
 Optional todos:
 

@@ -90,6 +90,16 @@ select.loading {
   opacity: 0.5;
 }
 
+/* Form slider */
+.form-slide nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-slide nav .btn {
+  width: 175px;
+}
+
 /* Input rows and cols */
 
 .input-row {
@@ -132,10 +142,6 @@ ul.step-indicator li {
   display: inline;
   font-size: 14px;
   color: black;
-}
-
-ul.step-indicator li.active {
-  color: #04AA6D;
 }
 
 ul.step-indicator li+li:before {

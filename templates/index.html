@@ -2,14 +2,14 @@
 <h1>হাসপাতাল ই-টিকেট</h1>
 <p>হাসপাতালের টিকেট অনলাইনে পেতে ফরমটি পূরন করুন</p>
 
-<!-- <ul class="step-indicator">
+<ul class="step-indicator">
   <li class="active">রোগীর তথ্য</li>
   <li>হাসপাতাল নির্বাচন</li>
   <li>ডাক্তার অ্যাপয়েন্টমেন্ট</li>
   <li>পেমেন্ট ও নিশ্চিতকরণ</li>
 </ul>
 
-<hr /> -->
+<hr />
 
 <form action="/post" id="mainForm">
   <div class="form-slide">
@@ -39,9 +39,7 @@
         <input type="text" placeholder="ইমেইল" name="email" id="email" required />
       </div>
     </div>
-  </div>
 
-  <div class="form-slide">
     <h2>রোগীর রোগ/সমস্যা ও লক্ষণসমূহ</h2>
 
     <div class="input-row">
@@ -66,6 +64,7 @@
         <input class="hide" type="text" id="inputCustomProblem" placeholder="রোগীর রোগ/সমস্যার নাম লিখুন"
           style="margin-top: 10px" />
       </div>
+
     </div>
 
     <div class="input-row">
@@ -77,6 +76,11 @@
         </div>
       </div>
     </div>
+
+    <nav>
+      <button class="btn">&#8592; Prev</button>
+      <button class="btn">Next &#8594;</button>
+    </nav>
   </div>
 
   <div class="form-slide">

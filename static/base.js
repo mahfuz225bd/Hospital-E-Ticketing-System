@@ -146,26 +146,61 @@ class CompareParagraphs {
 }
 
 class SlideForm {
-    constructor(slideElementsClassName) {
-        this.elements = document.getElementsByClassName(slideElementsClassName);
-        this.currentSlideIndex = 1;
+    #elements;
+    #indicatorLi;
+    #currentSlideNo;
+
+    constructor(slideElementsClassName, indicatorUlElementClassName) {
+        this.#elements = document.getElementsByClassName(slideElementsClassName);
+        this.#indicatorLi = document.querySelectorAll(`ul.${indicatorUlElementClassName} li`);
+        this.#currentSlideNo = 1;
     }
 
-    setCurrentSlideIndex(n) {
-        this.currentSlideIndex = n;
+    count() {
+        return this.#elements.length
     }
 
-    showSlide(n) {
-        const slides = this.elements
+    getSlideNo() {
+        return this.#currentSlideNo;
+    }
+
+    #setSlideNo(n) {
+        this.#currentSlideNo = n;
+    }
+
+    show(n) {
+        const slides = this.#elements
+        const indicatorLi = this.#indicatorLi
+
         let i;
-        if (n > slides.length) { this.setCurrentSlideIndex(1) }
-        if (n < 1) { this.setCurrentSlideIndex(this.currentSlideIndex) }
+        if (n > this.count()) { this.#setSlideNo(1) }
+        if (n < 1) { this.#setSlideNo(this.getSlideNo()) }
 
-        for (i = 0; i < slides.length; i++) {
+        for (i = 0; i < this.count(); i++) {
             slides[i].style.display = "none";
+            indicatorLi[i].style.color = "initial";
         }
 
-        slides[this.currentSlideIndex - 1].style.display = "block";
+        slides[this.getSlideNo() - 1].style.display = "block";
+        indicatorLi[this.getSlideNo() - 1].style.color = '#04AA6D';
+    }
+
+    next() {
+        if (this.getSlideNo() < this.count()) {
+            this.#setSlideNo(this.getSlideNo() + 1)
+            this.show(this.getSlideNo())
+        } else {
+            alert("Not available")
+        }
+    }
+
+    prev() {
+        if (this.getSlideNo() > 1) {
+            this.#setSlideNo(this.getSlideNo() - 1)
+            this.show(this.getSlideNo())
+        } else {
+            alert("Not available")
+        }
     }
 }
 

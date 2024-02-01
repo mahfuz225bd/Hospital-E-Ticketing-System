@@ -21,6 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const appointmentDateRow = document.querySelector('#appointmentDateRow')
     const inputAppointmentDate = document.querySelector('#appointmentDate')
 
+    const formSlide = new SlideForm('form-slide', 'step-indicator');
+
+    // Showing form
+    formSlide.show()
+
     // Setting attributes value, min, max properties of #appointmentDate
     const todayForHTML = DateValueForHTML.getToday()
     inputAppointmentDate.setAttribute('value', todayForHTML)
@@ -228,9 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetElement = event.target
         preventDatesToInput(targetElement, unavailableISOWeeks)
     })
-
-    const formSlide = new SlideForm('form-slide');
-    formSlide.showSlide()
 
     // If form#mainForm is submitted
     mainForm.addEventListener('submit', event => {
