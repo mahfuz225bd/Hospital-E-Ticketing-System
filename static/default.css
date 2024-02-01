@@ -115,6 +115,11 @@ select.loading {
   color: #666;
 }
 
+/* Form Slide */
+/* .form-slide {
+  display: none;
+} */
+
 /* Step Indicator Breadcrumb */
 
 ul.step-indicator {

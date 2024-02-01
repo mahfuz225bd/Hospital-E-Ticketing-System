@@ -12,101 +12,104 @@
 <hr /> -->
 
 <form action="/post" id="mainForm">
-  <div class="input-row no-label">
-    <div class="input-col left">
-      <input type="text" placeholder="রোগীর নাম *" name="name" id="name" required autofocus />
+  <div class="form-slide">
+    <div class="input-row no-label">
+      <div class="input-col left">
+        <input type="text" placeholder="রোগীর নাম *" name="name" id="name" required autofocus />
+      </div>
+      <div class="input-col">
+        <input type="text" placeholder="রোগীর বয়স *" name="age" id="age" required />
+      </div>
+      <div class="input-col right">
+        <select name="gender" id="gender" required>
+          <option value="" selected disabled>লিঙ্গ *</option>
+          <option value="M">পুরুষ</option>
+          <option value="F">মহিলা</option>
+          <option value="O">অন্যান্য</option>
+        </select>
+      </div>
     </div>
-    <div class="input-col">
-      <input type="text" placeholder="রোগীর বয়স *" name="age" id="age" required />
-    </div>
-    <div class="input-col right">
-      <select name="gender" id="gender" required>
-        <option value="" selected disabled>লিঙ্গ *</option>
-        <option value="M">পুরুষ</option>
-        <option value="F">মহিলা</option>
-        <option value="O">অন্যান্য</option>
-      </select>
-    </div>
-  </div>
 
-  <div class="input-row">
-    <div class="input-col left">
-      <input type="tel" placeholder="ফোন নম্বর *" name="phone" id="phone" data-input-template="+88X XXXX-XXXXXX"
-        required />
-    </div>
-    <div class="input-col right">
-      <input type="text" placeholder="ইমেইল" name="email" id="email" required />
-    </div>
-  </div>
-
-  <hr />
-  <h2>রোগীর রোগ/সমস্যা ও লক্ষণসমূহ</h2>
-
-  <div class="input-row">
-    <div class="input-col left">
-      <input type="radio" id="problem_known" name="problem_known_unknown" value="known" checked />
-      <label for="problem_known">রোগীর রোগ/সমস্যা নির্বাচন করি</label>
-    </div>
-    <div class="input-col right">
-      <input type="radio" id="problem_unknown" name="problem_known_unknown" value="unkonwn" />
-      <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই (শুধু) রোগের লক্ষণগুলো লিখি</label>
-    </div>
-  </div>
-
-  <div class="input-row" style="margin-top: -10px">
-    <div class="input-col">
-      <label for="problem">রোগ/সমস্যা নির্বাচনঃ <span style="color: red">*</span></label>
-      <select id="problem" name="problem" title="রোগীর রোগ/সমস্যা নির্বাচন করি" required>
-        <option>(নির্বাচন করুন)</option>
-      </select>
-      <br class="hide">
-      <!-- name attribute should not be provided. it will be handled by js -->
-      <input class="hide" type="text" id="inputCustomProblem" placeholder="রোগীর রোগ/সমস্যার নাম লিখুন"
-        style="margin-top: 10px" />
-    </div>
-  </div>
-
-  <div class="input-row">
-    <div class="input-col">
-      <label>রোগের লক্ষণসমূহঃ</label>
-      <textarea name="symptoms" id="symptoms" cols="30" rows="10" title="রোগের লক্ষণগুলো বর্ননা করি"></textarea>
-      <div class="text-right text-sm">
-        Word Count: <output id="symptomsWordCount">0</output>/255
+    <div class="input-row">
+      <div class="input-col left">
+        <input type="tel" placeholder="ফোন নম্বর *" name="phone" id="phone" data-input-template="+88X XXXX-XXXXXX"
+          required />
+      </div>
+      <div class="input-col right">
+        <input type="text" placeholder="ইমেইল" name="email" id="email" required />
       </div>
     </div>
   </div>
 
-  <hr />
-  <h2>হাসপাতাল নির্বাচন করুন</h2>
+  <div class="form-slide">
+    <h2>রোগীর রোগ/সমস্যা ও লক্ষণসমূহ</h2>
 
-  <p class="input-hint">
-    উক্ত রোগ/সমস্যার জন্য যে সকল হাসপাতালে চিকিৎসার সু-ব্যবস্থা রয়েছে, সে
-    হাসপাতালগুলোর নাম পেতে প্রথমে বিভাগ, জেলা, উপজেলা/থানা নির্বাচন করুন।
-  </p>
+    <div class="input-row">
+      <div class="input-col left">
+        <input type="radio" id="problem_known" name="problem_known_unknown" value="known" checked />
+        <label for="problem_known">রোগীর রোগ/সমস্যা নির্বাচন করি</label>
+      </div>
+      <div class="input-col right">
+        <input type="radio" id="problem_unknown" name="problem_known_unknown" value="unkonwn" />
+        <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই (শুধু) রোগের লক্ষণগুলো লিখি</label>
+      </div>
+    </div>
 
-  <div class="input-row">
-    <div class="input-col left">
-      <label for="division">বিভাগঃ <span style="color: red">*</span></label>
-      <select id="division" name="division" required>
-        <option>(নির্বাচন করুন)</option>
-      </select>
+    <div class="input-row" style="margin-top: -10px">
+      <div class="input-col">
+        <label for="problem">রোগ/সমস্যা নির্বাচনঃ <span style="color: red">*</span></label>
+        <select id="problem" name="problem" title="রোগীর রোগ/সমস্যা নির্বাচন করি" required>
+          <option>(নির্বাচন করুন)</option>
+        </select>
+        <br class="hide">
+        <!-- name attribute should not be provided. it will be handled by js -->
+        <input class="hide" type="text" id="inputCustomProblem" placeholder="রোগীর রোগ/সমস্যার নাম লিখুন"
+          style="margin-top: 10px" />
+      </div>
     </div>
-    <div class="input-col">
-      <label for="district">জেলাঃ <span style="color: red">*</span></label>
-      <select id="district" name="district" required disabled></select>
-    </div>
-    <div class="input-col right">
-      <label for="subdistrictOrThana">উপজেলা/থানাঃ</label>
-      <button type="button" id="btnShowSubdistrictOrThanaInput" class="btn btn-show-subdistrictOrThana-input"
-        title="Show input for subdistrict/thana" disabled>
-        ইনপুট দিতে ক্লিক করুন (ঐচ্ছিক)</button>
-      <select id="subdistrictOrThana" name="subdistrictOrThana" disabled hidden></select>
+
+    <div class="input-row">
+      <div class="input-col">
+        <label>রোগের লক্ষণসমূহঃ</label>
+        <textarea name="symptoms" id="symptoms" cols="30" rows="10" title="রোগের লক্ষণগুলো বর্ননা করি"></textarea>
+        <div class="text-right text-sm">
+          Word Count: <output id="symptomsWordCount">0</output>/255
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="input-row hide" id="hospitalSelectionRow">
-    <div class="input-col">
-      <!-- <label for="hospital">হাসপাতালের নামঃ <span style="color: red">*</span></label>
+  <div class="form-slide">
+    <h2>হাসপাতাল নির্বাচন করুন</h2>
+
+    <p class="input-hint">
+      উক্ত রোগ/সমস্যার জন্য যে সকল হাসপাতালে চিকিৎসার সু-ব্যবস্থা রয়েছে, সে
+      হাসপাতালগুলোর নাম পেতে প্রথমে বিভাগ, জেলা, উপজেলা/থানা নির্বাচন করুন।
+    </p>
+
+    <div class="input-row">
+      <div class="input-col left">
+        <label for="division">বিভাগঃ <span style="color: red">*</span></label>
+        <select id="division" name="division" required>
+          <option>(নির্বাচন করুন)</option>
+        </select>
+      </div>
+      <div class="input-col">
+        <label for="district">জেলাঃ <span style="color: red">*</span></label>
+        <select id="district" name="district" required disabled></select>
+      </div>
+      <div class="input-col right">
+        <label for="subdistrictOrThana">উপজেলা/থানাঃ</label>
+        <button type="button" id="btnShowSubdistrictOrThanaInput" class="btn btn-show-subdistrictOrThana-input"
+          title="Show input for subdistrict/thana" disabled>
+          ইনপুট দিতে ক্লিক করুন (ঐচ্ছিক)</button>
+        <select id="subdistrictOrThana" name="subdistrictOrThana" disabled hidden></select>
+      </div>
+    </div>
+
+    <div class="input-row hide" id="hospitalSelectionRow">
+      <div class="input-col">
+        <!-- <label for="hospital">হাসপাতালের নামঃ <span style="color: red">*</span></label>
       <br>
       <span class="filter-label">ফিল্টার করুনঃ</span>
       <input type="radio" id="filter_hospital" name="filter_hospital" value="for_selected_problem" checked>
@@ -115,19 +118,20 @@
       <input type="radio" id="clear_filter_hospital" name="filter_hospital" value="all">
       <label class="fw-normal" for="clear_filter_hospital">সকল হাসপাতাল</label>
       <br> -->
-      <select id="hospital" name="hospital" required disabled>
-        <option>(নির্বাচন করুন)</option>
-      </select>
+        <select id="hospital" name="hospital" required disabled>
+          <option>(নির্বাচন করুন)</option>
+        </select>
+      </div>
     </div>
   </div>
 
-  <hr />
-  <h2>ডাক্তার অ্যাপয়েন্টমেন্ট</h2>
+  <div class="form-slide">
+    <h2>ডাক্তার অ্যাপয়েন্টমেন্ট</h2>
 
-  <div class="input-row">
-    <div class="input-col">
-      <label for="doctor">ডাক্তার নির্বাচনঃ <span style="color: red">*</span></label>
-      <!-- <br>
+    <div class="input-row">
+      <div class="input-col">
+        <label for="doctor">ডাক্তার নির্বাচনঃ <span style="color: red">*</span></label>
+        <!-- <br>
       <span class="filter-label">ফিল্টার করুনঃ</span>
       <span class="text-sm">"<output class="hospitalNameValue"></output>"-এ</span>
       <input type="radio" id="filter_doctor" name="filter_doctor" value="for_selected_problem" checked>
@@ -137,20 +141,22 @@
       <label class="fw-normal" for="clear_filter_doctor">সকল বিভাগের
         ডাক্তারগণ</label>
       <br> -->
-      <select id="doctor" name="doctor" required disabled>
-        <option>(নির্বাচন করুন)</option>
-      </select>
+        <select id="doctor" name="doctor" required disabled>
+          <option>(নির্বাচন করুন)</option>
+        </select>
+      </div>
     </div>
-  </div>
 
-  <div class="input-row hide" id="appointmentDateRow">
-    <div class="input-col" style="display: flex; justify-content: end; flex-direction: column;">
-      <label for="appointmentDate">"<output class="doctorNameValue"></output>" এর অ্যাপয়েন্টমেন্ট তারিখ নির্বাচন করুনঃ
-        <span style="color: red">*</span></label>
-      <input type="date" name="appointmentDate" id="appointmentDate" data-available-iso-weeks="1,2,3,4,7" required />
+    <div class="input-row hide" id="appointmentDateRow">
+      <div class="input-col" style="display: flex; justify-content: end; flex-direction: column;">
+        <label for="appointmentDate">"<output class="doctorNameValue"></output>" এর অ্যাপয়েন্টমেন্ট তারিখ নির্বাচন
+          করুনঃ
+          <span style="color: red">*</span></label>
+        <input type="date" name="appointmentDate" id="appointmentDate" data-available-iso-weeks="1,2,3,4,7" required />
+      </div>
     </div>
-  </div>
 
-  <button type="submit" class="btn">নিশ্চিত করুন</button>
+    <button type="submit" class="btn">নিশ্চিত করুন</button>
+  </div>
 </form>
 {% endblock %}

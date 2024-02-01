@@ -75,7 +75,7 @@ const DateValueForHTML = {
 
 const preventDatesToInput = (inputElement, ISODaysNosToPrevent) => {
     const UTCDay = new Date(inputElement.value).getUTCDay();
-    
+
     // Convert 0 (Sunday) to 7 for adjustment with ISO days
     const ISODay = UTCDay === 0 ? 7 : UTCDay;
 
@@ -145,4 +145,28 @@ class CompareParagraphs {
     }
 }
 
-export { Validator, DateValueForHTML, preventDatesToInput, isNumeric, CompareParagraphs };
+class SlideForm {
+    constructor(slideElementsClassName) {
+        this.elements = document.getElementsByClassName(slideElementsClassName);
+        this.currentSlideIndex = 1;
+    }
+
+    setCurrentSlideIndex(n) {
+        this.currentSlideIndex = n;
+    }
+
+    showSlide(n) {
+        const slides = this.elements
+        let i;
+        if (n > slides.length) { this.setCurrentSlideIndex(1) }
+        if (n < 1) { this.setCurrentSlideIndex(this.currentSlideIndex) }
+
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        slides[this.currentSlideIndex - 1].style.display = "block";
+    }
+}
+
+export { Validator, DateValueForHTML, preventDatesToInput, CompareParagraphs, SlideForm };

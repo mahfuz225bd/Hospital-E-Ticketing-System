@@ -1,4 +1,4 @@
-import { Validator, DateValueForHTML, preventDatesToInput } from "./base.js"
+import { Validator, DateValueForHTML, preventDatesToInput, SlideForm } from "./base.js"
 
 document.addEventListener('DOMContentLoaded', () => {
     const mainForm = document.querySelector('#mainForm')
@@ -228,6 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetElement = event.target
         preventDatesToInput(targetElement, unavailableISOWeeks)
     })
+
+    const formSlide = new SlideForm('form-slide');
+    formSlide.showSlide()
 
     // If form#mainForm is submitted
     mainForm.addEventListener('submit', event => {
