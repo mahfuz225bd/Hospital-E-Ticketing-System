@@ -21,10 +21,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const appointmentDateRow = document.querySelector('#appointmentDateRow')
     const inputAppointmentDate = document.querySelector('#appointmentDate')
 
-    const formSlide = new SlideForm('form-slide', 'step-indicator');
+    // const formSlide = new SlideForm('form-slide', 'step-indicator');
 
-    // Showing form
-    formSlide.show()
+    // // Showing form
+    // formSlide.show()
+
+    const checkValidationOfTextValues = {
+        name: () => {
+            const nameValue = document.querySelector('#name').value
+            const nameValueValidator = new Validator(nameValue)
+            return nameValueValidator.isNotEmpty()
+        },
+        age: () => {
+            const fieldValue = document.querySelector('#age').value
+            const fieldValueValidator = new Validator(fieldValue)
+            return fieldValueValidator.isAge()
+        },
+        phone: () => {
+            const fieldValue = document.querySelector('#phone').value
+            const fieldValueValidator = new Validator(fieldValue)
+            return fieldValueValidator.isBDMobileNumberWithoutCountryCode()
+        },
+        gender: () => {
+            const fieldValue = document.querySelector('#phone').value
+            const fieldValueValidator = new Validator(fieldValue)
+            return fieldValueValidator.isBDMobileNumberWithoutCountryCode()
+        }
+    }
 
     // Setting attributes value, min, max properties of #appointmentDate
     const todayForHTML = DateValueForHTML.getToday()

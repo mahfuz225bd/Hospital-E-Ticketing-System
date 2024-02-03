@@ -1,4 +1,4 @@
-- validate filled up data then next action of form slider
+- complete multi step form
 - view count of available hospital for treatment that disease
 - input mask for mobile number according to bd format (with country code)
 - performing filter for hospitals
@@ -24,4 +24,3 @@ Database:
 - revising all bengali translated data
 - Updating database graphical schema
 - Modify the graphical schema for simplification
-- 
