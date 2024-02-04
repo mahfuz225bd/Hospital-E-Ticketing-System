@@ -42,10 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const fieldValueValidator = new Validator(fieldValue)
             return fieldValueValidator.isBDMobileNumberWithoutCountryCode()
         },
-        gender: () => {
-            const fieldValue = document.querySelector('#phone').value
+        email: () => {
+            const fieldValue = document.querySelector('#email').value
             const fieldValueValidator = new Validator(fieldValue)
-            return fieldValueValidator.isBDMobileNumberWithoutCountryCode()
+            return fieldValueValidator.isEmail()
         }
     }
 
