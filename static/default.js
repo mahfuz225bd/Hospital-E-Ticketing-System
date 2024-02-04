@@ -30,22 +30,34 @@ document.addEventListener('DOMContentLoaded', () => {
         name: () => {
             const nameValue = document.querySelector('#name').value
             const nameValueValidator = new Validator(nameValue)
+
             return nameValueValidator.isNotEmpty()
         },
         age: () => {
             const fieldValue = document.querySelector('#age').value
             const fieldValueValidator = new Validator(fieldValue)
-            return fieldValueValidator.isAge()
+
+            return fieldValueValidator.isNotEmpty() && fieldValueValidator.isAge()
         },
         phone: () => {
             const fieldValue = document.querySelector('#phone').value
             const fieldValueValidator = new Validator(fieldValue)
-            return fieldValueValidator.isBDMobileNumberWithoutCountryCode()
+
+            return fieldValueValidator.isNotEmpty() && fieldValueValidator.isBDMobileNumberWithoutCountryCode()
         },
         email: () => {
             const fieldValue = document.querySelector('#email').value
             const fieldValueValidator = new Validator(fieldValue)
-            return fieldValueValidator.isEmail()
+
+            return fieldValueValidator.isEmail() || fieldValueValidator.isEmpty()
+        },
+        customProblem: () => {
+            if (selectProblem.value === '_other') {
+                const fieldValue = inputCustomProblem.value
+                const fieldValueValidator = new Validator(fieldValue)
+
+                return fieldValueValidator.isNotEmpty()
+            }
         }
     }
 

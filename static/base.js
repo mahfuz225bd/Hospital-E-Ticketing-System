@@ -3,8 +3,12 @@ class Validator {
         this.value = value
     }
 
+    isEmpty() {
+        return this.value === undefined || this.value === null || this.value.length === 0
+    }
+
     isNotEmpty() {
-        return !(this.value === undefined || this.value === null || this.value.length === 0)
+        return !this.isEmpty()
     }
 
     isNumeric() {
