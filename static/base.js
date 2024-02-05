@@ -99,10 +99,6 @@ const preventDatesToInput = (inputElement, ISODaysNosToPrevent) => {
     }
 };
 
-const isNumeric = (value) => {
-    return !isNaN(value)
-}
-
 class CompareParagraphs {
     constructor(inputParagraph, targetToCompare) {
         this.inputParagraph = inputParagraph
