@@ -238,6 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (data.length > 0) {
                             hospitalSelectionRow.classList.remove('hide')
                             selectHospital.disabled = false
+                            selectHospital.innerHTML = '<option>(নির্বাচন করুন)</option>'
                             data.forEach(each => selectHospital.innerHTML += `<option value="${each.id}">${each.value}</option>`)
                         }
                     }).then(() => {
@@ -262,6 +263,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 const subdistrictOrThanaId = event.target.selectedOptions[0].getAttribute('value')
                 const subdistrictOrThanaName = event.target.selectedOptions[0].innerText
 
+                const subdistrictOrThanaAll = subdistrictOrThanaId === 'all'
+                const selectedDistrictId = selectDistrict.selectedOptions[0].getAttribute('value')
+
+                if (subdistrictOrThanaAll) {
+                    fetch(`/api/hospitals?districtId=${selectedDistrictId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.length > 0) {
+                                hospitalSelectionRow.classList.remove('hide')
+                                selectHospital.disabled = false
+                                selectHospital.innerHTML = '<option>(নির্বাচন করুন)</option>'
+                                data.forEach(each => selectHospital.innerHTML += `<option value="${each.id}">${each.value}</option>`)
+                            }
+                        })
+                }
+
                 fetch(`/api/hospitals?subdistrictOrThanaId=${subdistrictOrThanaId}`)
                     .then(response => response.json())
                     .then(data => {
@@ -270,11 +287,17 @@ document.addEventListener('DOMContentLoaded', () => {
                             selectHospital.innerHTML = '<option>(নির্বাচন করুন)</option>'
                             data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`);
                         } else {
-                            // Get subdistrictOrThanaName with removing count
-                            const _subdistrictOrThanaName = subdistrictOrThanaName.split(" ")
-                            _subdistrictOrThanaName.pop()
+                            // Get words of subdistrictOrThanaName as array
+                            const subdistrictOrThanaNameWords = subdistrictOrThanaName.split(" ")
 
-                            alert(`${_subdistrictOrThanaName.join(" ")}-তে কোন হাসপাতাল পাওয়া যায় নি`)
+                            // Removing count  from the last word in subdistrictOrThanaName
+                            subdistrictOrThanaNameWords.pop()
+
+                            const subdistrictOrThanaNameWithoutCount = subdistrictOrThanaNameWords.join(" ")
+
+                            if (subdistrictOrThanaNameWithoutCount) {
+                                alert(`${subdistrictOrThanaNameWithoutCount}-তে কোন হাসপাতাল পাওয়া যায় নি`)
+                            }
                         }
                     })
                     .catch(err => console.error(err))
