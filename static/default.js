@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const fieldValueValidator = new Validator(fieldValue)
 
             // Field can be empty, so we need to add the email rule only if it's not empty
-            return fieldValueValidator.isEmail() || fieldValueValidator.isEmpty()
+            return fieldValueValidator.isEmail() && fieldValueValidator.isEmpty()
         },
         checkProblemSelection: () => {
             const fieldValue = selectProblem.selectedOptions[0].getAttribute('value')
