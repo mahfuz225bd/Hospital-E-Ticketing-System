@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Showing form
     formSlider.show()
-    
+
 
     const checkInputs = {
         checkName: () => {
@@ -57,13 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const fieldValueValidator = new Validator(fieldValue)
 
             // Field can be empty, so we need to add the email rule only if it's not empty
-            return fieldValueValidator.isEmail() && fieldValueValidator.isEmpty()
+            return fieldValueValidator.isEmail() || fieldValueValidator.isEmpty()
         },
         checkProblemSelection: () => {
             const fieldValue = selectProblem.selectedOptions[0].getAttribute('value')
             const fieldValueValidator = new Validator(fieldValue)
 
-            const filledUp = fieldValueValidator.isNot(null) || fieldValueValidator.isNot('')
+            const filledUp = fieldValueValidator.isNot(null) && fieldValueValidator.isNot('')
 
             return filledUp
         },
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const fieldValue = selectDivision.selectedOptions[0].getAttribute('value')
             const fieldValueValidator = new Validator(fieldValue)
 
-            const filledUp = fieldValueValidator.isNot(null) || fieldValueValidator.isNot('')
+            const filledUp = fieldValueValidator.isNot(null) && fieldValueValidator.isNot('')
 
             return filledUp
         },
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const fieldValue = selectDistrict.selectedOptions[0].getAttribute('value')
                 const fieldValueValidator = new Validator(fieldValue)
 
-                const filledUp = fieldValueValidator.isNot(null) || fieldValueValidator.isNot('')
+                const filledUp = fieldValueValidator.isNot(null) && fieldValueValidator.isNot('')
 
                 return filledUp
             }
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const fieldValue = selectHospital.selectedOptions[0].getAttribute('value')
             const fieldValueValidator = new Validator(fieldValue)
 
-            const filledUp = fieldValueValidator.isNot(null) || fieldValueValidator.isNot('')
+            const filledUp = fieldValueValidator.isNot(null) && fieldValueValidator.isNot('')
 
             return filledUp
         },
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const fieldValue = selectDoctor.selectedOptions[0].getAttribute('value')
             const fieldValueValidator = new Validator(fieldValue)
 
-            const filledUp = fieldValueValidator.isNot(null) || fieldValueValidator.isNot('')
+            const filledUp = fieldValueValidator.isNot(null) && fieldValueValidator.isNot('')
 
             return filledUp
         },
