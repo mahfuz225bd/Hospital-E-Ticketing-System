@@ -16,14 +16,14 @@
   <div class="form-slide">
     <div class="input-row no-label">
       <div class="input-col left">
-        <input type="text" placeholder="রোগীর নাম *" name="name" id="name" required autofocus />
+        <input type="text" placeholder="রোগীর নাম *" name="name" id="name" autofocus />
       </div>
       <div class="input-col">
-        <input type="text" placeholder="রোগীর বয়স *" name="age" id="age" required />
+        <input type="text" placeholder="রোগীর বয়স *" name="age" id="age" />
       </div>
       <div class="input-col right">
-        <select name="gender" id="gender" required>
-          <option value="" selected disabled>লিঙ্গ *</option>
+        <select name="gender" id="gender">
+          <option disabled selected>লিঙ্গ *</option>
           <option value="M">পুরুষ</option>
           <option value="F">মহিলা</option>
           <option value="O">অন্যান্য</option>
@@ -33,11 +33,10 @@
 
     <div class="input-row">
       <div class="input-col left">
-        <input type="tel" placeholder="ফোন নম্বর *" name="phone" id="phone" data-input-template="+88X XXXX-XXXXXX"
-          required />
+        <input type="tel" placeholder="ফোন নম্বর *" name="phone" id="phone" data-input-template="+88X XXXX-XXXXXX" />
       </div>
       <div class="input-col right">
-        <input type="text" placeholder="ইমেইল" name="email" id="email" required />
+        <input type="text" placeholder="ইমেইল" name="email" id="email" />
       </div>
     </div>
 
@@ -57,8 +56,8 @@
     <div class="input-row" style="margin-top: -10px">
       <div class="input-col">
         <label for="problem">রোগ/সমস্যা নির্বাচনঃ <span style="color: red">*</span></label>
-        <select id="problem" name="problem" title="রোগীর রোগ/সমস্যা নির্বাচন করি" required>
-          <option>(নির্বাচন করুন)</option>
+        <select id="problem" name="problem" title="রোগীর রোগ/সমস্যা নির্বাচন করি">
+          <option disabled selected>(নির্বাচন করুন)</option>
         </select>
         <br class="hide">
         <!-- name attribute should not be provided. it will be handled by js -->
@@ -78,13 +77,12 @@
       </div>
     </div>
 
-    <nav>
-      <button class="btn">&#8592; Prev</button>
-      <button class="btn">Next &#8594;</button>
+    <nav class="float-right">
+      <a class="btn" id="patientDiseaseInformation_btnNext">Next &#8594;</a>
     </nav>
   </div>
 
-  <!-- Form Slide: Hospital Selection Slide -->
+  <!-- Form Slide: Hospital Selection -->
   <div class="form-slide">
     <h2>হাসপাতাল নির্বাচন করুন</h2>
 
@@ -96,17 +94,17 @@
     <div class="input-row">
       <div class="input-col left">
         <label for="division">বিভাগঃ <span style="color: red">*</span></label>
-        <select id="division" name="division" required>
+        <select id="division" name="division">
           <option>(নির্বাচন করুন)</option>
         </select>
       </div>
       <div class="input-col">
         <label for="district">জেলাঃ <span style="color: red">*</span></label>
-        <select id="district" name="district" required disabled></select>
+        <select id="district" name="district" disabled></select>
       </div>
       <div class="input-col right">
         <label for="subdistrictOrThana">উপজেলা/থানাঃ</label>
-        <button type="button" id="btnShowSubdistrictOrThanaInput" class="btn btn-show-subdistrictOrThana-input"
+        <button type="button" id="btnShowSubdistrictOrThanaInput" class="btn btn-show-subdistrictOrThana-input text-sm"
           title="Show input for subdistrict/thana" disabled>
           ইনপুট দিতে ক্লিক করুন (ঐচ্ছিক)</button>
         <select id="subdistrictOrThana" name="subdistrictOrThana" disabled hidden></select>
@@ -124,14 +122,19 @@
       <input type="radio" id="clear_filter_hospital" name="filter_hospital" value="all">
       <label class="fw-normal" for="clear_filter_hospital">সকল হাসপাতাল</label>
       <br> -->
-        <select id="hospital" name="hospital" required disabled>
+        <select id="hospital" name="hospital" disabled>
           <option>(নির্বাচন করুন)</option>
         </select>
       </div>
     </div>
+
+    <nav>
+      <a class="btn" id="hospitalSlide_prevBtn">&#8592; Prev</a>
+      <a class="btn" id="hospitalSlide_nextBtn">Next &#8594;</a>
+    </nav>
   </div>
 
-  <!-- Form Slide: Doctor Appointment Slide -->
+  <!-- Form Slide: Doctor Appointment -->
   <div class="form-slide">
     <h2>ডাক্তার অ্যাপয়েন্টমেন্ট</h2>
 
@@ -148,7 +151,7 @@
       <label class="fw-normal" for="clear_filter_doctor">সকল বিভাগের
         ডাক্তারগণ</label>
       <br> -->
-        <select id="doctor" name="doctor" required disabled>
+        <select id="doctor" name="doctor" disabled>
           <option>(নির্বাচন করুন)</option>
         </select>
       </div>
@@ -159,9 +162,21 @@
         <label for="appointmentDate">"<output class="doctorNameValue"></output>" এর অ্যাপয়েন্টমেন্ট তারিখ নির্বাচন
           করুনঃ
           <span style="color: red">*</span></label>
-        <input type="date" name="appointmentDate" id="appointmentDate" data-available-iso-weeks="1,2,3,4,7" required />
+        <input type="date" name="appointmentDate" id="appointmentDate" data-available-iso-weeks="1,2,3,4,7" />
       </div>
     </div>
+
+    <nav>
+      <a class="btn" id="doctorAppointment_btnPrev">&#8592; Prev</a>
+      <a class="btn" id="doctorAppointment_btnNext">Next &#8594;</a>
+    </nav>
+  </div>
+
+  <!-- Form Slide: Payment and Confirmation -->
+  <div class="form-slide">
+    <nav>
+      <a class="btn" id="paymentAndConfirmation_btnPrev">&#8592; Prev</a>
+    </nav>
 
     <button type="submit" class="btn">নিশ্চিত করুন</button>
   </div>

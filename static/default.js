@@ -25,277 +25,429 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Showing form
     formSlider.show()
+    
 
-    const checkValidationOfTextValues = {
-        name: () => {
-            const nameValue = document.querySelector('#name').value
+    const checkInputs = {
+        checkName: () => {
+            const nameValue = document.querySelector('input#name').value
             const nameValueValidator = new Validator(nameValue)
 
             return nameValueValidator.isNotEmpty()
         },
-        age: () => {
-            const fieldValue = document.querySelector('#age').value
+        checkAge: () => {
+            const fieldValue = document.querySelector('input#age').value
             const fieldValueValidator = new Validator(fieldValue)
 
             return fieldValueValidator.isNotEmpty() && fieldValueValidator.isAge()
         },
-        phone: () => {
-            const fieldValue = document.querySelector('#phone').value
+        checkGender: () => {
+            const fieldValue = document.querySelector('select#gender').value
+            const fieldValueValidator = new Validator(fieldValue)
+
+            return fieldValueValidator.isOneOf(['M', 'F', 'O'])
+        },
+        checkPhoneNumber: () => {
+            const fieldValue = document.querySelector('input#phone').value
             const fieldValueValidator = new Validator(fieldValue)
 
             return fieldValueValidator.isNotEmpty() && fieldValueValidator.isBDMobileNumberWithoutCountryCode()
         },
-        email: () => {
-            const fieldValue = document.querySelector('#email').value
+        checkEmail: () => {
+            const fieldValue = document.querySelector('input#email').value
             const fieldValueValidator = new Validator(fieldValue)
 
+            // Field can be empty, so we need to add the email rule only if it's not empty
             return fieldValueValidator.isEmail() || fieldValueValidator.isEmpty()
         },
-        customProblem: () => {
-            if (selectProblem.value === '_other') {
+        checkProblemSelection: () => {
+            const fieldValue = selectProblem.selectedOptions[0].getAttribute('value')
+            const fieldValueValidator = new Validator(fieldValue)
+
+            const filledUp = fieldValueValidator.isNot(null) || fieldValueValidator.isNot('')
+
+            return filledUp
+        },
+        checkCustomProblemInput: () => {
+            if (selectProblem.selectedOptions[0].getAttribute('value') === '_other') {
                 const fieldValue = inputCustomProblem.value
                 const fieldValueValidator = new Validator(fieldValue)
 
                 return fieldValueValidator.isNotEmpty()
             }
+
+            return true
+        },
+        checkDivisionSelection: () => {
+            const fieldValue = selectDivision.selectedOptions[0].getAttribute('value')
+            const fieldValueValidator = new Validator(fieldValue)
+
+            const filledUp = fieldValueValidator.isNot(null) || fieldValueValidator.isNot('')
+
+            return filledUp
+        },
+        checkDistrictSelection: () => {
+            if (selectDistrict.selectedOptions[0]) {
+                const fieldValue = selectDistrict.selectedOptions[0].getAttribute('value')
+                const fieldValueValidator = new Validator(fieldValue)
+
+                const filledUp = fieldValueValidator.isNot(null) || fieldValueValidator.isNot('')
+
+                return filledUp
+            }
+
+            return false
+        },
+        checkHospitalSelection: () => {
+            const fieldValue = selectHospital.selectedOptions[0].getAttribute('value')
+            const fieldValueValidator = new Validator(fieldValue)
+
+            const filledUp = fieldValueValidator.isNot(null) || fieldValueValidator.isNot('')
+
+            return filledUp
+        },
+        checkDoctorSelection: () => {
+            const fieldValue = selectDoctor.selectedOptions[0].getAttribute('value')
+            const fieldValueValidator = new Validator(fieldValue)
+
+            const filledUp = fieldValueValidator.isNot(null) || fieldValueValidator.isNot('')
+
+            return filledUp
+        },
+        checkAppointmentDate: () => {
+            const fieldValue = appointmentDate.value
+            const fieldValueValidator = new Validator(fieldValue)
+
+            const filledUp = fieldValueValidator.isNot(null) && fieldValueValidator.isNot('')
+
+            return filledUp && fieldValueValidator.isHTMLDate()
         }
     }
 
-    const activeFunctionalites = (slideNo) => {
-        switch (slideNo) {
-            case 1:
 
-                break;
-
-            case 2:
-
-                break;
-
-            case 3:
-
-                break;
-
-            case 4:
-
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    activeFunctionalites(formSlider.getSlideNo())
-
-    // Next to hospital selection slide
-    
-
-    // Setting attributes value, min, max properties of #appointmentDate
-    const todayForHTML = DateValueForHTML.getToday()
-    inputAppointmentDate.setAttribute('value', todayForHTML)
-    inputAppointmentDate.setAttribute('min', todayForHTML)
-    inputAppointmentDate.setAttribute('max', DateValueForHTML.getDateAfterThirtyDays())
-
-    // To enable selectProblem and inputCustomProblem
-    problemKnownOption.addEventListener('click', () => {
-        selectProblem.disabled = false
-        inputCustomProblem.disabled = false
-    })
-
-    // To disable selectProblem and inputCustomProblem
-    problemUnknownOption.addEventListener('click', () => {
-        selectProblem.disabled = true
-        inputCustomProblem.disabled = true
-    })
-
-    // Loading problems to #selectProblems, then loading divisions to #division
-    fetch('/api/problems')
-        .then(response => response.json())
-        .then(problems => {
-            const categories = Object.keys(problems)
-            categories.forEach(category => {
-                let optionElements = ''
-                problems[category].forEach(problem => {
-                    optionElements += `<option value="${problem.id}" data-value-alt=${problem.valueAlt}>${problem.value}</option>`
-                })
-
-                selectProblem.innerHTML += `<optgroup label="${category}">${optionElements}</optgroup>`
+    const activeFunctionalities = (slideNo) => {
+        if (slideNo === 1) {
+            // To enable selectProblem and inputCustomProblem
+            problemKnownOption.addEventListener('click', () => {
+                selectProblem.disabled = false
+                inputCustomProblem.disabled = false
             })
-            selectProblem.innerHTML += '<option value="_other">অন্য রোগ/সমস্যা</option>';
-        }).then(() => {
-            // Loading divisions to #division
-            fetch('/api/divisions')
+
+            // To disable selectProblem and inputCustomProblem
+            problemUnknownOption.addEventListener('click', () => {
+                selectProblem.disabled = true
+                inputCustomProblem.disabled = true
+            })
+
+            // Loading problems to #selectProblems, then loading divisions to #division
+            fetch('/api/problems')
                 .then(response => response.json())
-                .then(data => {
-                    data.forEach(each => selectDivision.innerHTML += `<option value=${each.id}>${each.value}</option>`);
+                .then(problems => {
+                    const categories = Object.keys(problems)
+                    categories.forEach(category => {
+                        let optionElements = ''
+                        problems[category].forEach(problem => {
+                            optionElements += `<option value="${problem.id}" data-value-alt=${problem.valueAlt}>${problem.value}</option>`
+                        })
+
+                        selectProblem.innerHTML += `<optgroup label="${category}">${optionElements}</optgroup>`
+                    })
+                    selectProblem.innerHTML += '<option value="_other">অন্য রোগ/সমস্যা</option>';
+                }).then(() => {
+                    // Loading divisions to #division
+                    fetch('/api/divisions')
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(each => selectDivision.innerHTML += `<option value=${each.id}>${each.value}</option>`);
+                        })
+                        .catch(err => console.error(err))
                 })
                 .catch(err => console.error(err))
-        })
-        .catch(err => console.error(err))
 
-    // To change values of all output.problemValue + show/hide #inputCustomProblem
-    selectProblem.addEventListener('input', event => {
-        // Changing values of all output.problemValue
-        const selectedProblemValue = event.target.selectedOptions[0].innerText
-        allProblemValues.forEach(each => {
-            each.innerText = selectedProblemValue
-        })
+            // To change values of all output.problemValue + show/hide #inputCustomProblem
+            selectProblem.addEventListener('input', event => {
+                // Changing values of all output.problemValue
+                const selectedProblemValue = event.target.selectedOptions[0].innerText
+                allProblemValues.forEach(each => {
+                    each.innerText = selectedProblemValue
+                })
 
-        // Showing or hiding #inputCustomProblem + changing filter values for hospitals and doctors
-        if (event.target.value === '_other') {
-            inputCustomProblem.style.display = 'block'
-            inputCustomProblem.value = ''
-            inputCustomProblem.setAttribute('required', true)
-            inputCustomProblem.setAttribute('placeholder', "রোগীর রোগ/সমস্যার নাম লিখুন *")
+                // Showing or hiding #inputCustomProblem + changing filter values for hospitals and doctors
+                if (event.target.value === '_other') {
+                    inputCustomProblem.style.display = 'block'
+                    inputCustomProblem.value = ''
+                    inputCustomProblem.setAttribute('required', true)
+                    inputCustomProblem.setAttribute('placeholder', "রোগীর রোগ/সমস্যার নাম লিখুন *")
 
-            document.getElementById('filter_hospital').value = 'filter_outdoor'
-            document.getElementById('filter_doctor').value = 'filter_outdoor'
-        } else {
-            inputCustomProblem.style.display = 'none'
-            inputCustomProblem.value = ''
-            inputCustomProblem.removeAttribute('required', false)
-            inputCustomProblem.setAttribute('placeholder', "রোগীর রোগ/সমস্যার নাম লিখুন")
-        }
-    })
-
-    // To change value to selectProblem from #inputCustomProblem (with replacing _other)
-    inputCustomProblem.addEventListener('input', event => {
-        selectProblem.selectedOptions[0].value = "Other: " + event.target.value
-
-        // Changing text of filter labels
-        document.querySelector('label[for="filter_hospital"]').innerHTML = `${inputCustomProblem.value} এর জন্য বহির্বিভাগ রয়েছে এমন হাসপাতালসমূহ`
-        document.querySelector('label[for="filter_doctor"]').innerHTML = `${inputCustomProblem.value} এর জন্য বহির্বিভাগের ডাক্তারগণ`
-    })
-
-    // To show word count and limit for preventing input for more characters
-    symptoms.addEventListener('input', event => {
-        const countWord = event.target.value.trim().length
-        if (countWord <= 255) {
-            symptomsWordCount.innerText = countWord
-        } else {
-            alert("রোগের লক্ষণসমূহ ২৫৫ অক্ষরের বেশি লিখা যাবে না।")
-            symptomsWordCount.innerText = "255"
-            event.target.value = event.target.value.slice(0, 255)
-        }
-    })
-
-    // To load districts on input #division
-    selectDivision.addEventListener('input', event => {
-        const divisionId = event.target.selectedOptions[0].getAttribute('value')
-
-        fetch(`/api/districts?divisionId=${divisionId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.length > 0) {
-                    selectDistrict.disabled = false
-                    selectDistrict.innerHTML = '<option>(নির্বাচন করুন)</option>'
-                    data.forEach(each => selectDistrict.innerHTML += `<option value=${each.id}>${each.value}</option>`);
+                    // document.getElementById('filter_hospital').value = 'filter_outdoor'
+                    document.getElementById('filter_doctor').value = 'filter_outdoor'
+                } else {
+                    inputCustomProblem.style.display = 'none'
+                    inputCustomProblem.value = ''
+                    inputCustomProblem.removeAttribute('required', false)
+                    inputCustomProblem.setAttribute('placeholder', "রোগীর রোগ/সমস্যার নাম লিখুন")
                 }
             })
-            .catch(err => console.error(err))
-    })
 
-    // To load hospitals \w showing hidden #hospitalSelectionRow + subdistrict/thanas on input #district
-    selectDistrict.addEventListener('input', event => {
-        const districtId = event.target.selectedOptions[0].getAttribute('value')
+            // To change value to selectProblem from #inputCustomProblem (with replacing _other)
+            inputCustomProblem.addEventListener('input', event => {
+                selectProblem.selectedOptions[0].value = "Other: " + event.target.value
 
-        // Loading hospitals + subdistrict/thanas with enabling select input
-        fetch(`/api/hospitals?districtId=${districtId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.length > 0) {
-                    hospitalSelectionRow.classList.remove('hide')
-                    selectHospital.disabled = false
-                    data.forEach(each => selectHospital.innerHTML += `<option value="${each.id}">${each.value}</option>`)
+                // Changing text of filter labels
+                document.querySelector('label[for="filter_hospital"]').innerHTML = `${inputCustomProblem.value} এর জন্য বহির্বিভাগ রয়েছে এমন হাসপাতালসমূহ`
+                document.querySelector('label[for="filter_doctor"]').innerHTML = `${inputCustomProblem.value} এর জন্য বহির্বিভাগের ডাক্তারগণ`
+            })
+
+            // To show word count and limit for preventing input for more characters
+            symptoms.addEventListener('input', event => {
+                const countWord = event.target.value.trim().length
+                if (countWord <= 255) {
+                    symptomsWordCount.innerText = countWord
+                } else {
+                    alert("রোগের লক্ষণসমূহ ২৫৫ অক্ষরের বেশি লিখা যাবে না।")
+                    symptomsWordCount.innerText = "255"
+                    event.target.value = event.target.value.slice(0, 255)
                 }
-            }).then(() => {
-                // Loading subdistrict/thanas with enabling select input
-                fetch(`/api/subdistrictAndThanas?districtId=${districtId}`)
+            })
+        }
+
+        if (slideNo === 2) {
+            // To load districts on input #division
+            selectDivision.addEventListener('input', event => {
+                const divisionId = event.target.selectedOptions[0].getAttribute('value')
+
+                fetch(`/api/districts?divisionId=${divisionId}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.length > 0) {
-                            btnShowSubdistrictOrThanaInput.disabled = false
-                            selectSubdistrictOrThana.disabled = false
-                            selectSubdistrictOrThana.innerHTML = '<option value="all">-- সকল --</option>'
-                            data.forEach(each => selectSubdistrictOrThana.innerHTML += `<option value="${each.id}">${each.value} (${each.count})</option>`);
+                            selectDistrict.disabled = false
+                            selectDistrict.innerHTML = '<option>(নির্বাচন করুন)</option>'
+                            data.forEach(each => selectDistrict.innerHTML += `<option value=${each.id}>${each.value}</option>`);
                         }
                     })
                     .catch(err => console.error(err))
             })
-            .catch(err => console.error(err))
-    })
 
-    // To load hospitals on input #subdistrictOrThana
-    selectSubdistrictOrThana.addEventListener('input', event => {
-        const subdistrictOrThanaId = event.target.selectedOptions[0].getAttribute('value')
-        const subdistrictOrThanaName = event.target.selectedOptions[0].innerText
+            // To load hospitals \w showing hidden #hospitalSelectionRow + subdistrict/thanas on input #district
+            selectDistrict.addEventListener('input', event => {
+                const districtId = event.target.selectedOptions[0].getAttribute('value')
 
-        fetch(`/api/hospitals?subdistrictOrThanaId=${subdistrictOrThanaId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.length > 0) {
-                    selectHospital.disabled = false
-                    selectHospital.innerHTML = '<option>(নির্বাচন করুন)</option>'
-                    data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`);
-                } else {
-                    // Get subdistrictOrThanaName with removing count
-                    const _subdistrictOrThanaName = subdistrictOrThanaName.split(" ")
-                    _subdistrictOrThanaName.pop()
-
-                    alert(`${_subdistrictOrThanaName.join(" ")}-তে কোন হাসপাতাল পাওয়া যায় নি`)
-                }
+                // Loading hospitals + subdistrict/thanas with enabling select input
+                fetch(`/api/hospitals?districtId=${districtId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            hospitalSelectionRow.classList.remove('hide')
+                            selectHospital.disabled = false
+                            data.forEach(each => selectHospital.innerHTML += `<option value="${each.id}">${each.value}</option>`)
+                        }
+                    }).then(() => {
+                        // Loading subdistrict/thanas with enabling select input
+                        fetch(`/api/subdistrictAndThanas?districtId=${districtId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.length > 0) {
+                                    btnShowSubdistrictOrThanaInput.disabled = false
+                                    selectSubdistrictOrThana.disabled = false
+                                    selectSubdistrictOrThana.innerHTML = '<option value="all">-- সকল --</option>'
+                                    data.forEach(each => selectSubdistrictOrThana.innerHTML += `<option value="${each.id}">${each.value} (${each.count})</option>`);
+                                }
+                            })
+                            .catch(err => console.error(err))
+                    })
+                    .catch(err => console.error(err))
             })
-            .catch(err => console.error(err))
-    })
 
-    // To load doctors on input #hospital + change values of all output.hospitalValues
-    selectHospital.addEventListener('input', event => {
-        const hospitalId = event.target.selectedOptions[0].getAttribute('value')
+            // To load hospitals on input #subdistrictOrThana
+            selectSubdistrictOrThana.addEventListener('input', event => {
+                const subdistrictOrThanaId = event.target.selectedOptions[0].getAttribute('value')
+                const subdistrictOrThanaName = event.target.selectedOptions[0].innerText
 
-        fetch(`/api/doctors?hospitalId=${hospitalId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.length > 0) {
-                    selectDoctor.disabled = false
-                    selectDoctor.innerHTML = '<option>(নির্বাচন করুন)</option>'
-                    data.forEach(each => selectDoctor.innerHTML += `<option value=${each.id} data-per-visit-time=${each.perVisitTime} data-treatment-for="${each.treatmentFor}">${each.name}, ${each.speciality}</option>`)
-                }
-            }).then(() => {
-                // Changing values of all output.hospitalValues
-                const selectedHospitalValue = event.target.selectedOptions[0].innerText
-                allHospitalValues.forEach(each => {
-                    each.innerText = selectedHospitalValue
-                })
+                fetch(`/api/hospitals?subdistrictOrThanaId=${subdistrictOrThanaId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            selectHospital.disabled = false
+                            selectHospital.innerHTML = '<option>(নির্বাচন করুন)</option>'
+                            data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`);
+                        } else {
+                            // Get subdistrictOrThanaName with removing count
+                            const _subdistrictOrThanaName = subdistrictOrThanaName.split(" ")
+                            _subdistrictOrThanaName.pop()
+
+                            alert(`${_subdistrictOrThanaName.join(" ")}-তে কোন হাসপাতাল পাওয়া যায় নি`)
+                        }
+                    })
+                    .catch(err => console.error(err))
             })
-            .catch(err => console.error(err))
-    })
 
-    // To show #selectSubdistrictOrThana and hide button itself
-    btnShowSubdistrictOrThanaInput.addEventListener('click', event => {
-        event.target.hidden = true;
-        selectSubdistrictOrThana.hidden = false;
-    })
+            // To load doctors on input #hospital + change values of all output.hospitalValues
+            selectHospital.addEventListener('input', event => {
+                const hospitalId = event.target.selectedOptions[0].getAttribute('value')
 
-    // To show #appointmentDateRow + change all output.allDoctorNameValues
-    selectDoctor.addEventListener('input', event => {
-        // Hide #appointmentDateRow
-        if (appointmentDateRow.classList.contains('hide')) {
-            appointmentDateRow.classList.remove('hide')
+                fetch(`/api/doctors?hospitalId=${hospitalId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            selectDoctor.disabled = false
+                            selectDoctor.innerHTML = '<option>(নির্বাচন করুন)</option>'
+                            data.forEach(each => selectDoctor.innerHTML += `<option value=${each.id} data-per-visit-time=${each.perVisitTime} data-treatment-for="${each.treatmentFor}">${each.name}, ${each.speciality}</option>`)
+                        }
+                    }).then(() => {
+                        // Changing values of all output.hospitalValues
+                        const selectedHospitalValue = event.target.selectedOptions[0].innerText
+                        allHospitalValues.forEach(each => {
+                            each.innerText = selectedHospitalValue
+                        })
+                    })
+                    .catch(err => console.error(err))
+            })
+
+            // To show #selectSubdistrictOrThana and hide button itself
+            btnShowSubdistrictOrThanaInput.addEventListener('click', event => {
+                event.target.hidden = true;
+                selectSubdistrictOrThana.hidden = false;
+            })
         }
 
-        const doctorName = event.target.selectedOptions[0].innerText.split(",")[0].trim(0)
+        if (slideNo === 3) {
+            // To show #appointmentDateRow + change all output.allDoctorNameValues
+            selectDoctor.addEventListener('input', event => {
+                // Hide #appointmentDateRow
+                if (appointmentDateRow.classList.contains('hide')) {
+                    appointmentDateRow.classList.remove('hide')
+                }
 
-        // Changing values to all output.doctorNameValue
-        allDoctorNameValues.forEach(each => each.innerText = doctorName)
+                const doctorName = event.target.selectedOptions[0].innerText.split(",")[0].trim(0)
+
+                // Changing values to all output.doctorNameValue
+                allDoctorNameValues.forEach(each => each.innerText = doctorName)
+            })
+
+            // Setting attributes value, min, max properties of #appointmentDate
+            const todayForHTML = DateValueForHTML.getToday()
+            inputAppointmentDate.setAttribute('value', todayForHTML)
+            inputAppointmentDate.setAttribute('min', todayForHTML)
+            inputAppointmentDate.setAttribute('max', DateValueForHTML.getDateAfterThirtyDays())
+
+            // To configure to show alert if doctor is not available according to specific weeks (iso weeks)
+            inputAppointmentDate.addEventListener('input', event => {
+                const availableISOWeeks = event.target.dataset.availableIsoWeeks.split(',').map(item => Number(item.trim()));
+                const unavailableISOWeeks = Array.from({ length: 7 }, (_, index) => index + 1).filter(num => !availableISOWeeks.includes(num));
+
+                const targetElement = event.target
+                preventDatesToInput(targetElement, unavailableISOWeeks)
+            })
+        }
+    }
+
+
+    activeFunctionalities(formSlider.getSlideNo())
+
+
+    // Onclick action nav buttons of form slide: Patient and Disease Information
+    document.querySelector('#patientDiseaseInformation_btnNext').addEventListener('click', () => {
+        // console.log("Check Name: ", checkInputs.checkName());
+        // console.log("Check Age: ", checkInputs.checkAge());
+        // console.log("Check Gender: ", checkInputs.checkGender());
+        // console.log("Check Phone Number: ", checkInputs.checkPhoneNumber());
+        // console.log("Check Email: ", checkInputs.checkEmail());
+        // console.log("Check Problem Selection: ", checkInputs.checkProblemSelection());
+        // console.log("Check Custom Problem Input: ", checkInputs.checkCustomProblemInput());
+
+        if (checkInputs.checkName() &&
+            checkInputs.checkAge() &&
+            checkInputs.checkGender() &&
+            checkInputs.checkPhoneNumber() &&
+            checkInputs.checkEmail() &&
+            checkInputs.checkProblemSelection() &&
+            checkInputs.checkCustomProblemInput()
+        ) {
+            formSlider.next()
+            activeFunctionalities(formSlider.getSlideNo())
+        } else {
+            if (!checkInputs.checkName()) {
+                alert("Must provide patient name.")
+            }
+
+            if (!checkInputs.checkAge()) {
+                alert("Provide valid age.")
+            }
+
+            if (!checkInputs.checkGender()) {
+                alert("Gender must be (M, F or O) where M=Male, F=Female and O=Other.")
+            }
+
+            if (!checkInputs.checkPhoneNumber()) {
+                alert("Provide valid Phone Number of Bangladesh.")
+            }
+
+            if (!checkInputs.checkEmail()) {
+                alert("Invalid Email Address.")
+            }
+
+            if (!checkInputs.checkProblemSelection()) {
+                alert("Must provide patient's disease/problem.")
+            }
+
+            if (!checkInputs.checkCustomProblemInput()) {
+                alert("You must input patient's disease/problem.")
+            }
+        }
     })
 
-    // To configure to show alert if doctor is not available according to specific weeks (iso weeks)
-    inputAppointmentDate.addEventListener('input', event => {
-        const availableISOWeeks = event.target.dataset.availableIsoWeeks.split(',').map(item => Number(item.trim()));
-        const unavailableISOWeeks = Array.from({ length: 7 }, (_, index) => index + 1).filter(num => !availableISOWeeks.includes(num));
 
-        const targetElement = event.target
-        preventDatesToInput(targetElement, unavailableISOWeeks)
+    // Onclick action nav buttons of form slide: Hospital Selection Slide
+    document.querySelector('#hospitalSlide_prevBtn').addEventListener('click', () => {
+        formSlider.prev()
     })
+
+    document.querySelector('#hospitalSlide_nextBtn').addEventListener('click', () => {
+        if (checkInputs.checkDivisionSelection() &&
+            checkInputs.checkDistrictSelection() &&
+            checkInputs.checkHospitalSelection()) {
+            formSlider.next()
+            activeFunctionalities(formSlider.getSlideNo())
+        } else {
+            if (!checkInputs.checkDivisionSelection()) {
+                alert("Division is not selected.")
+            }
+
+            if (!checkInputs.checkDistrictSelection()) {
+                alert("District is not selected.")
+            }
+
+            if (checkInputs.checkDistrictSelection() && !checkInputs.checkHospitalSelection()) {
+                alert("Hospital is not selected.")
+            }
+        }
+    })
+
+
+    // Onclick action nav buttons of form slide: Doctor Appointment Slide
+    document.querySelector('#doctorAppointment_btnPrev').addEventListener('click', () => {
+        formSlider.prev()
+    })
+
+    // Onclick action nav buttons of form slide: Payment and Confirmation
+    document.querySelector("#paymentAndConfirmation_btnPrev").addEventListener('click', () => {
+        formSlider.prev()
+    })
+
+
+    document.querySelector('#doctorAppointment_btnNext').addEventListener('click', () => {
+        if (checkInputs.checkDoctorSelection() && checkInputs.checkAppointmentDate()) {
+            formSlider.next()
+        } else {
+            if (!checkInputs.checkDoctorSelection()) {
+                alert("Doctor is not selected.")
+            }
+
+            if (!checkInputs.checkAppointmentDate()) {
+                alert("Invalid date input")
+            }
+        }
+    })
+
 
     // If form#mainForm is submitted
     mainForm.addEventListener('submit', event => {
@@ -324,7 +476,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }).toString()
             }).then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     // remove session
                     if (customProblemId) {
                         sessionStorage.removeItem("customProblemId");
@@ -407,9 +558,9 @@ document.addEventListener('DOMContentLoaded', () => {
         event.target.reset()
     })
 
-    // Temporary
-    document.querySelectorAll("*").forEach(el => {
-        el.classList.remove('hide')
-        el.disabled = false
-    })
+    // // Temporary
+    // document.querySelectorAll("*").forEach(el => {
+    //     el.classList.remove('hide')
+    //     el.disabled = false
+    // })
 })

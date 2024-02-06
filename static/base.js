@@ -30,24 +30,37 @@ class Validator {
         return emailRegExp.test(this.value)
     }
 
+    isHTMLDate() {
+        const htmlDateRegExp = /\b\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])\b/
+        return htmlDateRegExp.test(this.value)
+    }
+
     isToday() {
-        let today = new Date();
-        let d = new Date(this.value);
+        const today = new Date();
+        const d = new Date(this.value);
         return today.getFullYear() === d.getFullYear() &&
             today.getMonth() + 1 === d.getMonth() &&
             today.getDate() === d.getDate();
     }
 
     isWithinThirtyDaysFromToday() {
-        var dateOne = new Date(this.value);
-        var dateTwo = new Date();
-        var Difference_In_Time = dateTwo - dateOne;
+        const dateOne = new Date(this.value);
+        const dateTwo = new Date();
+        const Difference_In_Time = dateTwo - dateOne;
 
         // convert time into days
-        var Difference_In_Days = Difference_In_Time / (1 *
-            (1000 * 60 * 60 * 24));
+        const Difference_In_Days = Difference_In_Time / (1 * (1000 * 60 * 60 * 24));
 
         return Difference_In_Days <= 30;
+    }
+
+    isOneOf(valuesToCheck) {
+        if (!Array.isArray(valuesToCheck)) throw Error('Argument should be an array');
+        return valuesToCheck.includes(this.value)
+    }
+
+    isNot(newValue) {
+        return this.value !== newValue
     }
 }
 

@@ -61,7 +61,8 @@ textarea:focus {
 
 input:disabled,
 select:disabled,
-textarea:disabled {
+textarea:disabled,
+button:disabled {
   cursor: not-allowed;
 }
 
@@ -88,6 +89,10 @@ select.loading {
 .btn:disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+a.btn {
+  text-align: center;
 }
 
 /* Form slider */
@@ -170,6 +175,10 @@ ul.step-indicator li+li:before {
 
 .text-right {
   text-align: right;
+}
+
+.float-right {
+  float: right;
 }
 
 /* Others */
