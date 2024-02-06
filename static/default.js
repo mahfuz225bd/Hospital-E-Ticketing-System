@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     inputCustomProblem.setAttribute('required', true)
                     inputCustomProblem.setAttribute('placeholder', "রোগীর রোগ/সমস্যার নাম লিখুন *")
 
-                    // document.getElementById('filter_hospital').value = 'filter_outdoor'
+                    document.getElementById('filter_hospital').value = 'filter_outdoor'
                     document.getElementById('filter_doctor').value = 'filter_outdoor'
                 } else {
                     inputCustomProblem.style.display = 'none'
