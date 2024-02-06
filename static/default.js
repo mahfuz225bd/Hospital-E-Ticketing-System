@@ -451,8 +451,8 @@ document.addEventListener('DOMContentLoaded', () => {
         formSlider.prev()
     })
 
-    // Onclick action nav buttons of form slide: Payment and Confirmation
-    document.querySelector("#paymentAndConfirmation_btnPrev").addEventListener('click', () => {
+    // Onclick action nav buttons of form slide: Confirmation
+    document.querySelector("#confirmation_btnPrev").addEventListener('click', () => {
         formSlider.prev()
     })
 
