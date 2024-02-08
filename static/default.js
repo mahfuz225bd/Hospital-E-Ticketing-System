@@ -543,19 +543,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         .then(data => {
                             const appointmentId = data['appointmentId']
                             window.location.href = `/successful?appointmentId=${appointmentId}`;
-                            // fetch('/successful', {
-                            //     method: 'POST',
-                            //     body: new URLSearchParams({
-                            //         appointmentId: appointmentId
-                            //     }).toString()
-                            // })
-                            //     .then(response => response.text())
-                            //     .then(data => {
-                            //         console.log(data);
-                            //         document.body.innerHTML = data
-                            //     }).catch(error => {
-                            //         alert("Error: ", error)
-                            //     })
                         })
                         .catch(error => {
                             alert("Error: ", error)
