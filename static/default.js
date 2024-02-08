@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectProblem = document.querySelector('#problem');
     const inputCustomProblem = document.querySelector('#inputCustomProblem')
     const allProblemValues = document.querySelectorAll('output.problemValue');
-    const symptoms = document.querySelector('#symptoms');
+    const symptoms = document.querySelector('textarea#symptoms');
     const symptomsWordCount = document.querySelector('#symptomsWordCount')
     const selectDivision = document.querySelector('#division')
     const selectDistrict = document.querySelector('#district')
@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const allDoctorNameValues = document.querySelectorAll('output.doctorNameValue')
     const appointmentDateRow = document.querySelector('#appointmentDateRow')
     const inputAppointmentDate = document.querySelector('#appointmentDate')
+    const tableConfirmationDetails = document.querySelector('table#confirmationDetails')
+    const btnGoToFirstSlide = document.querySelector('#goToFirstSlide')
 
     const formSlider = new SlideForm('form-slide', 'step-indicator');
 
@@ -188,9 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
 
-            // To change value to selectProblem from #inputCustomProblem (with replacing _other)
+            // To change value to selectProblem from #inputCustomProblem
             inputCustomProblem.addEventListener('input', event => {
-                selectProblem.selectedOptions[0].value = "Other: " + event.target.value
+                // selectProblem.selectedOptions[0].value = "Other: " + event.target.value
 
                 // Changing text of filter labels
                 document.querySelector('label[for="filter_hospital"]').innerHTML = `${inputCustomProblem.value} এর জন্য বহির্বিভাগ রয়েছে এমন হাসপাতালসমূহ`
@@ -220,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(data => {
                         if (data.length > 0) {
                             selectDistrict.disabled = false
-                            selectDistrict.innerHTML = '<option>(নির্বাচন করুন)</option>'
+                            selectDistrict.innerHTML = '<option  disabled selected>(নির্বাচন করুন)</option>'
                             data.forEach(each => selectDistrict.innerHTML += `<option value=${each.id}>${each.value}</option>`);
                         }
                     })
@@ -369,14 +371,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Onclick action nav buttons of form slide: Patient and Disease Information
     document.querySelector('#patientDiseaseInformation_btnNext').addEventListener('click', () => {
-        // console.log("Check Name: ", checkInputs.checkName());
-        // console.log("Check Age: ", checkInputs.checkAge());
-        // console.log("Check Gender: ", checkInputs.checkGender());
-        // console.log("Check Phone Number: ", checkInputs.checkPhoneNumber());
-        // console.log("Check Email: ", checkInputs.checkEmail());
-        // console.log("Check Problem Selection: ", checkInputs.checkProblemSelection());
-        // console.log("Check Custom Problem Input: ", checkInputs.checkCustomProblemInput());
-
         if (checkInputs.checkName() &&
             checkInputs.checkAge() &&
             checkInputs.checkGender() &&
@@ -460,15 +454,45 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#doctorAppointment_btnNext').addEventListener('click', () => {
         if (checkInputs.checkDoctorSelection() && checkInputs.checkAppointmentDate()) {
             formSlider.next()
+
+            const innerHtmlPrevState = tableConfirmationDetails.innerHTML
+            const innerHtmlNewState = innerHtmlPrevState
+                .replace('{patient_name}', document.querySelector('#name').value)
+                .replace('{gender}', document.querySelector('#gender').value)
+                .replace('{age}', document.querySelector('#age').value)
+                .replace('{contact_no}', document.querySelector('#phone').value)
+                .replace('{contact_email}', document.querySelector('#email').value)
+                .replace('{disease}', selectProblem.selectedOptions[0].innerText)
+                .replace('{symptoms}', symptoms.value)
+                .replace('{hospital_name}', selectHospital.selectedOptions[0].innerText)
+                .replace('{division}', selectDivision.selectedOptions[0].innerText)
+                .replace('{district}', selectDistrict.selectedOptions[0].innerText)
+                .replace('{doctor}', selectDoctor.selectedOptions[0].innerText)
+                .replace('{appointment_date}', document.querySelector('#appointmentDate').value)
+
+            tableConfirmationDetails.innerHTML = innerHtmlNewState
+
+            if (selectProblem.selectedOptions[0].getAttribute('value') === '_other') {
+                tableConfirmationDetails.querySelector('#isOther').classList.remove('hide')
+
+                // Set innerHTML (again) with replacing 'অন্য রোগ/সমস্যা'
+                tableConfirmationDetails.innerHTML = tableConfirmationDetails.innerHTML.replace('অন্য রোগ/সমস্যা', inputCustomProblem.value)
+            }
         } else {
             if (!checkInputs.checkDoctorSelection()) {
                 alert("Doctor is not selected.")
             }
 
             if (!checkInputs.checkAppointmentDate()) {
-                alert("Invalid date input")
+                alert("Invalid date input. Please enter a valid date in the format 'YYYY-MM-DD'.")
             }
         }
+    })
+
+
+    btnGoToFirstSlide.addEventListener('click', () => {
+        formSlider.setSlideNo(1)
+        formSlider.show()
     })
 
 
@@ -499,7 +523,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }).toString()
             }).then(response => response.json())
                 .then(data => {
-                    // remove session
+                    // Remove customProblemId from session
                     if (customProblemId) {
                         sessionStorage.removeItem("customProblemId");
                     }
@@ -516,6 +540,23 @@ document.addEventListener('DOMContentLoaded', () => {
                             appointmentDate: formEntries['appointmentDate']
                         }).toString()
                     }).then(response => response.json())
+                        .then(data => {
+                            const appointmentId = data['appointmentId']
+                            window.location.href = `/successful?appointmentId=${appointmentId}`;
+                            // fetch('/successful', {
+                            //     method: 'POST',
+                            //     body: new URLSearchParams({
+                            //         appointmentId: appointmentId
+                            //     }).toString()
+                            // })
+                            //     .then(response => response.text())
+                            //     .then(data => {
+                            //         console.log(data);
+                            //         document.body.innerHTML = data
+                            //     }).catch(error => {
+                            //         alert("Error: ", error)
+                            //     })
+                        })
                         .catch(error => {
                             alert("Error: ", error)
                         })
@@ -525,7 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         }
 
-        const isCustomProblem = selectProblem.value.startsWith("Other: ")
+        const isCustomProblem = selectProblem.selectedOptions[0].value === '_other'
 
         if (isCustomProblem) {
             // add problem as draft to database

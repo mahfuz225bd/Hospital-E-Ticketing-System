@@ -162,15 +162,57 @@ def make_appointment():
         try:
             db_cursor.execute(query, (patient_id, doctor_by_hospital_id, appointment_date))
             mydb.commit()
-            response = {'status':'success'}
+            response = {'status':'success', 'appointmentId': db_cursor.lastrowid}
         except Exception as e:
             print('Error: ', e)
             response = {'status': 'failure', 'message': str(e)}
+
         return jsonify(**response)
 
-@app.route('/test_route')
-def test_route():
-    return render_template('successful.html')
+@app.route('/successful', methods=['POST', 'GET'])
+def successful():
+    appointment_id = int(request.args['appointmentId'])
+
+    appointment_details = {}
+
+    try:
+        db_cursor.execute('''SELECT 
+                                h.hospital_name_bn AS hospital,
+                                st.value_bn AS subdistrict_or_thana,
+                                d.value_bn AS district,
+                                dh.name_bn AS doctor,
+                                dh.room_location,
+                                a.serial_no,
+                                a.date AS appointment_date,
+                                a.time AS appointment_time,
+                                p.phone_no AS contact_no,
+                                p.email AS contact_email
+                            FROM appointments a
+                            JOIN doctors_by_hospital dh ON a.doctor_by_hospital_id = dh.id
+                            JOIN hospitals h ON dh.hospital_id = h.id
+                            JOIN subdistrict_and_thanas st ON h.subdistrict_thana_id = st.id
+                            JOIN districts d ON st.district_id = d.id
+                            JOIN patients p ON a.patient_id = p.id
+                            WHERE a.id = %s;
+        ''', (appointment_id,))
+
+        result = db_cursor.fetchone()
+        
+        appointment_details['hospital_name'] = result[0]
+        appointment_details['hospital_district'] = result[2]
+        appointment_details['doctor'] = result[3]
+        appointment_details['room_location'] = result[4]
+        appointment_details['serial_no'] = result[5]
+        appointment_details['appointment_date'] = result[6]
+        appointment_details['appointment_time'] = result[7]
+        appointment_details['contact_no'] = result[8]
+        appointment_details['contact_email'] = result[9]
+
+    except Exception as e:
+        print('Error: ', e)
+
+    return render_template('successful.html', appointment_details=appointment_details)
+
 
 @app.route('/send_sms', methods=['GET'])
 def send_sms():

@@ -134,10 +134,24 @@ a.btn {
   color: #666;
 }
 
-/* Form Slide */
-/* .form-slide {
-  display: none;
-} */
+/* Table */
+
+table,
+td,
+th {
+  border: 1px solid #000;
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td {
+  width: 25%;
+  padding: 5px;
+}
 
 /* Step Indicator Breadcrumb */
 
@@ -179,6 +193,14 @@ ul.step-indicator li+li:before {
 
 .float-right {
   float: right;
+}
+
+.bg-success {
+  background-color: dodgerblue;
+}
+
+.bg-danger {
+  background-color: crimson;
 }
 
 /* Others */

@@ -5,7 +5,7 @@
 - show hospitals + doctors for specific problem
 - set data-available-iso-weeks= of selected doctor
 - set dataset `valueAlt` for translation
-- confirmation summary (patient name, age, gender, contact no, email, problem/disease, syndrome, hospital name with address, appointment date & time)
+- confirmation summary (patient name, age, gender, contact no, email, problem/disease, symptoms, hospital name with address, appointment date & time)
 
 Optional todos:
 

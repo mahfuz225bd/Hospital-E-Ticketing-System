@@ -177,40 +177,46 @@ class SlideForm {
         return this.#currentSlideNo;
     }
 
-    #setSlideNo(n) {
+    setSlideNo(n) {
         this.#currentSlideNo = n;
     }
 
-    show(n) {
+    show() {
+        const currentSlideNo = this.getSlideNo()
+        
         const slides = this.#elements
         const indicatorLi = this.#indicatorLi
 
         let i;
-        if (n > this.count()) { this.#setSlideNo(1) }
-        if (n < 1) { this.#setSlideNo(this.getSlideNo()) }
+        if (currentSlideNo > this.count()) { this.setSlideNo(1) }
+        if (currentSlideNo < 1) { this.setSlideNo(currentSlideNo) }
 
         for (i = 0; i < this.count(); i++) {
             slides[i].style.display = "none";
             indicatorLi[i].style.color = "initial";
         }
 
-        slides[this.getSlideNo() - 1].style.display = "block";
-        indicatorLi[this.getSlideNo() - 1].style.color = '#04AA6D';
+        slides[currentSlideNo - 1].style.display = "block";
+        indicatorLi[currentSlideNo - 1].style.color = '#04AA6D';
     }
 
     next() {
-        if (this.getSlideNo() < this.count()) {
-            this.#setSlideNo(this.getSlideNo() + 1)
-            this.show(this.getSlideNo())
+        const currentSlideNo = this.getSlideNo()
+
+        if (currentSlideNo < this.count()) {
+            this.setSlideNo(currentSlideNo + 1)
+            this.show(currentSlideNo)
         } else {
             alert("Not available")
         }
     }
 
     prev() {
-        if (this.getSlideNo() > 1) {
-            this.#setSlideNo(this.getSlideNo() - 1)
-            this.show(this.getSlideNo())
+        const currentSlideNo = this.getSlideNo()
+
+        if (currentSlideNo > 1) {
+            this.setSlideNo(currentSlideNo - 1)
+            this.show(currentSlideNo)
         } else {
             alert("Not available")
         }
