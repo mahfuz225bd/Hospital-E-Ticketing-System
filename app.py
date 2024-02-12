@@ -3,7 +3,25 @@ from twilio.rest import Client
 from controllers.db_config import db_cursor, mydb, Error
 from controllers.translator import EnBnTranslator
 
+import random
+
 app = Flask(__name__)
+
+def send_sms(message, to):
+    account_sid = 'AC0c3b046145c1886babbeb1e8d59f8dc8'
+    auth_token = '17f13346e591dc6d0dee9b272b6f8700'
+    
+    client = Client(account_sid, auth_token)
+    
+    receiver_phone_no = to if to.startswith("+88") else  "+88" + to
+
+    message = client.messages.create(
+        from_='+12177182574',
+        body=message,
+        to=receiver_phone_no
+    )
+
+    print(message.sid)
 
 @app.route('/')
 def index():
@@ -12,15 +30,15 @@ def index():
 @app.route('/api/problems')
 def get_problems_category_wise():
     problems = {}
-    db_cursor.execute("SELECT id, value_bn, value_en, (SELECT value_bn FROM problem_categories WHERE problem_categories.id = problem_category_id) AS category FROM problems;")
+    db_cursor.execute("SELECT id, value_bn, value_en, (SELECT value_bn FROM problem_categories WHERE problem_categories.id = problem_category_id) AS category FROM problems ORDER BY problems.value_en ASC;")
     result = db_cursor.fetchall()
 
     for each in result:
         category = each[3]
         if category in problems:
-            problems[category].append({'id': each[0], 'value': each[1], 'valueAlt': each[2], 'category': each[3]})
+            problems[category].append({'id': each[0], 'value': each[2], 'valueAlt': each[1], 'category': each[3]})
         else:
-            problems[category] = [{'id': each[0], 'value': each[1], 'category': each[2]}]
+            problems[category] = [{'id': each[0], 'value': each[2], 'category': each[1]}]
 
     return jsonify(problems)
 
@@ -197,7 +215,7 @@ def successful():
         ''', (appointment_id,))
 
         result = db_cursor.fetchone()
-        
+         
         appointment_details['hospital_name'] = result[0]
         appointment_details['hospital_district'] = result[2]
         appointment_details['doctor'] = result[3]
@@ -208,23 +226,36 @@ def successful():
         appointment_details['contact_no'] = result[8]
         appointment_details['contact_email'] = result[9]
 
-    except Exception as e:
+        message_template = "আপনার {hospital_name}, {district} হাসপাতালে {doctor_name}-এর অ্যাপয়েন্টমেন্ট নিশ্চিত হয়েছে। আপনার সিরিয়াল নং: {serial_no} এবং {appointment_date} তারিখে {appointment_time} এর মধ্যে এই হাসপাতালের {room_location} এ উপস্থিত থাকার জন্য অনুরোধ করা হলো";
+        message = message_template.replace('{hospital_name}', str(result[0])) \
+                          .replace('{district}', str('ঢাকা')) \
+                          .replace('{doctor_name}', str(result[3])) \
+                          .replace('{serial_no}', str(result[5])) \
+                          .replace('{appointment_date}', str(result[6])) \
+                          .replace('{appointment_time}', str(result[7]) if result[7] else '11:30AM') \
+                          .replace('{room_location}', str(result[4]))
+
+        send_sms(message, result[8])
+
+    except Exception as e: 
         print('Error: ', e)
 
     return render_template('successful.html', appointment_details=appointment_details)
 
 
 @app.route('/send_sms', methods=['GET'])
-def send_sms():
+def send_sms2():
     account_sid = 'AC0c3b046145c1886babbeb1e8d59f8dc8'
-    auth_token = '499fec0970a9ef14662792d1d59b647f'
+    auth_token = '17f13346e591dc6d0dee9b272b6f8700'
     client = Client(account_sid, auth_token)
 
     if request.method == 'GET':
+        receiver_phone_no = request.args['to'] if request.args['to'].startswith("+88") else  "+88" + request.args['to']
+
         message = client.messages.create(
-            from_='+12052363581',
+            from_='+12177182574',
             body=request.args['message'],
-            to=request.args['to']
+            to=receiver_phone_no
         )
 
     return message.sid

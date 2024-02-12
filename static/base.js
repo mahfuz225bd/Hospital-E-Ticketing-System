@@ -183,7 +183,7 @@ class SlideForm {
 
     show() {
         const currentSlideNo = this.getSlideNo()
-        
+
         const slides = this.#elements
         const indicatorLi = this.#indicatorLi
 
@@ -223,4 +223,6 @@ class SlideForm {
     }
 }
 
-export { Validator, DateValueForHTML, preventDatesToInput, CompareParagraphs, SlideForm };
+const messageTemplate = "আপনার {hospital_name}, {district} হাসপাতালে {doctor_name}-এর অ্যাপয়েন্টমেন্ট নিশ্চিত হয়েছে। আপনার সিরিয়াল নং: {serial_no} এবং {appointment_date} তারিখে {appointment_time} এর মধ্যে এই হাসপাতালের {room_location} এ উপস্থিত থাকার জন্য অনুরোধ করা হলো";
+
+export { Validator, DateValueForHTML, preventDatesToInput, SlideForm, messageTemplate, CompareParagraphs };

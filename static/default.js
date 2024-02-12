@@ -1,4 +1,4 @@
-import { Validator, DateValueForHTML, preventDatesToInput, SlideForm } from "./base.js"
+import { Validator, DateValueForHTML, preventDatesToInput, SlideForm, messageTemplate } from "./base.js"
 
 document.addEventListener('DOMContentLoaded', () => {
     const mainForm = document.querySelector('#mainForm')
@@ -375,9 +375,9 @@ document.addEventListener('DOMContentLoaded', () => {
             checkInputs.checkAge() &&
             checkInputs.checkGender() &&
             checkInputs.checkPhoneNumber() &&
-            checkInputs.checkEmail() &&
-            checkInputs.checkProblemSelection() &&
-            checkInputs.checkCustomProblemInput()
+            checkInputs.checkEmail()
+            // && checkInputs.checkProblemSelection() &&
+            // checkInputs.checkCustomProblemInput()
         ) {
             formSlider.next()
             activeFunctionalities(formSlider.getSlideNo())
@@ -402,13 +402,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert("Invalid Email Address.")
             }
 
-            if (!checkInputs.checkProblemSelection()) {
-                alert("Must provide patient's disease/problem.")
-            }
+            // if (!checkInputs.checkProblemSelection()) {
+            //     alert("Must provide patient's disease/problem.")
+            // }
 
-            if (!checkInputs.checkCustomProblemInput()) {
-                alert("You must input patient's disease/problem.")
-            }
+            // if (!checkInputs.checkCustomProblemInput()) {
+            //     alert("You must input patient's disease/problem.")
+            // }
         }
     })
 
@@ -542,7 +542,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     }).then(response => response.json())
                         .then(data => {
                             const appointmentId = data['appointmentId']
-                            window.location.href = `/successful?appointmentId=${appointmentId}`;
+
+                            // const message = messageTemplate.replace('{hospital_name}', selectHospital.selectedOptions[0].innerText)
+                            //     .replace('{district}', selectDistrict.selectedOptions[0].innerText)
+                            //     .replace('{doctor_name}', selectDoctor.selectedOptions[0].innerText)
+                            //     .replace('{serial_no}', '{}')
+                            //     .replace('{appointment_date}', '{}')
+                            //     .replace('{appointment_time}', '{}')
+                            //     .replace('{room_location}', '{}');
+
+                            // // Send SMS
+                            // fetch('/send_sms?' + new URLSearchParams({
+                            //     message: message,
+                            //     to: formEntries['phone']
+                            // }).toString())
+                            //     .then(() => {
+                            //         window.location.href = `/successful?appointmentId=${appointmentId}`
+                            //     }).catch(error => {
+                            //         alert(`Error sending sms:\n${error}`);
+                            //     })
+
+                            window.location.href = `/successful?appointmentId=${appointmentId}`
                         })
                         .catch(error => {
                             alert("Error: ", error)

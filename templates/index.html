@@ -11,7 +11,7 @@
 
 <hr />
 
-<form action="/post" id="mainForm">
+<form action="/post" id="mainForm" autocomplete="off">
   <!-- Form Slide: Patient & Disease Information -->
   <div class="form-slide">
     <div class="input-row no-label">
@@ -40,39 +40,41 @@
       </div>
     </div>
 
-    <h2>রোগীর রোগ/সমস্যা ও লক্ষণসমূহ</h2>
+    <div class="hide">
+      <h2>রোগীর রোগ/সমস্যা ও লক্ষণসমূহ</h2>
 
-    <div class="input-row">
-      <div class="input-col left">
-        <input type="radio" id="problem_known" name="problem_known_unknown" value="known" checked />
-        <label for="problem_known">রোগীর রোগ/সমস্যা নির্বাচন করি</label>
-      </div>
-      <div class="input-col right">
-        <input type="radio" id="problem_unknown" name="problem_known_unknown" value="unkonwn" />
-        <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই (শুধু) রোগের লক্ষণগুলো লিখি</label>
-      </div>
-    </div>
-
-    <div class="input-row" style="margin-top: -10px">
-      <div class="input-col">
-        <label for="problem">রোগ/সমস্যা নির্বাচনঃ <span style="color: red">*</span></label>
-        <select id="problem" name="problem" title="রোগীর রোগ/সমস্যা নির্বাচন করি">
-          <option disabled selected>(নির্বাচন করুন)</option>
-        </select>
-        <br class="hide">
-        <!-- name attribute should not be provided. it will be handled by js -->
-        <input class="hide" type="text" id="inputCustomProblem" placeholder="রোগীর রোগ/সমস্যার নাম লিখুন"
-          style="margin-top: 10px" />
+      <div class="input-row">
+        <div class="input-col left">
+          <input type="radio" id="problem_known" name="problem_known_unknown" value="known" checked />
+          <label for="problem_known">রোগীর রোগ/সমস্যা নির্বাচন করি</label>
+        </div>
+        <div class="input-col right">
+          <input type="radio" id="problem_unknown" name="problem_known_unknown" value="unkonwn" />
+          <label for="problem_unknown">রোগ বুঝতে পারছি না, তাই (শুধু) রোগের লক্ষণগুলো লিখি</label>
+        </div>
       </div>
 
-    </div>
+      <div class="input-row" style="margin-top: -10px">
+        <div class="input-col">
+          <label for="problem">রোগ/সমস্যা নির্বাচনঃ <span style="color: red">*</span></label>
+          <select id="problem" name="problem" title="রোগীর রোগ/সমস্যা নির্বাচন করি">
+            <option disabled selected>(নির্বাচন করুন)</option>
+          </select>
+          <br class="hide">
+          <!-- name attribute should not be provided. it will be handled by js -->
+          <input class="hide" type="text" id="inputCustomProblem" placeholder="রোগীর রোগ/সমস্যার নাম লিখুন"
+            style="margin-top: 10px" />
+        </div>
 
-    <div class="input-row">
-      <div class="input-col">
-        <label>রোগের লক্ষণসমূহঃ</label>
-        <textarea name="symptoms" id="symptoms" cols="30" rows="10" title="রোগের লক্ষণগুলো বর্ননা করি"></textarea>
-        <div class="text-right text-sm">
-          Word Count: <output id="symptomsWordCount">0</output>/255
+      </div>
+
+      <div class="input-row">
+        <div class="input-col">
+          <label>রোগের লক্ষণসমূহঃ</label>
+          <textarea name="symptoms" id="symptoms" cols="30" rows="10" title="রোগের লক্ষণগুলো বর্ননা করি"></textarea>
+          <div class="text-right text-sm">
+            Word Count: <output id="symptomsWordCount">0</output>/255
+          </div>
         </div>
       </div>
     </div>
@@ -178,35 +180,35 @@
         <tr>
           <td>রোগীর নামঃ</td>
           <td>{patient_name}</td>
-          <td>লিঙ্গঃ</td>
+          <td style="text-align: right;">লিঙ্গঃ</td>
           <td>{gender}</td>
-          <td>বয়সঃ</td>
+          <td style="text-align: right;">বয়সঃ</td>
           <td>{age}</td>
         </tr>
         <tr>
           <td>যোগাযোগ নম্বরঃ</td>
           <td colspan="2">{contact_no}</td>
-          <td>যোগাযোগ ইমেইলঃ</td>
+          <td style="text-align: right;">যোগাযোগ ইমেইলঃ</td>
           <td colspan="2">{contact_email}</td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>রোগ/সমস্যা <span id="isOther" class="hide">(অন্যান্য)</span></td>
           <td colspan="6">{disease}</td>
         </tr>
         <tr>
           <td>রোগের লক্ষণঃ</td>
           <td colspan="6">{symptoms}</td>
-        </tr>
+        </tr> -->
         <tr>
           <td>হাসপাতালঃ</td>
           <td colspan="2">{hospital_name}</td>
-          <td>ঠিকানাঃ</td>
+          <td style="text-align: right;">ঠিকানাঃ</td>
           <td colspan="2">{district} জেলা, {division} বিভাগ</td>
         </tr>
         <tr>
           <td>অ্যাপয়েন্টমেন্টকৃত ডাক্তারঃ</td>
           <td colspan="2">{doctor}</td>
-          <td>আপয়েন্টমেন্টের তারিখঃ</td>
+          <td style="text-align: right;">আপয়েন্টমেন্টের তারিখঃ</td>
           <td colspan="2">{appointment_date}</td>
         </tr>
       </tbody>
