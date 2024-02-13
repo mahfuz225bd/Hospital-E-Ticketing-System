@@ -542,8 +542,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }).then(response => response.json())
                         .then(data => {
                             const appointmentId = data['appointmentId']
-                            console.log(appointmentId)
-
+                            
                             // const message = messageTemplate.replace('{hospital_name}', selectHospital.selectedOptions[0].innerText)
                             //     .replace('{district}', selectDistrict.selectedOptions[0].innerText)
                             //     .replace('{doctor_name}', selectDoctor.selectedOptions[0].innerText)
