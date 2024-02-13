@@ -1,27 +1,11 @@
 from flask import Flask, render_template, request, jsonify
 from twilio.rest import Client
 from controllers.db_config import db_cursor, mydb, Error
+from controllers.send_sms import send_sms
+from controllers.time_formatter import convert_into_12hr_format
 from controllers.translator import EnBnTranslator
 
-import random
-
 app = Flask(__name__)
-
-def send_sms(message, to):
-    account_sid = 'AC0c3b046145c1886babbeb1e8d59f8dc8'
-    auth_token = '17f13346e591dc6d0dee9b272b6f8700'
-    
-    client = Client(account_sid, auth_token)
-    
-    receiver_phone_no = to if to.startswith("+88") else  "+88" + to
-
-    message = client.messages.create(
-        from_='+12177182574',
-        body=message,
-        to=receiver_phone_no
-    )
-
-    print(message.sid)
 
 @app.route('/')
 def index():
@@ -216,27 +200,30 @@ def successful():
 
         result = db_cursor.fetchone()
          
-        appointment_details['hospital_name'] = result[0]
-        appointment_details['hospital_district'] = result[2]
-        appointment_details['doctor'] = result[3]
-        appointment_details['room_location'] = result[4]
-        appointment_details['serial_no'] = result[5]
-        appointment_details['appointment_date'] = result[6]
-        appointment_details['appointment_time'] = result[7]
-        appointment_details['contact_no'] = result[8]
-        appointment_details['contact_email'] = result[9]
+        # Construct appointment details
+        appointment_details = {
+            'hospital_name': result[0],
+            'hospital_district': result[2],
+            'doctor': result[3],
+            'room_location': result[4],
+            'serial_no': result[5],
+            'appointment_date': result[6],
+            'appointment_time': convert_into_12hr_format(str(result[7])),
+            'contact_no': result[8],
+            'contact_email': result[9]
+        }
 
-        message_template = "আপনার {hospital_name}, {district} হাসপাতালে {doctor_name}-এর অ্যাপয়েন্টমেন্ট নিশ্চিত হয়েছে। আপনার সিরিয়াল নং: {serial_no} এবং {appointment_date} তারিখে {appointment_time} এর মধ্যে এই হাসপাতালের {room_location} এ উপস্থিত থাকার জন্য অনুরোধ করা হলো";
-        message = message_template.replace('{hospital_name}', str(result[0])) \
-                          .replace('{district}', str('ঢাকা')) \
-                          .replace('{doctor_name}', str(result[3])) \
-                          .replace('{serial_no}', str(result[5])) \
-                          .replace('{appointment_date}', str(result[6])) \
-                          .replace('{appointment_time}', str(result[7]) if result[7] else '11:30AM') \
-                          .replace('{room_location}', str(result[4]))
+        # Construct message template using appointment details
+        message_template = (
+            "আপনার {hospital_name}, {hospital_district} হাসপাতালে {doctor}-এর অ্যাপয়েন্টমেন্ট নিশ্চিত হয়েছে। "
+            "আপনার সিরিয়াল নং: {serial_no} এবং {appointment_date} তারিখে {appointment_time} এর মধ্যে "
+            "এই হাসপাতালের {room_location} এ উপস্থিত থাকার জন্য অনুরোধ করা হলো"
+        )
 
-        send_sms(message, result[8])
+        # Format message using appointment details
+        message = message_template.format(**appointment_details)
 
+        send_sms(message, appointment_details['contact_no'])
     except Exception as e: 
         print('Error: ', e)
 

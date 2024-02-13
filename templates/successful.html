@@ -5,13 +5,19 @@
   <strong>{{ appointment_details.doctor }}</strong>-এর অ্যাপয়েন্টমেন্ট নিশ্চিত হয়েছে। আপনার সিরিয়াল নং: <span
     style="font-weight: bold; color: blue;">{{ appointment_details.serial_no }}</span> এবং <span style="color: red;">{{
     appointment_details.appointment_date }}</span> তারিখে <span style="color: red; font-weight: bold;">{{
-    appointment_details.appointment_time if appointment_details.appointment_time else '11:30AM' }}</span> এর মধ্যে এই
+    appointment_details.appointment_time }}</span> এর মধ্যে এই
   হাসপাতালের <span style="color: red;">{{
     appointment_details.room_location }}</span> এ উপস্থিত থাকার জন্য অনুরোধ করা হলো। আপনার <strong>{{
     appointment_details.contact_no }}</strong> নম্বরে সিরিয়াল নম্বরটি প্রেরণ করা হয়েছে।
 </p>
 <p style="text-align: right;">
-  <span>🖨️</span><a href="#">প্রিন্ট করুন</a> &nbsp;|&nbsp;
+  <span>🖨️</span><a href="#" id="printBtn">প্রিন্ট করুন</a> &nbsp;|&nbsp;
   <span>🆕</span><a href="/">নতুন অ্যাপয়েন্টমেন্ট</a>
 </p>
+
+<script>
+  document.getElementById('printBtn').addEventListener('click', () => {
+    window.print()
+  })
+</script>
 {% endblock %}
