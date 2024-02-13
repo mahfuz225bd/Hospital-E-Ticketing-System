@@ -542,7 +542,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }).then(response => response.json())
                         .then(data => {
                             const appointmentId = data['appointmentId']
-                            
+
                             // const message = messageTemplate.replace('{hospital_name}', selectHospital.selectedOptions[0].innerText)
                             //     .replace('{district}', selectDistrict.selectedOptions[0].innerText)
                             //     .replace('{doctor_name}', selectDoctor.selectedOptions[0].innerText)
@@ -575,6 +575,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const isCustomProblem = selectProblem.selectedOptions[0].value === '_other'
 
+        // Applying makeAnAppointment() with adding custom problem to the database (if necessary)
         if (isCustomProblem) {
             // add problem as draft to database
             fetch('/api/add_problem', {
