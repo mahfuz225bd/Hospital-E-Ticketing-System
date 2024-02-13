@@ -83,7 +83,7 @@ def get_hospitals():
 def get_doctors():
     doctors = []
     if request.method == 'GET':
-        db_cursor.execute("SELECT `id`, `name_en`, `name_bn`, `degree`, `speciality`, `treatment_for`, `designation`,  `dob`, `phone_no_1`, `phone_no_2`, `outdoor_doctor`, `per_visit_time`, `room_location`, `doctor_available_now`, `note` FROM `doctors_by_hospital` WHERE hospital_id=%s", (request.args['hospitalId'],))
+        db_cursor.execute("SELECT `id`, `name_en`, `name_bn`, `degree`, `speciality`, `treatment_for`, `designation`,  `dob`, `phone_no_1`, `phone_no_2`, `outdoor_doctor`, `per_visit_time`, `room_location`, `doctor_available_now`, `note` FROM `doctors_by_hospital` WHERE `hospital_id`=%s AND `doctor_available_now`=1", (request.args['hospitalId'],))
 
         result = db_cursor.fetchall()
 
