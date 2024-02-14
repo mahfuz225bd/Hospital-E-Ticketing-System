@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from twilio.rest import Client
+# from twilio.rest import Client
 from controllers.db_config import db_cursor, mydb, Error
 from controllers.send_sms import send_sms
 from controllers.time_formatter import convert_into_12hr_format
@@ -230,22 +230,22 @@ def successful():
     return render_template('successful.html', appointment_details=appointment_details)
 
 
-@app.route('/send_sms', methods=['GET'])
-def send_sms2():
-    account_sid = 'AC0c3b046145c1886babbeb1e8d59f8dc8'
-    auth_token = '17f13346e591dc6d0dee9b272b6f8700'
-    client = Client(account_sid, auth_token)
+# @app.route('/send_sms', methods=['GET'])
+# def send_sms2():
+#     account_sid = 'AC0c3b046145c1886babbeb1e8d59f8dc8'
+#     auth_token = '17f13346e591dc6d0dee9b272b6f8700'
+#     client = Client(account_sid, auth_token)
 
-    if request.method == 'GET':
-        receiver_phone_no = request.args['to'] if request.args['to'].startswith("+88") else  "+88" + request.args['to']
+#     if request.method == 'GET':
+#         receiver_phone_no = request.args['to'] if request.args['to'].startswith("+88") else  "+88" + request.args['to']
 
-        message = client.messages.create(
-            from_='+12177182574',
-            body=request.args['message'],
-            to=receiver_phone_no
-        )
+#         message = client.messages.create(
+#             from_='+12177182574',
+#             body=request.args['message'],
+#             to=receiver_phone_no
+#         )
 
-    return message.sid
+#     return message.sid
 
 if __name__ == '__main__':
     app.run(debug=True)
