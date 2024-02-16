@@ -470,6 +470,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 .replace('{doctor}', selectDoctor.selectedOptions[0].innerText)
                 .replace('{appointment_date}', document.querySelector('#appointmentDate').value)
 
+            console.log(innerHtmlNewState);
+
             tableConfirmationDetails.innerHTML = innerHtmlNewState
 
             if (selectProblem.selectedOptions[0].getAttribute('value') === '_other') {
