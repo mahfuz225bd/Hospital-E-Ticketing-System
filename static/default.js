@@ -1,4 +1,4 @@
-import { Validator, DateValueForHTML, preventDatesToInput, SlideForm, messageTemplate } from "./base.js"
+import { Validator, DateValueForHTML, preventDatesToInput, SlideForm, ElementPainterByTemplate, summaryTableTemplate } from "./base.js"
 
 document.addEventListener('DOMContentLoaded', () => {
     const mainForm = document.querySelector('#mainForm')
@@ -20,10 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const allDoctorNameValues = document.querySelectorAll('output.doctorNameValue')
     const appointmentDateRow = document.querySelector('#appointmentDateRow')
     const inputAppointmentDate = document.querySelector('#appointmentDate')
-    const tableConfirmationDetails = document.querySelector('table#confirmationDetails')
+    // const tableConfirmationDetails = document.querySelector('table#confirmationDetails')
     const btnGoToFirstSlide = document.querySelector('#goToFirstSlide')
 
     const formSlider = new SlideForm('form-slide', 'step-indicator');
+    const paintConfirmationSummary = new ElementPainterByTemplate(summaryTableTemplate, 'confirmationDetails')
 
     // Showing form
     formSlider.show()
@@ -445,41 +446,50 @@ document.addEventListener('DOMContentLoaded', () => {
         formSlider.prev()
     })
 
-    // Onclick action nav buttons of form slide: Confirmation
-    document.querySelector("#confirmation_btnPrev").addEventListener('click', () => {
-        formSlider.prev()
-    })
-
-
     document.querySelector('#doctorAppointment_btnNext').addEventListener('click', () => {
         if (checkInputs.checkDoctorSelection() && checkInputs.checkAppointmentDate()) {
             formSlider.next()
 
-            const innerHtmlPrevState = tableConfirmationDetails.innerHTML
-            const innerHtmlNewState = innerHtmlPrevState
-                .replace('{patient_name}', document.querySelector('#name').value)
-                .replace('{gender}', document.querySelector('#gender').value)
-                .replace('{age}', document.querySelector('#age').value)
-                .replace('{contact_no}', document.querySelector('#phone').value)
-                .replace('{contact_email}', document.querySelector('#email').value)
-                .replace('{disease}', selectProblem.selectedOptions[0].innerText)
-                .replace('{symptoms}', symptoms.value)
-                .replace('{hospital_name}', selectHospital.selectedOptions[0].innerText)
-                .replace('{division}', selectDivision.selectedOptions[0].innerText)
-                .replace('{district}', selectDistrict.selectedOptions[0].innerText)
-                .replace('{doctor}', selectDoctor.selectedOptions[0].innerText)
-                .replace('{appointment_date}', document.querySelector('#appointmentDate').value)
+            const replacements = {
+                '{patient_name}': document.querySelector('#name').value,
+                '{gender}': document.querySelector('#gender').value,
+                '{age}': document.querySelector('#age').value,
+                '{contact_no}': document.querySelector('#phone').value,
+                '{contact_email}': document.querySelector('#email').value,
+                '{disease}': selectProblem.selectedOptions[0].innerText,
+                '{symptoms}': symptoms.value,
+                '{hospital_name}': selectHospital.selectedOptions[0].innerText,
+                '{division}': selectDivision.selectedOptions[0].innerText,
+                '{district}': selectDistrict.selectedOptions[0].innerText,
+                '{doctor}': selectDoctor.selectedOptions[0].innerText,
+                '{appointment_date}': document.querySelector('#appointmentDate').value
+            };
 
-            console.log(innerHtmlNewState);
+            paintConfirmationSummary.replaceAll(replacements)
 
-            tableConfirmationDetails.innerHTML = innerHtmlNewState
+            // const innerHtmlPrevState = tableConfirmationDetails.innerHTML
+            // const innerHtmlNewState = innerHtmlPrevState
+            //     .replace('{patient_name}', document.querySelector('#name').value)
+            //     .replace('{gender}', document.querySelector('#gender').value)
+            //     .replace('{age}', document.querySelector('#age').value)
+            //     .replace('{contact_no}', document.querySelector('#phone').value)
+            //     .replace('{contact_email}', document.querySelector('#email').value)
+            //     .replace('{disease}', selectProblem.selectedOptions[0].innerText)
+            //     .replace('{symptoms}', symptoms.value)
+            //     .replace('{hospital_name}', selectHospital.selectedOptions[0].innerText)
+            //     .replace('{division}', selectDivision.selectedOptions[0].innerText)
+            //     .replace('{district}', selectDistrict.selectedOptions[0].innerText)
+            //     .replace('{doctor}', selectDoctor.selectedOptions[0].innerText)
+            //     .replace('{appointment_date}', document.querySelector('#appointmentDate').value)
 
-            if (selectProblem.selectedOptions[0].getAttribute('value') === '_other') {
-                tableConfirmationDetails.querySelector('#isOther').classList.remove('hide')
+            // tableConfirmationDetails.innerHTML = innerHtmlNewState
 
-                // Set innerHTML (again) with replacing 'অন্য রোগ/সমস্যা'
-                tableConfirmationDetails.innerHTML = tableConfirmationDetails.innerHTML.replace('অন্য রোগ/সমস্যা', inputCustomProblem.value)
-            }
+            // if (selectProblem.selectedOptions[0].getAttribute('value') === '_other') {
+            //     tableConfirmationDetails.querySelector('#isOther').classList.remove('hide')
+
+            //     // Set innerHTML (again) with replacing 'অন্য রোগ/সমস্যা'
+            //     tableConfirmationDetails.innerHTML = tableConfirmationDetails.innerHTML.replace('অন্য রোগ/সমস্যা', inputCustomProblem.value)
+            // }
         } else {
             if (!checkInputs.checkDoctorSelection()) {
                 alert("Doctor is not selected.")
@@ -492,9 +502,16 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
 
+    // Onclick action nav buttons of form slide: Confirmation
+    document.querySelector("#confirmation_btnPrev").addEventListener('click', () => {
+        formSlider.prev()
+        paintConfirmationSummary.reset()
+    })
+
     btnGoToFirstSlide.addEventListener('click', () => {
         formSlider.setSlideNo(1)
         formSlider.show()
+        paintConfirmationSummary.reset()
     })
 
 

@@ -223,6 +223,49 @@ class SlideForm {
     }
 }
 
-const messageTemplate = "আপনার {hospital_name}, {district} হাসপাতালে {doctor_name}-এর অ্যাপয়েন্টমেন্ট নিশ্চিত হয়েছে। আপনার সিরিয়াল নং: {serial_no} এবং {appointment_date} তারিখে {appointment_time} এর মধ্যে এই হাসপাতালের {room_location} এ উপস্থিত থাকার জন্য অনুরোধ করা হলো";
+class ElementPainterByTemplate {
+    constructor(innerHTMLValue, elementIdToChange) {
+        const regexPattern = /\{.*?\}/g;
 
-export { Validator, DateValueForHTML, preventDatesToInput, SlideForm, messageTemplate, CompareParagraphs };
+        if (innerHTMLValue.match(regexPattern)) {
+            this.$innerHTMLValueState = innerHTMLValue
+            this.$innerHTMLValueState2 = innerHTMLValue
+            if (document.getElementById(elementIdToChange)) {
+                this.$elementId = elementIdToChange
+            } else {
+                console.error('There is no such element with id: ' + elementIdToChange);
+            }
+        } else {
+            console.error('Invalid element template. There must be at least one placeholder in the template like {placeholder_to_change}')
+        }
+    }
+
+    getInnerHTMLValue() { return this.$innerHTMLValueState }
+
+    setInnerHTMLValue(value) { this.$innerHTMLValueState = value, this.$innerHTMLValueState2 = value }
+
+    $changesToElement() { document.getElementById(this.$elementId).innerHTML = this.getInnerHTMLValue() }
+
+    replaceAll(values) {
+        let initInnerHTMLValue = this.$innerHTMLValueState
+
+        for (const key in values) {
+            initInnerHTMLValue = initInnerHTMLValue.replaceAll(key, values[key])
+        }
+
+        this.setInnerHTMLValue(initInnerHTMLValue)
+
+        this.$changesToElement()
+    }
+
+    reset() {
+        this.$innerHTMLValueState = this.$innerHTMLValueState2
+        this.$changesToElement()
+    }
+}
+
+const summaryTableTemplate = '<table> <tbody> <tr> <td>রোগীর নামঃ</td> <td>{patient_name}</td> <td style="text-align: right;">লিঙ্গঃ</td> <td>{gender}</td> <td style="text-align: right;">বয়সঃ</td> <td>{age}</td> </tr> <tr> <td>যোগাযোগ নম্বরঃ</td> <td colspan="2">{contact_no}</td> <td style="text-align: right;">যোগাযোগ ইমেইলঃ</td> <td colspan="2">{contact_email}</td> </tr> <!-- <tr> <td>রোগ/সমস্যা <span id="isOther" class="hide">(অন্যান্য)</span></td> <td colspan="6">{disease}</td> </tr> <tr> <td>রোগের লক্ষণঃ</td> <td colspan="6">{symptoms}</td> </tr> --> <tr> <td>হাসপাতালঃ</td> <td colspan="2">{hospital_name}</td> <td style="text-align: right;">ঠিকানাঃ</td> <td colspan="2">{district} জেলা, {division} বিভাগ</td> </tr> <tr> <td>অ্যাপয়েন্টমেন্টকৃত ডাক্তারঃ</td> <td colspan="2">{doctor}</td> <td style="text-align: right;">আপয়েন্টমেন্টের তারিখঃ</td> <td colspan="2">{appointment_date}</td> </tr> </tbody> </table>'
+
+// export { Validator, DateValueForHTML, preventDatesToInput, SlideForm, smsTemplate, ElementTemplate, summaryTableTemplate };
+
+export { Validator, DateValueForHTML, preventDatesToInput, SlideForm, ElementPainterByTemplate, summaryTableTemplate };
