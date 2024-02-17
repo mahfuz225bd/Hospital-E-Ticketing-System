@@ -242,7 +242,7 @@ class ElementPainterByTemplate {
 
     getInnerHTMLValue() { return this.$innerHTMLValueState }
 
-    setInnerHTMLValue(value) { this.$innerHTMLValueState = value, this.$innerHTMLValueState2 = value }
+    $setInnerHTMLValue(value) { this.$innerHTMLValueState = value }
 
     $changesToElement() { document.getElementById(this.$elementId).innerHTML = this.getInnerHTMLValue() }
 
@@ -253,7 +253,7 @@ class ElementPainterByTemplate {
             initInnerHTMLValue = initInnerHTMLValue.replaceAll(key, values[key])
         }
 
-        this.setInnerHTMLValue(initInnerHTMLValue)
+        this.$setInnerHTMLValue(initInnerHTMLValue)
 
         this.$changesToElement()
     }
