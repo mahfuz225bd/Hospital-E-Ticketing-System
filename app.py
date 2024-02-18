@@ -88,7 +88,16 @@ def get_doctors():
         result = db_cursor.fetchall()
 
         for each in result:
-            doctors.append({'id': each[0], 'name': each[2], 'nameEn': each[1], 'speciality': each[4], 'treatmentFor': each[5], 'outdoor_doctor': each[10], 'perVisitTime': each[11]})
+            doctor_id = each[0]
+
+            available_weeks = []
+
+            db_cursor.execute("SELECT `weekday` FROM `doctor_weekly_schedules` WHERE `doctor_id` = %s", (doctor_id,))
+            result_days = db_cursor.fetchall()
+            for each_day in result_days:
+                available_weeks.append(each_day[0])
+
+            doctors.append({'id': doctor_id, 'name': each[2], 'nameEn': each[1], 'speciality': each[4], 'treatmentFor': each[5], 'outdoor_doctor': each[10], 'perVisitTime': each[11], 'availableWeeks': ', '.join(str(day) for day in available_weeks)})
 
         return jsonify(doctors)
     

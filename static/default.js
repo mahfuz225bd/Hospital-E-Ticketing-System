@@ -313,6 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 fetch(`/api/doctors?hospitalId=${hospitalId}`)
                     .then(response => response.json())
                     .then(data => {
+                        console.log(data);
                         if (data.length > 0) {
                             selectDoctor.disabled = false
                             selectDoctor.innerHTML = '<option>(নির্বাচন করুন)</option>'
