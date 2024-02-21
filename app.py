@@ -97,7 +97,7 @@ def get_doctors():
             for each_day in result_days:
                 available_weeks.append(each_day[0])
 
-            doctors.append({'id': doctor_id, 'name': each[2], 'nameEn': each[1], 'speciality': each[4], 'treatmentFor': each[5], 'outdoor_doctor': each[10], 'perVisitTime': each[11], 'availableWeeks': ', '.join(str(day) for day in available_weeks)})
+            doctors.append({'id': doctor_id, 'name': each[2], 'nameEn': each[1], 'speciality': each[4], 'treatmentFor': each[5], 'outdoor_doctor': each[10], 'perVisitTime': each[11], 'availableISOWeeks': ', '.join(str(day) for day in available_weeks)})
 
         return jsonify(doctors)
     

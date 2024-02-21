@@ -160,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     fetch('/api/divisions')
                         .then(response => response.json())
                         .then(data => {
+                            selectDivision.innerHTML = '<option disabled selected>(নির্বাচন করুন)</option>'
                             data.forEach(each => selectDivision.innerHTML += `<option value=${each.id}>${each.value}</option>`);
                         })
                         .catch(err => console.error(err))
@@ -223,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(data => {
                         if (data.length > 0) {
                             selectDistrict.disabled = false
-                            selectDistrict.innerHTML = '<option  disabled selected>(নির্বাচন করুন)</option>'
+                            selectDistrict.innerHTML = '<option disabled selected>(নির্বাচন করুন)</option>'
                             data.forEach(each => selectDistrict.innerHTML += `<option value=${each.id}>${each.value}</option>`);
                         }
                     })
@@ -241,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (data.length > 0) {
                             hospitalSelectionRow.classList.remove('hide')
                             selectHospital.disabled = false
-                            selectHospital.innerHTML = '<option>(নির্বাচন করুন)</option>'
+                            selectHospital.innerHTML = '<option disabled selected>(নির্বাচন করুন)</option>'
                             data.forEach(each => selectHospital.innerHTML += `<option value="${each.id}">${each.value}</option>`)
                         }
                     }).then(() => {
@@ -276,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (data.length > 0) {
                                 hospitalSelectionRow.classList.remove('hide')
                                 selectHospital.disabled = false
-                                selectHospital.innerHTML = '<option>(নির্বাচন করুন)</option>'
+                                selectHospital.innerHTML = '<option disabled selected>(নির্বাচন করুন)</option>'
                                 data.forEach(each => selectHospital.innerHTML += `<option value="${each.id}">${each.value}</option>`)
                             }
                         })
@@ -287,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(data => {
                         if (data.length > 0) {
                             selectHospital.disabled = false
-                            selectHospital.innerHTML = '<option>(নির্বাচন করুন)</option>'
+                            selectHospital.innerHTML = '<option disabled selected>(নির্বাচন করুন)</option>'
                             data.forEach(each => selectHospital.innerHTML += `<option value=${each.id}>${each.value}</option>`);
                         } else {
                             // Get words of subdistrictOrThanaName as array
@@ -315,8 +316,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(data => {
                         if (data.length > 0) {
                             selectDoctor.disabled = false
-                            selectDoctor.innerHTML = '<option>(নির্বাচন করুন)</option>'
-                            data.forEach(each => selectDoctor.innerHTML += `<option value=${each.id} data-per-visit-time=${each.perVisitTime} data-treatment-for="${each.treatmentFor}">${each.name}, ${each.speciality}</option>`)
+                            selectDoctor.innerHTML = '<option disabled selected>(নির্বাচন করুন)</option>'
+                            data.forEach(each => selectDoctor.innerHTML += `<option value="${each.id}" data-per-visit-time="${each.perVisitTime}" data-available-iso-weeks="${each.availableISOWeeks}" data-treatment-for="${each.treatmentFor}">${each.name}, ${each.speciality}</option>`)
                         }
                     }).then(() => {
                         // Changing values of all output.hospitalValues
@@ -338,6 +339,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (slideNo === 3) {
             // To show #appointmentDateRow + change all output.allDoctorNameValues
             selectDoctor.addEventListener('input', event => {
+                const availableISOWeeks = event.target.dataset['available-iso-weeks'];
+
                 // Hide #appointmentDateRow
                 if (appointmentDateRow.classList.contains('hide')) {
                     appointmentDateRow.classList.remove('hide')
@@ -348,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Changing values to all output.doctorNameValue
                 allDoctorNameValues.forEach(each => each.innerText = doctorName)
 
-                appointmentDate.dataset.availableISOWeeks = ''
+                appointmentDate.dataset.availableISOWeeks = availableISOWeeks
             })
 
             // Setting attributes value, min, max properties of #appointmentDate
@@ -520,6 +523,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // If form#mainForm is submitted
     mainForm.addEventListener('submit', event => {
         event.preventDefault()
+
+        // const isLastSlide = formSlider.getSlideNo() === formSlider.count();
+        // if (isLastSlide) {
+            
+        // }
 
         const formData = new FormData(event.target)
         const formEntries = Object.fromEntries(formData.entries())
