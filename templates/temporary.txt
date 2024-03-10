@@ -33,5 +33,4 @@
         Word Count: <output id="symptomsWordCount">0</output>/255
       </div>
     </div>
-  </div>
-  
+  </div>  
